@@ -10,7 +10,7 @@ public class PhraseParserTest {
 
 	@Before
 	public void setUp() throws Exception {
-		parser = new PhraseParser(",I. l:::o;;ve!? m?o,.nkeys?");
+		parser = new PhraseParser(",I. l:::o;;ve!? m?o,.nkeys? Don't you????!");
 	}
 
 	@Test
@@ -21,6 +21,12 @@ public class PhraseParserTest {
 		assertNotNull(parser.getWords());
 		for (String s : parser.getWords()) {
 			System.out.print(s + " ");
+		}
+		System.out.print("\n\n\n");
+		
+		System.out.println("Blank Words:");
+		for (String s : parser.getWords()) {
+			System.out.println(s + " " + parser.isWordBlank(s));
 		}
 	}
 

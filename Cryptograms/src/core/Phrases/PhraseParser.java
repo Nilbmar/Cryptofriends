@@ -28,5 +28,13 @@ public class PhraseParser {
 		// Still contains apostrophes
 		words = newPhrase.split(" ");
 	}
+	
+	public boolean isWordBlank(String s) {
+		boolean blank = false;
+		if (s == null || s.isEmpty() || s.contains(" ")) {
+			blank = true;
+		}
+		return blank;
+	}
 
 }
