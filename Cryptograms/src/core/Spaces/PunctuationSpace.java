@@ -6,4 +6,10 @@ public class PunctuationSpace extends Space {
 		super(display);
 		setUnderlined(false);
 	}
+	
+	@Override
+	public void setDisplayChar(char c) { 
+		// Abstract - but
+		// Don't want to change this
+	}
 }

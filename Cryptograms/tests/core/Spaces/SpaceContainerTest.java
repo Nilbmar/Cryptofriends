@@ -89,6 +89,23 @@ public class SpaceContainerTest {
 			}
 		}
 		System.out.println("\n" + codeLetters);
+		
+		System.out.println("\nCorrect Chars / Display Chars.");
+		for (Space space : spaces.getList()) {
+			if (space.isUnderlined()) {
+				System.out.print(((LetterSpace) space).getCorrectChar());
+			} else {
+				System.out.print(" ");
+			}
+		}
+		System.out.println("");
+		for (Space space : spaces.getList()) {
+			if (space.isUnderlined()) {
+				System.out.print(space.getDisplayChar());
+			} else {
+				System.out.print(" ");
+			}
+		}
 	}
 
 }
