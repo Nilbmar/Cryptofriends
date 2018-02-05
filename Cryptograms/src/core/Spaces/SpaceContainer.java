@@ -1,11 +1,16 @@
 package core.Spaces;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import core.Phrases.PhraseParser;
 
 public class SpaceContainer {
 	private ArrayList<Space> spaceList;
+	private String displayChars;
+	private int currentDisplayChar = 0;
 	
 	public SpaceContainer() {
 		spaceList = new ArrayList<Space>();
@@ -40,6 +45,29 @@ public class SpaceContainer {
 		}
 		
 		return space;
+	}
+	
+	public String getDisplayCharacters() { return displayChars; }
+	public void setDisplayCharacters() {
+		// Scramble the alphabet to use for Space's display characters
+		String[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+		List<String> toScramble = Arrays.asList(alphabet);
+		Collections.shuffle(toScramble);
+		StringBuilder strBuild = new StringBuilder(alphabet.length);
+		for (String c : toScramble) {
+			strBuild.append(c);
+		}
+		
+		// Reset the display chars
+		displayChars = strBuild.toString();
+		currentDisplayChar = 0;
+	}
+	
+	public char getCharToDisplay() {
+		// Should not see this dash
+		char display = '-';
+		
+		return display;
 	}
 
 }

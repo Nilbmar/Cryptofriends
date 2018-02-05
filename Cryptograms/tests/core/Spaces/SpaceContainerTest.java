@@ -28,6 +28,23 @@ public class SpaceContainerTest {
 	}
 	
 	@Test
+	public void testGetDisplayCharacters() {
+		//fail("Not yet implemented");
+		String displayChars = null;
+		assertNotNull(spaces.getList());
+		assertNull(displayChars);
+		spaces.setDisplayCharacters();
+		displayChars = spaces.getDisplayCharacters();
+		assertNotNull(displayChars);
+		System.out.println("\n\n" + displayChars);
+	}
+	
+	@Test
+	public void testGetCharToDisplay() {
+		assertNotSame('-', spaces.getCharToDisplay());
+	}
+	
+	@Test
 	public void testPrint() {
 		//fail("You suck, failure!");
 		assertNotNull(spaces.getList());
@@ -35,27 +52,25 @@ public class SpaceContainerTest {
 		// Should error - nothing added yet
 		//assertEquals(1, spaces.getList().size());
 		
-		String testPhrase = "I'm a donkey; I'm a lovely donkey. Do you hate me?";
+		String testPhrase = ". a, b' c! d? e; f: g";
 		spaces.create(testPhrase);
 		
-		/*
-		int sizeList = spaces.getList().size();
-		for (int x = 0; x < sizeList; x++) {
-			
-		}*/
-		
+		// Determine what to print based on info from each Space
+		StringBuilder codeLetters = new StringBuilder();
 		for (Space space : spaces.getList()) {
 			if (!space.isUnderlined()) {
 				// Not underlined means space or punctuation
 				// Display as is
 				System.out.print(space.getDisplayChar());
+				codeLetters.append(" ");
 			} else {
 				// Underlined means a Letter, only display an underline
-				// Will display a Code letter later
 				System.out.print("_");
+				codeLetters.append(space.getDisplayChar());
+				//codeLetters.append(((LetterSpace) space).getCorrectLetter());
 			}
 		}
-		
+		System.out.println("\n" + codeLetters);
 	}
 
 }
