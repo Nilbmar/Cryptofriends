@@ -67,6 +67,11 @@ public class SpaceContainer {
 		// Should not see this dash
 		char display = '-';
 		
+		// Grabs a char form the scrambled string
+		// and updates to the next char so the next one is different
+		display = displayChars.charAt(currentDisplayChar);
+		currentDisplayChar++;
+		
 		return display;
 	}
 

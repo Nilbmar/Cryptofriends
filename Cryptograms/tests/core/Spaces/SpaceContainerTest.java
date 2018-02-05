@@ -41,6 +41,18 @@ public class SpaceContainerTest {
 	
 	@Test
 	public void testGetCharToDisplay() {
+		// First make sure alphabet has been randomized
+		testGetDisplayCharacters();
+		
+		System.out.println("\nGetChartoDisplay:");
+		// Now show getting individual characters one by one
+		System.out.println(spaces.getDisplayCharacters());
+		System.out.print(spaces.getCharToDisplay());
+		System.out.print(spaces.getCharToDisplay());
+		System.out.print(spaces.getCharToDisplay());
+		System.out.print(spaces.getCharToDisplay());
+		System.out.print(spaces.getCharToDisplay());
+		System.out.print("\n\n\n");
 		assertNotSame('-', spaces.getCharToDisplay());
 	}
 	
