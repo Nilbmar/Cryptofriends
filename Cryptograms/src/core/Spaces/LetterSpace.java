@@ -7,7 +7,7 @@ public class LetterSpace extends Space {
 
 	public LetterSpace(char display, char correct) {
 		super(display);
-		underline = true;
+		setUnderlined(true);
 		this.correctLetter = correct;
 	}
 

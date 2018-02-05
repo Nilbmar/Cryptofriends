@@ -4,7 +4,7 @@ public class BlankSpace extends Space {
 
 	public BlankSpace(char display) {
 		super(display);
-		underline = false;
+		setUnderlined(false);
 		// TODO Auto-generated constructor stub
 	}
 
