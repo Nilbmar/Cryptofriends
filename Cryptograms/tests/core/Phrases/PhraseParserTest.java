@@ -27,7 +27,7 @@ public class PhraseParserTest {
 			if (parser.isBlankSpace(testPhrase.substring(x, x+1))) {
 				blanksCount++;
 			} else {
-				System.out.print(parser.getOrigPhrase().substring(x, x+1));
+				//System.out.print(testPhrase.substring(x, x+1));
 			}
 		}
 		
@@ -54,5 +54,21 @@ public class PhraseParserTest {
 		assertTrue(strBuild.toString().contentEquals(",.:::;;!??,.?'????!"));
 	}
 	
+	@Test
+	public void printOnlyLetters() {
+		//fail("Not done anything yet!");
+		assertNotNull(parser.getOrigPhrase());
+		String testPhrase = "Howdy! I like bananas; I like bananas a lot. "
+				+ "Don't you like bananas?"
+				+ "Would you: eat bananas, not eat bananas, or unsure?";
+		
+		int len = testPhrase.length();
+		for (int x = 0; x < len; x++) {
+			if (!parser.isPunctuation(testPhrase.substring(x, x+1))
+			&& !parser.isBlankSpace(testPhrase.substring(x, x+1))) {
+				System.out.print(testPhrase.substring(x, x+1));
+			}
+		}
+	}
 	
 }
