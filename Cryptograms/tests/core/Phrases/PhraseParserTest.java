@@ -16,25 +16,40 @@ public class PhraseParserTest {
 	@Test
 	public void testIsBlank() {
 		assertNotNull(parser.getOrigPhrase());
+		//assertTrue(parser.isBlankSpace("Monkey"));
+		assertFalse(parser.isBlankSpace("M"));
+		assertTrue(parser.isBlankSpace(" "));
+		//assertFalse(parser.isBlankSpace(" "));
+		String testPhrase = " I love donkey chops with potato locks";
+		int blanksCount = 0;
+		int len = testPhrase.length();
+		for (int x = 0; x < len; x++) {
+			if (parser.isBlankSpace(testPhrase.substring(x, x+1))) {
+				blanksCount++;
+			} else {
+				System.out.print(parser.getOrigPhrase().substring(x, x+1));
+			}
+		}
 		
+		assertEquals(7, blanksCount);
 	}
 	
 	@Test
 	public void testIsPunctuation() {
 		assertNotNull(parser.getOrigPhrase());
 		
-		System.out.println("Punctuation Test:\n" 
-				+ parser.getOrigPhrase() + "\n");
+		//System.out.println("Punctuation Test:\n" 
+		//		+ parser.getOrigPhrase() + "\n");
 		
 		StringBuilder strBuild = new StringBuilder();
 		int len = parser.getOrigPhrase().length();
 		for (int x = 0; x < len; x++) {
-			if (parser.isPunctuation(parser.getOrigPhrase().substring(x, x + 1))) {
-				System.out.print(parser.getOrigPhrase().charAt(x));
+			if (parser.isPunctuation(parser.getOrigPhrase().substring(x, x+1))) {
+				//System.out.print(parser.getOrigPhrase().charAt(x));
 				strBuild.append(parser.getOrigPhrase().charAt(x));
 			}
 		}
-		System.out.println("\n" + strBuild.toString());
+		//System.out.println("\n" + strBuild.toString());
 		
 		assertTrue(strBuild.toString().contentEquals(",.:::;;!??,.?'????!"));
 	}

@@ -2,20 +2,13 @@ package core.Phrases;
 
 public class PhraseParser {
 	private String origPhrase;
-	private String newPhrase;
 	private String[] punctuation = {",", "?", "!", ".", ":", ";", "'" };
-	private String[] words;
 	
 	public PhraseParser(String phrase) {
 		origPhrase = phrase;
 	}
 	
 	public String getOrigPhrase() { return origPhrase; }
-	
-	public String[] getWords() { return words; }
-	private void parseWords() {
-		
-	}
 	
 	public boolean isBlankSpace(String s) {
 		boolean blank = false;
