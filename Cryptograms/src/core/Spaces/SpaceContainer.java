@@ -11,6 +11,7 @@ public class SpaceContainer {
 	private ArrayList<Space> spaceList;
 	private String displayChars;
 	private int currentDisplayChar = 0;
+	private ArrayList<String> displayCharTaken;
 	
 	public SpaceContainer() {
 		spaceList = new ArrayList<Space>();
@@ -21,7 +22,9 @@ public class SpaceContainer {
 		// Punctuation, Blanks, and Letters
 		// Which can be used by whatever display component
 		PhraseParser parser = new PhraseParser(phrase);
+		displayCharTaken = new ArrayList<String>();
 		int len = phrase.length();
+		
 		for (int x = 0; x < len; x++) {
 			if (parser.isPunctuation(phrase.substring(x, x+1))) {
 				// Punctuation space
@@ -33,6 +36,8 @@ public class SpaceContainer {
 				// Letter space
 				spaceList.add(new LetterSpace('f', phrase.charAt(x)));
 			}
+			
+			// TODO: HOW DO I STORE WHEN A LETTER SPACE HAS ALREADY TAKEN A CODE CHAR?
 		}
 	}
 	
