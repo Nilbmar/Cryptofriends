@@ -70,7 +70,7 @@ public class SpaceContainerTest {
 		// Should error - nothing added yet
 		//assertEquals(1, spaces.getList().size());
 		
-		String testPhrase = ". a, b' c! d? e; f: g";
+		String testPhrase = ". a, b' c! d? e; f: g. a, b' c! d? e; f: g";
 		spaces.create(testPhrase);
 		
 		// Determine what to print based on info from each Space

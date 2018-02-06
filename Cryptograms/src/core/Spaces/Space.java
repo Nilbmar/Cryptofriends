@@ -3,11 +3,15 @@ package core.Spaces;
 public abstract class Space {
 	protected char displayChar;
 	private boolean underline;
+	private int id;
 	
 	public Space(char display) {
 		displayChar = display;
 	}
 
+	public int getID() { return id; }			// zero-indexed
+	public void setID(int id) { this.id = id; }
+	
 	public void setUnderlined(boolean u) { underline = u; }
 	public boolean isUnderlined() { return underline; }
 	

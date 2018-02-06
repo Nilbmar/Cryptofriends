@@ -26,13 +26,19 @@ public class SpaceContainer {
 		for (int x = 0; x < len; x++) {
 			if (parser.isPunctuation(phrase.substring(x, x+1))) {
 				// Punctuation space
-				spaceList.add(new PunctuationSpace(phrase.charAt(x)));
+				PunctuationSpace punc = new PunctuationSpace(phrase.charAt(x));
+				punc.setID(x);
+				spaceList.add(punc);
 			} else if (parser.isBlankSpace(phrase.substring(x, x+1))) { 
 				// Blank space
-				spaceList.add(new BlankSpace(' '));
+				BlankSpace blank = new BlankSpace(' ');
+				blank.setID(x);
+				spaceList.add(blank);
 			} else {
 				// Letter space
-				spaceList.add(new LetterSpace('|', phrase.charAt(x)));
+				LetterSpace letter = new LetterSpace('|', phrase.charAt(x));
+				letter.setID(x);
+				spaceList.add(letter);
 			}
 			
 			setDisplayChars();
