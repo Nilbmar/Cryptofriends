@@ -1,4 +1,4 @@
-package core.Phrases;
+package core.Processes;
 
 public class PhraseParser {
 	private String origPhrase;

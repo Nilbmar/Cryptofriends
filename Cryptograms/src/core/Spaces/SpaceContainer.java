@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import core.Phrases.PhraseParser;
+import core.Processes.PhraseParser;
 
 public class SpaceContainer {
 	private ArrayList<Space> spaceList;
