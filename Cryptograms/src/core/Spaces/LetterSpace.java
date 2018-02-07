@@ -6,11 +6,12 @@ import core.Observers.Observer;
 import core.Observers.SelectionObserver;
 import core.Observers.Subject;
 
-public class LetterSpace extends Space implements Subject {
+public class LetterSpace extends Space implements Subject, Observer {
 	private char correctChar;
 	private char currentChar;
 	private boolean filled = false;
 	private ArrayList<Observer> observers;
+	private boolean hilight = false;
 
 	public LetterSpace(char display, char correct) {
 		super(display);
@@ -41,8 +42,11 @@ public class LetterSpace extends Space implements Subject {
 		return correct; 
 	}
 
+	public void setHilight(boolean hilight) {
+		this.hilight = hilight;
+	}
 
-
+	// FOR SUBJECT
 	@Override
 	public void addObserver(Observer observer) {
 		observers.add(observer);
@@ -55,8 +59,6 @@ public class LetterSpace extends Space implements Subject {
 		observers.remove(observer);
 	}
 
-
-
 	@Override
 	public void notifyObserver() {
 		for (Observer obs : observers) {
@@ -66,5 +68,20 @@ public class LetterSpace extends Space implements Subject {
 			
 			obs.update();
 		}
+	}
+
+	// FOR OBSERVER
+	@Override
+	public void update() {
+		if (hilight) {
+			System.out.println("ID: " + getID() 
+				+ " - Correct: " + getCorrectChar()
+				+ " - Hilight: " + hilight);
+		}
+	}
+
+	@Override
+	public String getType() {
+		return "letter";
 	}
 }
