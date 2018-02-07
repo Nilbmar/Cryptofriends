@@ -2,6 +2,8 @@ package core.Processes;
 
 import static org.junit.Assert.*;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,9 +27,15 @@ public class SelectorTest {
 	@Test
 	public void testSetSelected() {
 		//fail("Not yet implemented");
-		int random = 2;
+		// Picks a random space
+		int random = ThreadLocalRandom.current().nextInt(0, spaces.getList().size() - 1);
 		Space spaceToHilight = spaces.getList().get(random);
 		
+		// If its a LetterSpace
+		// Gives SelectionObserver it's display char
+		// so SelectionObserver can also tell others that share char
+		// they should be hilighted
+		// Then notifies SelectionObserver to update
 		if (spaceToHilight.isUnderlined()) {
 			((LetterSpace) spaceToHilight).addObserver(selectObs);
 			((LetterSpace) spaceToHilight).notifyObserver();
