@@ -6,11 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SpaceContainerTest {
-	private SpaceContainer spaces;
+	private SpaceList spaces;
 	
 	@Before
 	public void setUp() throws Exception {
-		spaces = new SpaceContainer();
+		spaces = new SpaceList();
 	}
 
 	@Test

@@ -7,11 +7,11 @@ import java.util.List;
 
 import core.Processes.PhraseParser;
 
-public class SpaceContainer {
+public class SpaceList {
 	private ArrayList<Space> spaceList;
 	private String displayChars;
 	
-	public SpaceContainer() {
+	public SpaceList() {
 		spaceList = new ArrayList<Space>();
 	}
 	

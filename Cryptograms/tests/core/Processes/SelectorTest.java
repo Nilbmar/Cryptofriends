@@ -11,15 +11,15 @@ import core.Observers.Observer;
 import core.Observers.SelectionObserver;
 import core.Spaces.LetterSpace;
 import core.Spaces.Space;
-import core.Spaces.SpaceContainer;
+import core.Spaces.SpaceList;
 
 public class SelectorTest {
-	private SpaceContainer spaces;
+	private SpaceList spaces;
 	private SelectionObserver selectObs;
 	
 	@Before
 	public void setUp() throws Exception {
-		spaces = new SpaceContainer();
+		spaces = new SpaceList();
 		String testPhrase = "I love you, too!";
 		spaces.create(testPhrase);
 		selectObs = new SelectionObserver();

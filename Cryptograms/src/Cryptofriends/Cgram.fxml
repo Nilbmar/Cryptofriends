@@ -1,7 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cryptofriends.CgramController">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane prefWidth="375.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.161" fx:controller="Cryptofriends.CgramController">
+   <center>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="476.0" prefWidth="370.0" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane prefHeight="50.0" prefWidth="367.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <children>
+                  <FlowPane prefHeight="10.0" prefWidth="410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <SplitPane prefHeight="69.0" prefWidth="375.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox prefHeight="67.0" prefWidth="373.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="378.0" text="Cryptograms" textAlignment="CENTER">
+                           <font>
+                              <Font name="Envy Code R Italic" size="30.0" />
+                           </font>
+                        </Label>
+                        <MenuBar prefHeight="51.0" prefWidth="327.0">
+                          <menus>
+                            <Menu mnemonicParsing="false" text="Puzzle">
+                              <items>
+                                    <MenuItem mnemonicParsing="false" text="Clear Letters" />
+                                    <MenuItem mnemonicParsing="false" text="New Puzzle" />
+                                    <MenuItem mnemonicParsing="false" text="Random Puzzle" />
+                                <MenuItem mnemonicParsing="false" text="Close Game" />
+                              </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Reveal">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Letter" />
+                                    <MenuItem mnemonicParsing="false" text="Mistakes" />
+                                    <MenuItem mnemonicParsing="false" text="Answer Puzzle" />
+                                 </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Help">
+                              <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                              </items>
+                            </Menu>
+                          </menus>
+                        </MenuBar>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </top>
 </BorderPane>
