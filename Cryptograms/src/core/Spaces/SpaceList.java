@@ -9,10 +9,12 @@ import core.Processes.PhraseParser;
 
 public class SpaceList {
 	private ArrayList<Space> spaceList;
+	private ArrayList<Integer> wordBreakList;
 	private String displayChars;
 	
 	public SpaceList() {
 		spaceList = new ArrayList<Space>();
+		wordBreakList = new ArrayList<Integer>();
 	}
 	
 	public void create(String phrase) {
@@ -34,6 +36,7 @@ public class SpaceList {
 				BlankSpace blank = new BlankSpace(' ');
 				blank.setID(x);
 				spaceList.add(blank);
+				wordBreakList.add(x);
 			} else {
 				// Letter space
 				LetterSpace letter = new LetterSpace('|', phrase.charAt(x));
@@ -45,7 +48,10 @@ public class SpaceList {
 		}
 	}
 	
-
+	// This is a list of of indexes where there are spaces in the phrase
+	// indicating where the phrase should break if going to the next line
+	public ArrayList<Integer> getWordBreaks() { return wordBreakList; }
+	
 	public ArrayList<Space> getList() { return spaceList; }
 	public Space getSpace(int index) {
 		Space space = null;
