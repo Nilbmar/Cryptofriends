@@ -15,6 +15,15 @@ public class CgramController {
 			spaceBox.setDisplayCharLabel(display);
 			spaceBox.setUnderlined(underline);
 			flow.getChildren().add(spaceBox);
+			System.out.println("Adding Space Box");
 		}
+	}
+	
+	public void addLotsOfBoxes() {
+		for (int x = 0; x < 10; x++) {
+    		addSpaceBox('A', 'T', true);
+    		addSpaceBox(' ', ' ', false);
+    		addSpaceBox(' ', '!', false);
+    	}
 	}
 }

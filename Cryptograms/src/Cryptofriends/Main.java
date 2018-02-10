@@ -21,18 +21,15 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Cryptograms");
 			
-			// TODO: REMOVE
+			//* TODO: REMOVE - DOESN'T WORK
 			// CURRENTLY TRYING TO LOAD ON STARTUP TO TEST
 			primaryStage.setOnShown(new EventHandler<WindowEvent>() {
 			    @Override
 			    public void handle(WindowEvent event) {
-			    	for (int x = 0; x < 10; x++) {
-			    		controller.addSpaceBox('A', 'T', true);
-			    		controller.addSpaceBox(' ', ' ', false);
-			    		controller.addSpaceBox(' ', '!', false);
-			    	}
+			    	controller.addLotsOfBoxes();
 			    }
 			});
+			//*/
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();

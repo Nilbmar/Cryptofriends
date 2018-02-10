@@ -22,7 +22,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                <children>
-                  <FlowPane id="flow" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="357.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <FlowPane id="flow" fx:id="flow" layoutX="10.0" layoutY="10.0" onMouseClicked="#addLotsOfBoxes" prefHeight="448.0" prefWidth="357.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                </children>
             </AnchorPane>
         </content>
