@@ -3,6 +3,7 @@ package Cryptofriends;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.TilePane;
 
 public class CgramController {
 	@FXML
@@ -20,10 +21,26 @@ public class CgramController {
 	}
 	
 	public void addLotsOfBoxes() {
-		for (int x = 0; x < 10; x++) {
-    		addSpaceBox('A', 'T', true);
-    		addSpaceBox(' ', ' ', false);
-    		addSpaceBox(' ', '!', false);
-    	}
+		addSpaceBox('I', 'T', true);
+		addSpaceBox(' ', ' ', false);
+		addSpaceBox('L', 'B', true);
+		addSpaceBox('O', 'Q', true);
+		addSpaceBox('V', 'I', true);
+		addSpaceBox('E', 'Z', true);
+		addSpaceBox(' ', ' ', false);
+		addSpaceBox('Y', 'C', true);
+		addSpaceBox('O', 'Q', true);
+		addSpaceBox('U', 'S', true);
+		addSpaceBox(',', ' ', false);
+		addSpaceBox(' ', ' ', false);
+		addSpaceBox('S', 'M', true);
+		addSpaceBox('O', 'Q', true);
+		addSpaceBox(' ', ' ', false);
+		addSpaceBox('M', 'D', true);
+		addSpaceBox('U', 'S', true);
+		addSpaceBox('C', 'P', true);
+		addSpaceBox('H', 'A', true);
+		addSpaceBox('!', ' ', false);
+		
 	}
 }

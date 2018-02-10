@@ -1,6 +1,7 @@
 package Cryptofriends.SpaceContainer;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,6 +10,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class SpaceBox extends VBox {
 	private Parent parent;
@@ -16,8 +19,6 @@ public class SpaceBox extends VBox {
 	private VBox vbox;
 	
 	private boolean selected = false;
-	
-	private Label underlineLabel = new Label();
 	private boolean underlined = false;
 	
 	private Label answerChar = new Label();
@@ -48,14 +49,19 @@ public class SpaceBox extends VBox {
 				}
 			}
 		});
+		answerChar.setFont(Font.font("Fira Mono", 20));
+		answerChar.setPadding(new Insets(0, 5, 0, 5));
+		
+		displayChar.setFont(Font.font("Fira Mono", 20));
+		displayChar.setPadding(new Insets(-5, 5, 0, 5));
 		
 		answerChar.setAlignment(Pos.BOTTOM_CENTER);
 		displayChar.setAlignment(Pos.TOP_CENTER);
 		
 		vbox.setAlignment(Pos.TOP_CENTER);
 		vbox.getChildren().add(answerChar);
-		vbox.getChildren().add(underlineLabel);
 		vbox.getChildren().add(displayChar);
+		vbox.setStyle("-fx-border-color: transparent");
 		
 	}
 	
@@ -69,7 +75,12 @@ public class SpaceBox extends VBox {
 	public void setUnderlined(boolean underlined) {
 		this.underlined = underlined;
 		if (underlined) {
-			underlineLabel.setText(String.valueOf('_'));
+			answerChar.setUnderline(true);
+		} else {
+			// Move punctuation closer to previous character
+			// also moves blank spaces but shouldn't be able to tell
+			answerChar.setAlignment(Pos.BASELINE_LEFT);
+			answerChar.setPadding(new Insets(0, 5, 0, -10));
 		}
 	}
 	public void setDisplayCharLabel(char c) {
@@ -94,6 +105,15 @@ public class SpaceBox extends VBox {
 	 * TODO: MOVE THIS INTO A CSS FILE
 	 */
 	private void setCSS(boolean highlight) {
+		//vbox.setStyle("-fx-border-color: black");
+		if (highlight) {
+			vbox.setStyle("-fx-border-color: black");
+		} else {
+			vbox.setStyle("-fx-border-color: transparent");
+		}
+		// Pale Red Color - CC6666
+		// TODO: THIS IS CAUSING VBOX TO JERK TO ONE SIDE
+		/*
 		if (highlight) {
 			vbox.setStyle("-fx-effect: innershadow(gaussian, #039ed3, 10, 1.0, 0, 0);" +
 					"-fx-padding: 2, 0, 2, 0;" + 
@@ -111,6 +131,7 @@ public class SpaceBox extends VBox {
 	                "-fx-border-radius: 5;"
 	                );
 		}
+		//*/
 	}
 
 }
