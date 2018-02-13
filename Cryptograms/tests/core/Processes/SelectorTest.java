@@ -2,8 +2,6 @@ package core.Processes;
 
 import static org.junit.Assert.*;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import org.junit.Before;
 import org.junit.Test;
 

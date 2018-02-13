@@ -1,11 +1,8 @@
 package Cryptofriends;
 
 import core.GameManager;
-import core.Spaces.Phrase;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;

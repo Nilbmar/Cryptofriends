@@ -2,7 +2,6 @@ package Cryptofriends.SpaceContainer;
 
 import core.Spaces.LetterSpace;
 import core.Spaces.Space;
-import core.Spaces.SpaceType;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class SpaceBox extends VBox {
