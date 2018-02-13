@@ -3,6 +3,9 @@ package core;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import core.Spaces.Phrase;
+import core.Spaces.SpaceList;
+
 public class GameManager {
 	private LinkedHashMap<String, Player> players;
 	
@@ -23,6 +26,15 @@ public class GameManager {
 		Player player = new Player(name, playerNum);
 		
 		players.put(name, player);
+	}
+	
+	public Phrase setPuzzle(String puzzlePhrase) {
+		Phrase phrase = null;
+		SpaceList spaces = new SpaceList();
+		spaces.create(puzzlePhrase);
+		phrase = spaces.getPhrase();
+		
+		return phrase;
 	}
 
 }
