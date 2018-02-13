@@ -6,8 +6,9 @@ public class Player {
 	private int score;
 	private boolean turn;
 	
-	public Player() {
-		
+	public Player(String name, int num) {
+		this.name = name;
+		playerNum = num;
 	}
 	
 	public void setName(String name) { this.name = name; }
