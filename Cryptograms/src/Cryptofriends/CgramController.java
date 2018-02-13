@@ -9,19 +9,16 @@ import core.Spaces.Space;
 import core.Spaces.Word;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.TilePane;
 
 public class CgramController {
 	@FXML
 	private FlowPane flow;
 	
-	public SpaceBox addSpaceBox(char answer, char display, boolean underline) {
+	public SpaceBox addSpaceBox(char answer, Space space) {
 		SpaceBox spaceBox = null;
 		if (flow != null) {
-			spaceBox = new SpaceBox();
+			spaceBox = new SpaceBox(space);
 			spaceBox.setAnswerCharLabel(answer);
-			spaceBox.setDisplayCharLabel(display);
-			spaceBox.setUnderlined(underline);
 		}
 		return spaceBox;
 	}
@@ -31,16 +28,16 @@ public class CgramController {
 		for (Space space : word.getWord()) {
 			switch (space.getSpaceType()) {
 			case BLANK:
-				wordBox.addSpaceBox(addSpaceBox(' ', ' ', false));
+				wordBox.addSpaceBox(addSpaceBox(' ', space));
 				break;
 			case LETTER:
 				LetterSpace letter = (LetterSpace) space;
 				wordBox.addSpaceBox(addSpaceBox(
-						letter.getCorrectChar(), letter.getDisplayChar(), true));
+						letter.getCorrectChar(), space));
 				break;
 			case PUNC:
 				PunctuationSpace punc = (PunctuationSpace) space;
-				wordBox.addSpaceBox(addSpaceBox(punc.getDisplayChar(), ' ', false));
+				wordBox.addSpaceBox(addSpaceBox(punc.getDisplayChar(), space));
 				break;
 			default:
 				break;
@@ -48,7 +45,6 @@ public class CgramController {
 		}
 		
 		flow.getChildren().add(wordBox.getHBox());
-		System.out.println("flowpane children" + flow.getChildren().size());
 	}
 	
 	public void setupPuzzle(Phrase phrase) {

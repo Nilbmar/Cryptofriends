@@ -1,5 +1,8 @@
 package Cryptofriends.SpaceContainer;
 
+import core.Spaces.LetterSpace;
+import core.Spaces.Space;
+import core.Spaces.SpaceType;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,6 +20,7 @@ public class SpaceBox extends VBox {
 	private Parent parent;
 	private Scene scene;
 	private VBox vbox;
+	private Space space;
 	
 	private boolean selected = false;
 	private boolean underlined = false;
@@ -24,7 +28,8 @@ public class SpaceBox extends VBox {
 	private Label answerChar = new Label();
 	private Label displayChar = new Label();
 	
-	public SpaceBox() {
+	public SpaceBox(Space space) {
+		this.space = space;
 		//this.scene = scene;
 		vbox = this; //new vBox(); // vbox might need to be inner vbox around answerLabel
 		
@@ -62,7 +67,9 @@ public class SpaceBox extends VBox {
 		vbox.getChildren().add(answerChar);
 		vbox.getChildren().add(displayChar);
 		vbox.setStyle("-fx-border-color: transparent");
-		
+
+		setDisplayCharLabel();
+		setUnderlined();
 	}
 	
 	public void setScene(Scene scene) {
@@ -72,8 +79,8 @@ public class SpaceBox extends VBox {
 		parent = fp;
 	}
 	
-	public void setUnderlined(boolean underlined) {
-		this.underlined = underlined;
+	public void setUnderlined() {
+		underlined = space.isUnderlined();
 		if (underlined) {
 			answerChar.setUnderline(true);
 		} else {
@@ -83,12 +90,40 @@ public class SpaceBox extends VBox {
 			answerChar.setPadding(new Insets(0, 5, 0, -10));
 		}
 	}
-	public void setDisplayCharLabel(char c) {
-		displayChar.setText(String.valueOf(c));
+	public void setDisplayCharLabel() {
+		switch (space.getSpaceType()) {
+		case BLANK:
+			displayChar.setText(" ");
+			break;
+		case PUNC:
+			displayChar.setText(" ");
+			break;
+		case LETTER:
+			displayChar.setText(String.valueOf(space.getDisplayChar()));
+			break;
+		default:
+			break;
+		}
+		
 	}
 	
 	public void setAnswerCharLabel(char c) {
-		answerChar.setText(String.valueOf(c));
+		// Allow changing the LetterSpace's answer char
+		// but don't allow changing the others
+		switch (space.getSpaceType()) {
+		case BLANK:
+			answerChar.setText(" ");
+			break;
+		case PUNC:
+			answerChar.setText(String.valueOf(space.getDisplayChar()));
+			break;
+		case LETTER:
+			answerChar.setText(String.valueOf(c));
+			break;
+		default:
+			break;
+		}
+		
 	}
 	
 	public boolean getSelected() {
