@@ -1,5 +1,7 @@
 package Cryptofriends;
 
+import core.GameManager;
+import core.Spaces.Phrase;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -21,15 +23,10 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Cryptograms");
 			
-			//* TODO: REMOVE - DOESN'T WORK
-			// CURRENTLY TRYING TO LOAD ON STARTUP TO TEST
-			primaryStage.setOnShown(new EventHandler<WindowEvent>() {
-			    @Override
-			    public void handle(WindowEvent event) {
-			    	controller.addLotsOfBoxes();
-			    }
-			});
-			//*/
+			GameManager gameMan = new GameManager();
+			String phraseToTest = "I love monkeys too! And you are super glue, bouncy monkeys baboon cheese.";
+			controller.setupPuzzle(gameMan.getPuzzle(phraseToTest));
+			
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
