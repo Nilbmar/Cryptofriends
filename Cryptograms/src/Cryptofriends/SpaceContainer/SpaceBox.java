@@ -70,6 +70,9 @@ public class SpaceBox extends VBox {
 
 		setDisplayCharLabel();
 		setUnderlined();
+		// TODO: SWITCH WHEN NOT TESTING
+		//setAnswerCharLabel(false);
+		setAnswerCharLabel(true);
 	}
 	
 	public void setScene(Scene scene) {
@@ -107,7 +110,7 @@ public class SpaceBox extends VBox {
 		
 	}
 	
-	public void setAnswerCharLabel(char c) {
+	public void setAnswerCharLabel(boolean showAnswer) {
 		// Allow changing the LetterSpace's answer char
 		// but don't allow changing the others
 		switch (space.getSpaceType()) {
@@ -115,10 +118,19 @@ public class SpaceBox extends VBox {
 			answerChar.setText(" ");
 			break;
 		case PUNC:
+			// Needs to show its display char on same line as Letter's answer
 			answerChar.setText(String.valueOf(space.getDisplayChar()));
 			break;
 		case LETTER:
-			answerChar.setText(String.valueOf(c));
+			String answer = null;
+			if (showAnswer) {
+				answer = String.valueOf(((LetterSpace) space).getCorrectChar());
+			} else {
+				// Don't show answer label
+				// Used at the start so they're blank
+				answer = " ";
+			}
+			answerChar.setText(String.valueOf(answer));
 			break;
 		default:
 			break;
