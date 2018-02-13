@@ -28,7 +28,7 @@ public class GameManager {
 		players.put(name, player);
 	}
 	
-	public Phrase setPuzzle(String puzzlePhrase) {
+	public Phrase getPuzzle(String puzzlePhrase) {
 		Phrase phrase = null;
 		SpaceList spaces = new SpaceList();
 		spaces.create(puzzlePhrase);

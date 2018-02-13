@@ -20,9 +20,9 @@ public class GameManagerTest {
 	}
 	
 	@Test
-	public void setPuzzleTest() {
-		Phrase phrase = gameMan.setPuzzle("I love  - 300 Monkeys : bye!!");
-		System.out.println("\n\n--setPuzzleTest--\n");
+	public void getPuzzleTest() {
+		Phrase phrase = gameMan.getPuzzle("I love  - 300 Monkeys : bye!!");
+		System.out.println("\n\n--getPuzzleTest--\n");
 		for (Word word : phrase.getPhrase()) {
 			for (Space space : word.getWord()) {
 				System.out.print(space.getDisplayChar());
