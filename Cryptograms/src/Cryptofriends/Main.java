@@ -24,7 +24,11 @@ public class Main extends Application {
 			primaryStage.setTitle("Cryptograms");
 			
 			GameManager gameMan = new GameManager();
-			String phraseToTest = "I love monkeys too! And you are super glue, bouncy monkeys baboon cheese.";
+			String phraseToTest = "I'm in a house full of baboons." 
+					+ " They're driving me crazy! Help me! I'll pay you."
+					+ "Like $4000? I'm in a house full of baboons." 
+					+ " They're driving me crazy! Help me! I'll pay you."
+					+ "Like $4000?";
 			controller.setupPuzzle(gameMan.getPuzzle(phraseToTest));
 			
 			
