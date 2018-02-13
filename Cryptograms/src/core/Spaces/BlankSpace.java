@@ -12,5 +12,10 @@ public class BlankSpace extends Space {
 		// Abstract - but
 		// Don't want to change this
 	}
+	
+	@Override 
+	protected void setSpaceType() {
+		spaceType = SpaceType.BLANK;
+	}
 
 }

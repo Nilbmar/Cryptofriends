@@ -70,7 +70,7 @@ public class SpaceContainerTest {
 		// Should error - nothing added yet
 		//assertEquals(1, spaces.getList().size());
 		
-		String testPhrase = ". a, b' c! d? e; f: g. a, b' c! d? e; f: g";
+		String testPhrase = "I love you, so much!";
 		spaces.create(testPhrase);
 		
 		// Determine what to print based on info from each Space
@@ -106,6 +106,11 @@ public class SpaceContainerTest {
 				System.out.print(" ");
 			}
 		}
+		
+		System.out.println("\n\n-----Phrase-----\n");
+		System.out.println("Phrase Size: " + spaces.getPhrase().getPhrase().size());
+		System.out.println("Word Breaks: " + spaces.getPhrase().getWordBreakIndexes().size());
+		System.out.println("Code Chars: " + spaces.getPhrase().toString());
 	}
 
 }

@@ -19,6 +19,11 @@ public class LetterSpace extends Space implements Subject, Observer {
 		this.correctChar = correct;
 		observers = new ArrayList<Observer>();
 	}
+	
+	@Override 
+	protected void setSpaceType() {
+		spaceType = SpaceType.LETTER;
+	}
 
 	@Override
 	public void setDisplayChar(char c) { displayChar = c; }
@@ -79,6 +84,7 @@ public class LetterSpace extends Space implements Subject, Observer {
 				+ " - Hilight: " + hilight);
 		}
 	}
+
 
 	@Override
 	public String getType() {

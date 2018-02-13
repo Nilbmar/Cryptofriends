@@ -4,10 +4,15 @@ public abstract class Space {
 	protected char displayChar;
 	private boolean underline;
 	private int id;
+	protected SpaceType spaceType;
 	
 	public Space(char display) {
 		displayChar = display;
+		setSpaceType();
 	}
+	
+	protected abstract void setSpaceType();
+	public SpaceType getSpaceType() { return spaceType; }
 
 	public int getID() { return id; }			// zero-indexed
 	public void setID(int id) { this.id = id; }

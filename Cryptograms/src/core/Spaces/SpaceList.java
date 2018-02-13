@@ -9,12 +9,11 @@ import core.Processes.PhraseParser;
 
 public class SpaceList {
 	private ArrayList<Space> spaceList;
-	private ArrayList<Integer> wordBreakList;
 	private String displayChars;
+	private Phrase phraseContainer = new Phrase();
 	
 	public SpaceList() {
 		spaceList = new ArrayList<Space>();
-		wordBreakList = new ArrayList<Integer>();
 	}
 	
 	public void create(String phrase) {
@@ -26,31 +25,57 @@ public class SpaceList {
 		int len = phrase.length();
 		
 		for (int x = 0; x < len; x++) {
-			if (parser.isPunctuation(phrase.substring(x, x+1))) {
-				// Punctuation space
-				PunctuationSpace punc = new PunctuationSpace(phrase.charAt(x));
-				punc.setID(x);
-				spaceList.add(punc);
+			if (parser.isLetter(phrase.substring(x, x+1))) {
+				// Letter space
+				LetterSpace letter = new LetterSpace('|', phrase.charAt(x));
+				letter.setID(x);
+				spaceList.add(letter);
+				
 			} else if (parser.isBlankSpace(phrase.substring(x, x+1))) { 
 				// Blank space
 				BlankSpace blank = new BlankSpace(' ');
 				blank.setID(x);
 				spaceList.add(blank);
-				wordBreakList.add(x);
+				//wordBreakList.add(x);
 			} else {
-				// Letter space
-				LetterSpace letter = new LetterSpace('|', phrase.charAt(x));
-				letter.setID(x);
-				spaceList.add(letter);
+				// Punctuation space
+				PunctuationSpace punc = new PunctuationSpace(phrase.charAt(x));
+				punc.setID(x);
+				spaceList.add(punc);
 			}
 			
 			setDisplayChars();
 		}
+		
+		//Phrase phraseContainer = new Phrase();
+		Word word = new Word();
+		for (Space space : spaceList) {
+			switch (space.getSpaceType()) {
+			case LETTER:
+			case PUNC:
+				word.addSpace(space);
+				
+				if (spaceList.size() == space.getID() + 1) {
+					phraseContainer.addWord(word);
+				}
+				break;
+			case BLANK:
+				// Add previous word to Phrase if it's not blank
+				if (word.size() > 0) {
+					phraseContainer.addWord(word);
+				}
+				// Create a Blank Word to add to phrase
+				word = new Word();
+				word.addSpace(space);
+				phraseContainer.addWordBreak(word);
+				// Clear out word so a new one is started
+				word = new Word();
+				break;
+			}
+		}
 	}
-	
-	// This is a list of of indexes where there are spaces in the phrase
-	// indicating where the phrase should break if going to the next line
-	public ArrayList<Integer> getWordBreaks() { return wordBreakList; }
+
+	public Phrase getPhrase() { return phraseContainer; }
 	
 	public ArrayList<Space> getList() { return spaceList; }
 	public Space getSpace(int index) {
