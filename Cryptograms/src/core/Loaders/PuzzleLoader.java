@@ -1,6 +1,8 @@
 package core.Loaders;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -10,7 +12,8 @@ import java.util.List;
 public class PuzzleLoader implements Loader {
 	private String target;
 	private String phrase;
-	private String databaseFile;
+	private String databasePath = "src/core/Assets";
+	private String databaseFileName = "PhraseDatabase.txt";
 	private List<String> phrases;
 	
 	public PuzzleLoader() {
@@ -36,7 +39,7 @@ public class PuzzleLoader implements Loader {
 		}
 		return phrase;
 	}
-
+	
 	@Override
 	public void setTarget(String target) {
 		this.target = target;
@@ -49,13 +52,11 @@ public class PuzzleLoader implements Loader {
 
 	@Override
 	public void load() {
-		databaseFile = "/home/sysgeek/git/Cryptofriends/Cryptograms/src/core/Assets";
-		Path path = FileSystems.getDefault().getPath(databaseFile, "PhraseDatabase.txt");
-		if (databaseFile != null && Files.exists(path, new LinkOption[]{LinkOption.NOFOLLOW_LINKS})) {
+		Path path = FileSystems.getDefault().getPath(databasePath, databaseFileName);
+		if (databasePath != null && Files.exists(path, new LinkOption[]{LinkOption.NOFOLLOW_LINKS})) {
 			try {
 				phrases = Files.readAllLines(path);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
