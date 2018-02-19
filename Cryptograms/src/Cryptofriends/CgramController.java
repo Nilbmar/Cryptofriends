@@ -39,9 +39,7 @@ public class CgramController {
 		int wordCount = flow.getChildren().size();
 		System.out.println("word count" + wordCount);
 		for (int x = 0; x < wordCount; x++) {
-			// Stupid hack because adding WordBox to FlowPane doesn't work
-			// only adding HBox works, even though WordBox is a subclass
-			WordBox wordBox = new WordBox((HBox) flow.getChildren().get(x));
+			WordBox wordBox = (WordBox) flow.getChildren().get(x);
 			for (SpaceBox space : wordBox.getAllSpaceBoxes()) {
 				space.setAnswerCharLabel(false);
 			}
@@ -100,7 +98,7 @@ public class CgramController {
 			}
 		}
 		
-		flow.getChildren().add(wordBox.getHBox());
+		flow.getChildren().add(wordBox);
 	}
 	
 	public void setupPuzzle(Phrase phrase) {

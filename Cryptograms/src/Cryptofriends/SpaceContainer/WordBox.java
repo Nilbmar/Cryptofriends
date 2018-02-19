@@ -8,7 +8,7 @@ public class WordBox extends HBox {
 	private HBox hbox;
 	
 	public WordBox() {
-		hbox = new HBox();
+		//hbox = this;
 	}
 	
 	public WordBox(HBox hbox) {
@@ -17,15 +17,15 @@ public class WordBox extends HBox {
 	
 	
 	public SpaceBox getSpaceBox(int index) {
-		return (SpaceBox) hbox.getChildren().get(index);
+		return (SpaceBox) this.getChildren().get(index);
 	}
 	public void addSpaceBox(SpaceBox box) {
-		hbox.getChildren().add(box);
+		this.getChildren().add(box);
 	}
 	
 	public ArrayList<SpaceBox> getAllSpaceBoxes() {
 		ArrayList<SpaceBox> spaceBoxes = new ArrayList<SpaceBox>();
-		int wordSize = hbox.getChildren().size();
+		int wordSize = this.getChildren().size();
 		if (wordSize > 0) {
 			for (int x = 0; x < wordSize; x++) {
 				spaceBoxes.add(getSpaceBox(x));
@@ -33,6 +33,4 @@ public class WordBox extends HBox {
 		}
 		return spaceBoxes;
 	}
-	
-	public HBox getHBox() { return hbox; }
 }
