@@ -21,12 +21,17 @@ public class Main extends Application {
 			primaryStage.setTitle("Cryptograms");
 			
 			GameManager gameMan = new GameManager();
+			controller.setGameManager(gameMan);
+			controller.loadNewPuzzle();
+			
+			/*
 			String phraseToTest = "I'm in a house full of baboons." 
 					+ " They're driving me crazy! Help me! I'll pay you."
 					+ "Like $4000? I'm in a house full of baboons." 
 					+ " They're driving me crazy! Help me! I'll pay you."
 					+ "Like $4000?";
 			controller.setupPuzzle(gameMan.getPuzzle(phraseToTest));
+			*/
 			
 			
 			primaryStage.setScene(scene);

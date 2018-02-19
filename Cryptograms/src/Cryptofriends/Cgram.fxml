@@ -44,8 +44,8 @@
                           <menus>
                             <Menu mnemonicParsing="false" text="Puzzle">
                               <items>
-                                    <MenuItem mnemonicParsing="false" text="Clear Letters" />
-                                    <MenuItem mnemonicParsing="false" text="New Puzzle" />
+                                    <MenuItem id="clearPuzzle" fx:id="clearPuzzle" mnemonicParsing="false" onAction="#clearPuzzle" text="Clear Letters" />
+                                    <MenuItem id="newPuzzle" fx:id="newPuzzle" mnemonicParsing="false" onAction="#loadNewPuzzle" text="New Puzzle" />
                                     <MenuItem mnemonicParsing="false" text="Random Puzzle" />
                                 <MenuItem mnemonicParsing="false" text="Close Game" />
                               </items>
