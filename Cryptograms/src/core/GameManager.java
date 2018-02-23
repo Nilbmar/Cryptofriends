@@ -3,31 +3,32 @@ package core;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import core.Managers.PlayerManager;
+import core.Managers.SelectionManager;
+import core.Observers.Observer;
+import core.Observers.SelectionObserver;
+import core.Spaces.LetterSpace;
 import core.Spaces.Phrase;
+import core.Spaces.Space;
 import core.Spaces.SpaceList;
 
 public class GameManager {
-	private LinkedHashMap<String, Player> players;
+	private SelectionManager selectMan;
+	private PlayerManager playerMan;
 	
 	public GameManager() {
-		players = new LinkedHashMap<String, Player>();
+		playerMan = new PlayerManager();
+		selectMan = new SelectionManager();
 	}
 	
-	public HashMap<String, Player> getPlayers() { return players; }
-	public void addPlayer() {
-		int playerNum = players.size() + 1;
-		String playerName = "Player " + playerNum;
-		Player player = new Player(playerName, playerNum);
-		
-		players.put(playerName, player);
-	}
-	public void addPlayer(String name) {
-		int playerNum = players.size() + 1;
-		Player player = new Player(name, playerNum);
-		
-		players.put(name, player);
+	public void update() {
+		playerMan.update();
+		selectMan.update();
 	}
 	
+	public PlayerManager getPlayerManager() { return playerMan; }
+	
+	// TODO: SEPERATE THIS TO A PUZZLEMANAGER
 	public Phrase getPuzzle(String puzzlePhrase) {
 		Phrase phrase = null;
 		SpaceList spaces = new SpaceList();
@@ -36,5 +37,4 @@ public class GameManager {
 		
 		return phrase;
 	}
-
 }
