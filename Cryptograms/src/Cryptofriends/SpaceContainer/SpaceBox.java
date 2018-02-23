@@ -1,7 +1,9 @@
 package Cryptofriends.SpaceContainer;
 
+import Cryptofriends.CgramController;
 import core.Spaces.LetterSpace;
 import core.Spaces.Space;
+import core.Spaces.SpaceType;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,10 +17,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 public class SpaceBox extends VBox {
-	private Parent parent;
-	private Scene scene;
 	private VBox vbox;
 	private Space space;
+	private CgramController controller;
 	
 	private boolean selected = false;
 	private boolean underlined = false;
@@ -26,8 +27,9 @@ public class SpaceBox extends VBox {
 	private Label answerChar = new Label();
 	private Label displayChar = new Label();
 	
-	public SpaceBox(Space space) {
+	public SpaceBox(Space space, CgramController controller) {
 		this.space = space;
+		this.controller = controller;
 		//this.scene = scene;
 		vbox = this; //new vBox(); // vbox might need to be inner vbox around answerLabel
 		
@@ -36,22 +38,25 @@ public class SpaceBox extends VBox {
 		 *     Hilight answerChar label
 		 *     Set itself as the space to Observe for changes
 		 */
-		vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				if (event.getButton() != null && event.getButton() == MouseButton.PRIMARY) {
-					// Toggle between Hilighted when clicking on a space
-					if (selected == false) {
-						selected = true;
-						setCSS(selected);
-					} else {
-						selected = false;
-						setCSS(selected);
+		// Only allow selection of LetterSpaces
+		if (space.getSpaceType() == SpaceType.LETTER) {
+			vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					// TODO Auto-generated method stub
+					if (event.getButton() != null && event.getButton() == MouseButton.PRIMARY) {
+						// Toggle between Hilighted when clicking on a space
+						if (selected == false) {
+							setSelected(true);
+						} else {
+							setSelected(false);
+						}
+						
+						controller.updateHilights();
 					}
 				}
-			}
-		});
+			});
+		}
 		answerChar.setFont(Font.font("Fira Mono", 20));
 		answerChar.setPadding(new Insets(0, 5, 0, 5));
 		
@@ -73,12 +78,7 @@ public class SpaceBox extends VBox {
 		setAnswerCharLabel(true);
 	}
 	
-	public void setScene(Scene scene) {
-		this.scene = scene;
-	}
-	public void setParent(FlowPane fp) {
-		parent = fp;
-	}
+	public Space getSpace() { return space; }
 	
 	public void setUnderlined() {
 		underlined = space.isUnderlined();
@@ -142,14 +142,21 @@ public class SpaceBox extends VBox {
 	
 	public void setSelected(boolean s) {
 		selected = s;
-		setCSS(selected);
+		//setCSS(selected);
+		
+		// TODO: NEEDS TO
+		// Notify observer to hilight all sharing this char
+		if (space.getSpaceType() == SpaceType.LETTER) {
+			//((LetterSpace) space).setHilight(selected);
+			((LetterSpace) space).notifyObserver();
+		}
 	}
 	
 	/* Highlight Folder and Label when label is clicked on
 	 * Or set it back to default style when unselected 
 	 * TODO: MOVE THIS INTO A CSS FILE
 	 */
-	private void setCSS(boolean highlight) {
+	public void setCSS(boolean highlight) {
 		//vbox.setStyle("-fx-border-color: black");
 		if (highlight) {
 			vbox.setStyle("-fx-border-color: black");
@@ -178,5 +185,4 @@ public class SpaceBox extends VBox {
 		}
 		//*/
 	}
-
 }

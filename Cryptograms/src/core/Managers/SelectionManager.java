@@ -17,12 +17,17 @@ public class SelectionManager {
 		
 	}
 	
+	public SelectionObserver getSelObserver() { return selectObs; }
+	
+	
+	
 	/* TODO:
 	 * WORKING ON HOOKING UP SELECTION OBSERVER
 	 * WILL NEED A WAY TO PASS SELECTION INFO
 	 * BETWEEN FXML AND THIS
 	 */
 	public void setupSelectionObserver(SpaceList spaces) {
+		System.out.println("Am I doing anything?");
 		// Add LetterSpaces to SelectionObserver's list
 		// of Observers it reports to
 		int listLen = spaces.getList().size() - 1;
@@ -47,6 +52,7 @@ public class SelectionManager {
 		if (spaceToHilight.isUnderlined()) {
 			//((LetterSpace) spaceToHilight).addObserver(selectObs);
 			((LetterSpace) spaceToHilight).notifyObserver();
+			System.out.println("Am I doing anything?");
 		}
 	}
 

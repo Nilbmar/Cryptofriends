@@ -27,6 +27,7 @@ public class GameManager {
 	}
 	
 	public PlayerManager getPlayerManager() { return playerMan; }
+	public SelectionManager getSelectionManager() { return selectMan; }
 	
 	// TODO: SEPERATE THIS TO A PUZZLEMANAGER
 	public Phrase getPuzzle(String puzzlePhrase) {

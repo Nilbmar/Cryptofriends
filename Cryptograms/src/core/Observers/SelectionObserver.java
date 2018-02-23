@@ -47,14 +47,16 @@ public class SelectionObserver implements Observer, Subject {
 
 	@Override
 	public void notifyObserver() {
-		System.out.println("\n\nSelectionObserver.notifyObserver:");
 		for (Observer obs : observers) {
 			try {
 				currentLetterSpace = (LetterSpace) obs;
+				currentLetterSpace.setHilight(false);
 				if (currentLetterSpace.getDisplayChar() == hilightedChar) {
 					currentLetterSpace.setHilight(true);
 					
 				}
+				
+				obs.update();
 			} catch (ClassCastException cce) {
 				System.out.println("\n\nSelectionObserver - ClassCastException:\n" + cce);
 			}

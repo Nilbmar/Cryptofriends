@@ -8,6 +8,7 @@ import core.Spaces.LetterSpace;
 import core.Spaces.Phrase;
 import core.Spaces.PunctuationSpace;
 import core.Spaces.Space;
+import core.Spaces.SpaceType;
 import core.Spaces.Word;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -30,6 +31,24 @@ public class CgramController {
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
+	}
+	
+	public void updateHilights() {
+		int wordCount = flow.getChildren().size();
+		for (int x = 0; x < wordCount; x++) {
+			WordBox wordBox = (WordBox) flow.getChildren().get(x);
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				Space space = spaceBox.getSpace();
+				
+				if (space.getSpaceType() == SpaceType.LETTER) {
+					System.out.println("Cgram - Letterspace hilight?" 
+							+ ((LetterSpace) space).getHilight());
+					spaceBox.setCSS(((LetterSpace) space).getHilight());
+				}
+				
+				//space.setAnswerCharLabel(false);
+			}
+		}
 	}
 	
 	public void clearPuzzle() {
@@ -73,7 +92,7 @@ public class CgramController {
 	public SpaceBox addSpaceBox(Space space) {
 		SpaceBox spaceBox = null;
 		if (flow != null) {
-			spaceBox = new SpaceBox(space);
+			spaceBox = new SpaceBox(space, this);
 		}
 		return spaceBox;
 	}
@@ -87,7 +106,8 @@ public class CgramController {
 				break;
 			case LETTER:
 				LetterSpace letter = (LetterSpace) space;
-				wordBox.addSpaceBox(addSpaceBox(space));
+				letter.addObserver(gameMan.getSelectionManager().getSelObserver());
+				wordBox.addSpaceBox(addSpaceBox(letter));
 				break;
 			case PUNC:
 				PunctuationSpace punc = (PunctuationSpace) space;
