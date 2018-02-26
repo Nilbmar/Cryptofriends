@@ -15,7 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 public class SpaceBox extends VBox {
-	private VBox vbox;
 	private Space space;
 	
 	private boolean selected = false;
@@ -26,9 +25,7 @@ public class SpaceBox extends VBox {
 	
 	public SpaceBox(Space space, CgramController controller) {
 		this.space = space;
-		//this.scene = scene;
-		vbox = this; //new vBox(); // vbox might need to be inner vbox around answerLabel
-		
+
 		/* Selects a Space to change
 		 * Should:
 		 *     Hilight answerChar label
@@ -36,7 +33,7 @@ public class SpaceBox extends VBox {
 		 */
 		// Only allow selection of LetterSpaces
 		if (space.getSpaceType() == SpaceType.LETTER) {
-			vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
 					// Select a LetterSpace
@@ -57,7 +54,7 @@ public class SpaceBox extends VBox {
 			
 			// When a letter key is pressed, a LetterSpace is selected
 			// set answer for all spaces sharing the char
-			vbox.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
+			this.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
 	            if (keyEvent.getCode().isLetterKey()) {
 	            	controller.setAnswer(keyEvent.getCode().toString());
 	            }
@@ -72,10 +69,10 @@ public class SpaceBox extends VBox {
 		answerChar.setAlignment(Pos.BOTTOM_CENTER);
 		displayChar.setAlignment(Pos.TOP_CENTER);
 		
-		vbox.setAlignment(Pos.TOP_CENTER);
-		vbox.getChildren().add(answerChar);
-		vbox.getChildren().add(displayChar);
-		vbox.setStyle("-fx-border-color: transparent");
+		this.setAlignment(Pos.TOP_CENTER);
+		this.getChildren().add(answerChar);
+		this.getChildren().add(displayChar);
+		this.setStyle("-fx-border-color: transparent");
 
 		setDisplayCharLabel();
 		setUnderlined();
@@ -166,9 +163,9 @@ public class SpaceBox extends VBox {
 	public void setCSS(boolean highlight) {
 		//vbox.setStyle("-fx-border-color: black");
 		if (highlight) {
-			vbox.setStyle("-fx-border-color: black");
+			this.setStyle("-fx-border-color: black");
 		} else {
-			vbox.setStyle("-fx-border-color: transparent");
+			this.setStyle("-fx-border-color: transparent");
 		}
 		// Pale Red Color - CC6666
 		// TODO: THIS IS CAUSING VBOX TO JERK TO ONE SIDE
