@@ -7,19 +7,16 @@ import core.Spaces.SpaceType;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 public class SpaceBox extends VBox {
 	private VBox vbox;
 	private Space space;
-	private CgramController controller;
 	
 	private boolean selected = false;
 	private boolean underlined = false;
@@ -29,7 +26,6 @@ public class SpaceBox extends VBox {
 	
 	public SpaceBox(Space space, CgramController controller) {
 		this.space = space;
-		this.controller = controller;
 		//this.scene = scene;
 		vbox = this; //new vBox(); // vbox might need to be inner vbox around answerLabel
 		
@@ -43,7 +39,9 @@ public class SpaceBox extends VBox {
 			vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					// TODO Auto-generated method stub
+					// Select a LetterSpace
+					// and hilight all LetterSpaces
+					// with same character
 					if (event.getButton() != null && event.getButton() == MouseButton.PRIMARY) {
 						// Toggle between Hilighted when clicking on a space
 						if (selected == false) {
@@ -56,6 +54,14 @@ public class SpaceBox extends VBox {
 					}
 				}
 			});
+			
+			// When a letter key is pressed, a LetterSpace is selected
+			// set answer for all spaces sharing the char
+			vbox.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
+	            if (keyEvent.getCode().isLetterKey()) {
+	            	controller.setAnswer(keyEvent.getCode().toString());
+	            }
+	        });
 		}
 		answerChar.setFont(Font.font("Fira Mono", 20));
 		answerChar.setPadding(new Insets(0, 5, 0, 5));
@@ -73,9 +79,9 @@ public class SpaceBox extends VBox {
 
 		setDisplayCharLabel();
 		setUnderlined();
-		// TODO: SWITCH WHEN NOT TESTING
-		//setAnswerCharLabel(false);
-		setAnswerCharLabel(true);
+
+		// false sets the letter as " " so only displays an underline
+		setAnswerCharLabel(false);
 	}
 	
 	public Space getSpace() { return space; }
@@ -122,7 +128,8 @@ public class SpaceBox extends VBox {
 		case LETTER:
 			String answer = null;
 			if (showAnswer) {
-				answer = String.valueOf(((LetterSpace) space).getCorrectChar());
+				// Display last character inserted into a space
+				answer = String.valueOf(((LetterSpace) space).getCurrentChar());
 			} else {
 				// Don't show answer label
 				// Used at the start so they're blank

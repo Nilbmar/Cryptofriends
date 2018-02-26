@@ -33,7 +33,9 @@ public class CgramController {
 		this.gameMan = gameMan;
 	}
 	
-	public void updateHilights() {
+	public void setAnswer(String answer) {
+		// Tells each selected SpaceBox to
+		// set answer label to letter input
 		int wordCount = flow.getChildren().size();
 		for (int x = 0; x < wordCount; x++) {
 			WordBox wordBox = (WordBox) flow.getChildren().get(x);
@@ -41,12 +43,27 @@ public class CgramController {
 				Space space = spaceBox.getSpace();
 				
 				if (space.getSpaceType() == SpaceType.LETTER) {
-					System.out.println("Cgram - Letterspace hilight?" 
-							+ ((LetterSpace) space).getHilight());
+					if (((LetterSpace) space).getHilight()) {
+						((LetterSpace) space).setCurrentChar(answer.charAt(0));
+						spaceBox.setAnswerCharLabel(true);
+					}
+				}
+			}
+		}
+	}
+	
+	public void updateHilights() {
+		// Tells each SpaceBox to hilight
+		// if it's space is selected (set to hilight)
+		int wordCount = flow.getChildren().size();
+		for (int x = 0; x < wordCount; x++) {
+			WordBox wordBox = (WordBox) flow.getChildren().get(x);
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				Space space = spaceBox.getSpace();
+				
+				if (space.getSpaceType() == SpaceType.LETTER) {
 					spaceBox.setCSS(((LetterSpace) space).getHilight());
 				}
-				
-				//space.setAnswerCharLabel(false);
 			}
 		}
 	}

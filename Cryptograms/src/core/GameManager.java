@@ -1,15 +1,8 @@
 package core;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import core.Managers.PlayerManager;
 import core.Managers.SelectionManager;
-import core.Observers.Observer;
-import core.Observers.SelectionObserver;
-import core.Spaces.LetterSpace;
 import core.Spaces.Phrase;
-import core.Spaces.Space;
 import core.Spaces.SpaceList;
 
 public class GameManager {
