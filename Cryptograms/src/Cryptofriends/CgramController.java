@@ -1,5 +1,7 @@
 package Cryptofriends;
 
+import java.util.ArrayList;
+
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
 import core.GameManager;
@@ -19,6 +21,7 @@ import javafx.scene.layout.HBox;
 public class CgramController {
 	private GameManager gameMan;
 	private int puzzleIndex = 0;
+	private ArrayList<Boolean> incorrectSpaces = new ArrayList<Boolean>();
 	
 	@FXML
 	private FlowPane flow;
@@ -31,6 +34,35 @@ public class CgramController {
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
+	}
+	
+	private void puzzleSolved() {
+		System.out.println("Congratulations! You won the game!");
+	}
+	private void checkForSolved() {
+		// Check to see if any space still contains a wrong answer
+		// if no spaces contain a wrong answer
+		// go to win condition
+		
+		// important to clear array list every check
+		incorrectSpaces.clear();
+		
+		int wordCount = flow.getChildren().size();
+		for (int x = 0; x < wordCount; x++) {
+			WordBox wordBox = (WordBox) flow.getChildren().get(x);
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				Space space = spaceBox.getSpace();
+				if (space.getSpaceType() == SpaceType.LETTER) {
+					incorrectSpaces.add(!((LetterSpace) space).isCorrect());
+				}
+			}
+		}
+		
+		// true = incorrect answer
+		// only solved if list contains no incorrect answers
+		if (!incorrectSpaces.contains(true)) {
+			puzzleSolved();
+		}
 	}
 	
 	public void setAnswer(String answer) {
@@ -50,6 +82,8 @@ public class CgramController {
 				}
 			}
 		}
+		
+		checkForSolved();
 	}
 	
 	public void updateHilights() {
