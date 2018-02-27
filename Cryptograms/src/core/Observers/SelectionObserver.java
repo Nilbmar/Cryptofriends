@@ -17,7 +17,6 @@ public class SelectionObserver implements Observer, Subject {
 	@Override
 	public void update() {
 		notifyObserver();
-		System.out.println("\n\nSelection Observer: " + hilightedChar);
 		for (Observer obs : observers) {
 			obs.update();
 		}

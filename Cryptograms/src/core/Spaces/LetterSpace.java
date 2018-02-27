@@ -82,9 +82,11 @@ public class LetterSpace extends Space implements Subject, Observer {
 	@Override
 	public void update() {
 		if (hilight) {
+			/*
 			System.out.println("ID: " + getID() 
 				+ " - Correct: " + getCorrectChar()
 				+ " - Hilight: " + hilight);
+			*/
 		}
 	}
 

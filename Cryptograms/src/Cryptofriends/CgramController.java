@@ -22,6 +22,7 @@ public class CgramController {
 	private GameManager gameMan;
 	private int puzzleIndex = 0;
 	private ArrayList<Boolean> incorrectSpaces = new ArrayList<Boolean>();
+	private ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
 	
 	@FXML
 	private FlowPane flow;
@@ -36,9 +37,23 @@ public class CgramController {
 		this.gameMan = gameMan;
 	}
 	
+	private void setupLetterBoxArray() {
+		int wordCount = flow.getChildren().size();
+		for (int x = 0; x < wordCount; x++) {
+			WordBox wordBox = (WordBox) flow.getChildren().get(x);
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				Space space = spaceBox.getSpace();
+				if (space.getSpaceType() == SpaceType.LETTER) {
+					letterBoxes.add(spaceBox);
+				}
+			}
+		}
+	}
+	
 	private void puzzleSolved() {
 		System.out.println("Congratulations! You won the game!");
 	}
+	
 	private void checkForSolved() {
 		// Check to see if any space still contains a wrong answer
 		// if no spaces contain a wrong answer
@@ -68,18 +83,12 @@ public class CgramController {
 	public void setAnswer(String answer) {
 		// Tells each selected SpaceBox to
 		// set answer label to letter input
-		int wordCount = flow.getChildren().size();
-		for (int x = 0; x < wordCount; x++) {
-			WordBox wordBox = (WordBox) flow.getChildren().get(x);
-			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
-				Space space = spaceBox.getSpace();
-				
-				if (space.getSpaceType() == SpaceType.LETTER) {
-					if (((LetterSpace) space).getHilight()) {
-						((LetterSpace) space).setCurrentChar(answer.charAt(0));
-						spaceBox.setAnswerCharLabel(true);
-					}
-				}
+		LetterSpace letterSpace = null;
+		for (SpaceBox spaceBox : letterBoxes) {
+			letterSpace = (LetterSpace) spaceBox.getSpace();
+			if (letterSpace.getHilight()) {
+				letterSpace.setCurrentChar(answer.charAt(0));
+				spaceBox.setAnswerCharLabel(true);
 			}
 		}
 		
@@ -89,32 +98,20 @@ public class CgramController {
 	public void updateHilights() {
 		// Tells each SpaceBox to hilight
 		// if it's space is selected (set to hilight)
-		int wordCount = flow.getChildren().size();
-		for (int x = 0; x < wordCount; x++) {
-			WordBox wordBox = (WordBox) flow.getChildren().get(x);
-			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
-				Space space = spaceBox.getSpace();
-				
-				if (space.getSpaceType() == SpaceType.LETTER) {
-					spaceBox.setCSS(((LetterSpace) space).getHilight());
-				}
-			}
+		LetterSpace letterSpace = null;
+		for (SpaceBox spaceBox : letterBoxes) {
+			letterSpace = (LetterSpace) spaceBox.getSpace();
+			spaceBox.setCSS(letterSpace.getHilight());
 		}
 	}
 	
 	public void clearPuzzle() {
-		// TODO: THIS IS NOT WHAT I WANT IT TO DO
-		// THIS SHOULD KEEP THE PUZZLE, JUST CLEAR ALL ANSWER LABELS
-		//flow.getChildren().clear();
-		int wordCount = flow.getChildren().size();
-		System.out.println("word count" + wordCount);
-		for (int x = 0; x < wordCount; x++) {
-			WordBox wordBox = (WordBox) flow.getChildren().get(x);
-			for (SpaceBox space : wordBox.getAllSpaceBoxes()) {
-				space.setAnswerCharLabel(false);
-			}
+		LetterSpace letterSpace = null;
+		for (SpaceBox spaceBox : letterBoxes) {
+			letterSpace = (LetterSpace) spaceBox.getSpace();
+			letterSpace.setCurrentChar(' ');
+			spaceBox.setAnswerCharLabel(true);
 		}
-		
 	}
 	
 	public void loadNewPuzzle() {
@@ -130,6 +127,8 @@ public class CgramController {
 			puzzlePhrase = pLoader.getPhrase();
 			setupPuzzle(gameMan.getPuzzle(puzzlePhrase));
 			
+			// Used for updating only letter spaces
+			setupLetterBoxArray();
 			// Keep the "next puzzle" updated
 			puzzleIndex++;
 		}
