@@ -52,6 +52,7 @@ public class CgramController {
 	
 	private void puzzleSolved() {
 		System.out.println("Congratulations! You won the game!");
+		flow.setDisable(true);
 	}
 	
 	private void checkForSolved() {
