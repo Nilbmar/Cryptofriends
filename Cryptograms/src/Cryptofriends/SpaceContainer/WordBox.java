@@ -15,6 +15,15 @@ public class WordBox extends HBox {
 		this.hbox = hbox;
 	}
 	
+	public int size() { 
+		return this.getChildren().size();
+	}
+	
+	public boolean isBlankSpace() {
+		boolean blank = false;
+		blank = (getSpaceBox(0).getSpace().getDisplayChar() == ' ');
+		return blank;
+	}
 	
 	public SpaceBox getSpaceBox(int index) {
 		return (SpaceBox) this.getChildren().get(index);
