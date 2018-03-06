@@ -9,7 +9,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -17,13 +16,10 @@
    <center>
       <ScrollPane hbarPolicy="NEVER" prefHeight="476.0" prefWidth="370.0" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane>
+          <AnchorPane fx:id="anchor" prefHeight="448.0" prefWidth="355.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
-               <children>
-                  <FlowPane id="flow" fx:id="flow" layoutX="10.0" layoutY="10.0" maxHeight="448.0" maxWidth="355.0" prefHeight="448.0" prefWidth="355.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-               </children>
             </AnchorPane>
         </content>
       </ScrollPane>

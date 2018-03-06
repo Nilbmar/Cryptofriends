@@ -32,6 +32,7 @@ public class Main extends Application {
 			
 			GameManager gameMan = new GameManager();
 			controller.setGameManager(gameMan);
+			controller.createBoard();
 			controller.loadNewPuzzle();
 			
 			/*

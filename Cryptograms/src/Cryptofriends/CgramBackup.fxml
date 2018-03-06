@@ -22,35 +22,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                <children>
-                  <FlowPane id="flow" fx:id="flow" layoutX="10.0" layoutY="10.0" onMouseClicked="#addLotsOfBoxes" prefHeight="448.0" prefWidth="357.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                     <children>
-                        <VBox>
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="A" textAlignment="CENTER" underline="true">
-                                 <font>
-                                    <Font name="Envy Code R" size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="!" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="Envy Code R" size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" top="-5.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children></FlowPane>
+                  <FlowPane id="flow" fx:id="flow" layoutX="10.0" layoutY="10.0" maxHeight="448.0" maxWidth="355.0" prefHeight="448.0" prefWidth="355.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                </children>
             </AnchorPane>
         </content>
@@ -72,8 +44,8 @@
                           <menus>
                             <Menu mnemonicParsing="false" text="Puzzle">
                               <items>
-                                    <MenuItem mnemonicParsing="false" text="Clear Letters" />
-                                    <MenuItem mnemonicParsing="false" text="New Puzzle" />
+                                    <MenuItem id="clearPuzzle" fx:id="clearPuzzle" mnemonicParsing="false" onAction="#clearPuzzle" text="Clear Letters" />
+                                    <MenuItem id="newPuzzle" fx:id="newPuzzle" mnemonicParsing="false" onAction="#loadNewPuzzle" text="New Puzzle" />
                                     <MenuItem mnemonicParsing="false" text="Random Puzzle" />
                                 <MenuItem mnemonicParsing="false" text="Close Game" />
                               </items>

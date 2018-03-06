@@ -2,6 +2,7 @@ package Cryptofriends;
 
 import java.util.ArrayList;
 
+import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
 import core.GameManager;
@@ -14,7 +15,10 @@ import core.Spaces.SpaceType;
 import core.Spaces.Word;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
@@ -25,7 +29,10 @@ public class CgramController {
 	private ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
 	
 	@FXML
-	private FlowPane flow;
+	private FlowBox flow; //FlowPane flow;
+	
+	@FXML
+	private AnchorPane anchor;
 	
 	@FXML
 	private MenuItem newPuzzle;
@@ -38,9 +45,10 @@ public class CgramController {
 	}
 	
 	private void setupLetterBoxArray() {
-		int wordCount = flow.getChildren().size();
+		//int wordCount = flow.getChildren().size();
+		int wordCount = flow.getWordBoxes().size();
 		for (int x = 0; x < wordCount; x++) {
-			WordBox wordBox = (WordBox) flow.getChildren().get(x);
+			WordBox wordBox = (WordBox) flow.getWordBoxes().get(x);
 			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
 				Space space = spaceBox.getSpace();
 				if (space.getSpaceType() == SpaceType.LETTER) {
@@ -63,9 +71,9 @@ public class CgramController {
 		// important to clear array list every check
 		incorrectSpaces.clear();
 		
-		int wordCount = flow.getChildren().size();
+		int wordCount = flow.getWordBoxes().size();
 		for (int x = 0; x < wordCount; x++) {
-			WordBox wordBox = (WordBox) flow.getChildren().get(x);
+			WordBox wordBox = (WordBox) flow.getWordBoxes().get(x);
 			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
 				Space space = spaceBox.getSpace();
 				if (space.getSpaceType() == SpaceType.LETTER) {
@@ -169,26 +177,20 @@ public class CgramController {
 			}
 		}
 		
-		flow.getChildren().add(wordBox);
+		flow.addWordBox(wordBox);
 	}
 	
 	public void setupPuzzle(Phrase phrase) {
-		// Controls Word Wrap
-		int spacesPerLine = 14;
-		int currentSpaces = 0;
 		for (Word word : phrase.getPhrase()) {
-			currentSpaces += word.getWord().size();
-			// If under designated width add the word
-			if (currentSpaces <= spacesPerLine) {
-				addWord(word);
-			} else {
-				// Don't reset space count if dropping to new line
-				currentSpaces = 0;
-				if (!word.isBlankSpace()) {
-					currentSpaces = word.size();
-					addWord(word);
-				}
-			}
+			addWord(word);
 		}
+	}
+	
+	public void createBoard() {
+		flow = new FlowBox();
+		flow.setSpacesPerLine(15);
+		//flow.setMinSize(355, 448);
+		//flow.setPrefSize(355, 448);
+		anchor.getChildren().add(flow);
 	}
 }
