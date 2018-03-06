@@ -10,3 +10,7 @@ Each letter in the alphabet is given a coded character to display beneath it's b
 ## Demo
 ### Solving a quote by Groucho Marx
 ![Groucho Marx Quote](/GrouchoQuote.png?raw=true "Solving Groucho Marx Quote")
+
+## Controls
+* Select a space with the left mouse button
+* Enter letters with keyboard
