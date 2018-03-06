@@ -43,18 +43,25 @@ public class FlowBox extends VBox {
 		lines.add(hbox);
 	}
 	
+	// Will return true if adding the latest word would
+	// push the line over it's maximum number of spaces
 	public boolean goToNextLine(int wordSize) {
 		boolean newLine = false;
 		int currentLine = lines.size() - 1;
 		int sizeOfLine = 0;
 		
+		// Calculate the number of all SpaceBoxes on a line
 		for (Node node : lines.get(currentLine).getChildren()) {
-			WordBox wordBox = (WordBox) node;
-			sizeOfLine += wordBox.size();
+			try {
+				WordBox wordBox = (WordBox) node;
+				sizeOfLine += wordBox.size();
+			} catch (ClassCastException e) {
+				System.out.println(e);
+			}
 		}
 		
 		int sizePostAdd = sizeOfLine + wordSize;
-		System.out.println(" Sizes: wordSize - " + wordSize + " postAdd - " + sizePostAdd);
+		
 		if (sizePostAdd > spacesPerLine) {
 			newLine = true;
 		}
@@ -63,16 +70,17 @@ public class FlowBox extends VBox {
 	}
 	
 	public void addWordBox(WordBox wordBox) {
-		
+		// Create first line if it doesn't already exist.
+		// Creating it in the constructor doesn't work for some reason
 		if (this.getChildren().size() <= 0) {
 			addNewLine();
 		}
 		
 		int currentLine = lines.size() - 1;
-		// Find out if word can fit on the line
+		
+		// If word can fit on a new line, add it
 		// if not, create a new line
-		// if that word is not blank, then add word
-		printWord(wordBox);
+		// if that word is not blank, then add word to the new line
 		if (!goToNextLine(wordBox.size())) {
 			lines.get(currentLine).getChildren().add(wordBox);
 		} else {
@@ -81,18 +89,6 @@ public class FlowBox extends VBox {
 			
 			if (!wordBox.isBlankSpace()) {
 				lines.get(currentLine).getChildren().add(wordBox);
-			}
-		}
-	}
-	
-	
-	public void printWord(WordBox wordBox) {
-		for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
-			Space space = spaceBox.getSpace();
-			if (space.getSpaceType() == SpaceType.LETTER) {
-				System.out.print(((LetterSpace) spaceBox.getSpace()).getCorrectChar());
-			} else {
-				System.out.print(space.getDisplayChar());
 			}
 		}
 	}
