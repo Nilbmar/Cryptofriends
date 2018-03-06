@@ -5,15 +5,10 @@ import java.util.ArrayList;
 import javafx.scene.layout.HBox;
 
 public class WordBox extends HBox {
-	private HBox hbox;
 	
 	public WordBox() {
-		//hbox = this;
 	}
 	
-	public WordBox(HBox hbox) {
-		this.hbox = hbox;
-	}
 	
 	public int size() { 
 		return this.getChildren().size();

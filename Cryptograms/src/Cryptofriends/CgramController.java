@@ -9,18 +9,12 @@ import core.GameManager;
 import core.Loaders.PuzzleLoader;
 import core.Spaces.LetterSpace;
 import core.Spaces.Phrase;
-import core.Spaces.PunctuationSpace;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import core.Spaces.Word;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 
 public class CgramController {
 	private GameManager gameMan;
@@ -169,7 +163,6 @@ public class CgramController {
 				wordBox.addSpaceBox(addSpaceBox(letter));
 				break;
 			case PUNC:
-				PunctuationSpace punc = (PunctuationSpace) space;
 				wordBox.addSpaceBox(addSpaceBox(space));
 				break;
 			default:
