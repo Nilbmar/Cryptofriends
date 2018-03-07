@@ -111,12 +111,12 @@ public class CgramController {
 			System.out.println("Arrow Key: DOWN");
 			break;
 		case LEFT:
-			System.out.println("Arrow Key: LEFT");
 			spacesToAdjust = -1;
 			break;
 		case RIGHT:
-			System.out.println("Arrow Key: RIGHT");
 			spacesToAdjust = 1;
+			break;
+		default:
 			break;
 		}
 		

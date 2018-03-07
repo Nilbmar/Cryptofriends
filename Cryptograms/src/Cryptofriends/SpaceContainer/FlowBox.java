@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 public class FlowBox extends VBox {
 	private int spacesPerLine = 14;
 	private ArrayList<HBox> lines;
-	private int selectedSpace = -1; // 0 is first space
 	
 	public FlowBox() {
 		lines = new ArrayList<HBox>();
