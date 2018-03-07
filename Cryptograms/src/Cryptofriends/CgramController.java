@@ -14,11 +14,13 @@ import core.Spaces.SpaceType;
 import core.Spaces.Word;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 public class CgramController {
 	private GameManager gameMan;
 	private int puzzleIndex = 0;
+	private int hilightedSpaceID = 0;
 	private ArrayList<Boolean> incorrectSpaces = new ArrayList<Boolean>();
 	private ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
 	
@@ -98,7 +100,45 @@ public class CgramController {
 		checkForSolved();
 	}
 	
-	public void updateHilights() {
+	public void moveSelection(KeyCode keyCode) {
+		int spacesToAdjust = 0;
+		
+		switch (keyCode) {
+		case UP:
+    		System.out.println("Arrow Key: UP");
+			break;
+		case DOWN:
+			System.out.println("Arrow Key: DOWN");
+			break;
+		case LEFT:
+			System.out.println("Arrow Key: LEFT");
+			spacesToAdjust = -1;
+			break;
+		case RIGHT:
+			System.out.println("Arrow Key: RIGHT");
+			spacesToAdjust = 1;
+			break;
+		}
+		
+		hilightNewSpace(spacesToAdjust);
+	}
+	
+	private void hilightNewSpace(int spacesToAdjust) {
+		int nextIndex = -1;
+		
+		for (SpaceBox spaceBox : letterBoxes) {
+			if (hilightedSpaceID == spaceBox.getSpace().getID()) {
+				nextIndex = letterBoxes.indexOf(spaceBox) + spacesToAdjust;
+			}
+		}
+		
+		if (nextIndex >= 0 && nextIndex < letterBoxes.size()) {
+			letterBoxes.get(nextIndex).setSelected();
+		}
+	}
+	
+	public void updateHilights(int id) {
+		hilightedSpaceID = id;
 		// Tells each SpaceBox to hilight
 		// if it's space is selected (set to hilight)
 		LetterSpace letterSpace = null;
@@ -106,6 +146,7 @@ public class CgramController {
 			letterSpace = (LetterSpace) spaceBox.getSpace();
 			spaceBox.setCSS(letterSpace.getHilight());
 		}
+		// MOVING FROM ARROW KEYS SETSELECTED
 	}
 	
 	public void clearPuzzle() {

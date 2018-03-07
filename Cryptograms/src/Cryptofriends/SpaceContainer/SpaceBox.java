@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 
 public class SpaceBox extends VBox {
 	private Space space;
+	private CgramController controller;
 	
 	private boolean selected = false;
 	private boolean underlined = false;
@@ -25,7 +26,9 @@ public class SpaceBox extends VBox {
 	
 	public SpaceBox(Space space, CgramController controller) {
 		this.space = space;
+		this.controller = controller;
 
+		
 		/* Selects a Space to change
 		 * Should:
 		 *     Hilight answerChar label
@@ -40,25 +43,11 @@ public class SpaceBox extends VBox {
 					// and hilight all LetterSpaces
 					// with same character
 					if (event.getButton() != null && event.getButton() == MouseButton.PRIMARY) {
-						// Toggle between Hilighted when clicking on a space
-						if (selected == false) {
-							setSelected(true);
-						} else {
-							setSelected(false);
-						}
-						
-						controller.updateHilights();
+						setSelected();
 					}
 				}
 			});
-			
-			// When a letter key is pressed, a LetterSpace is selected
-			// set answer for all spaces sharing the char
-			this.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
-	            if (keyEvent.getCode().isLetterKey()) {
-	            	controller.setAnswer(keyEvent.getCode().toString());
-	            }
-	        });
+
 		}
 		answerChar.setFont(Font.font("Fira Mono", 20));
 		answerChar.setPadding(new Insets(0, 5, 0, 5));
@@ -144,16 +133,16 @@ public class SpaceBox extends VBox {
 		return selected;
 	}
 	
-	public void setSelected(boolean s) {
-		selected = s;
-		//setCSS(selected);
+	public void setSelected() {
+		selected = !selected;
 		
-		// TODO: NEEDS TO
 		// Notify observer to hilight all sharing this char
 		if (space.getSpaceType() == SpaceType.LETTER) {
 			//((LetterSpace) space).setHilight(selected);
 			((LetterSpace) space).notifyObserver();
 		}
+		
+		controller.updateHilights(space.getID());
 	}
 	
 	/* Highlight Folder and Label when label is clicked on

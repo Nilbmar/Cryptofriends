@@ -19,12 +19,17 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
+			// Accept Key Inpu
 	        scene.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
 	        	
-	            if (keyEvent.getCode().isLetterKey()) {
-	            	System.out.println("Yep, letter " + keyEvent.getCode());
+	        	// Letter Input
+	        	if (keyEvent.getCode().isLetterKey()) {
 	            	controller.setAnswer(keyEvent.getCode().toString());
 	            }
+	        	
+	        	if (keyEvent.getCode().isArrowKey()) {
+	        		controller.moveSelection(keyEvent.getCode());
+	        	}
 	        });
 			
 			primaryStage.setScene(scene);
