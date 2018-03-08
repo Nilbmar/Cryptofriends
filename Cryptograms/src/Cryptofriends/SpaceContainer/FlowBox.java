@@ -14,6 +14,62 @@ public class FlowBox extends VBox {
 		lines = new ArrayList<HBox>();
 	}
 	
+	public int lines() { return lines.size(); }
+	public int positionOnLine(int line, int spaceID) {
+		int pos = -1;
+		
+		for (Node node : lines.get(line).getChildren()) {
+			WordBox wordBox = (WordBox) node;
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				
+				pos++;
+				if (spaceID == spaceBox.getSpace().getID()) {
+					return pos;
+				}
+			}
+			
+		}
+		
+		return pos;
+	}
+	
+	public SpaceBox spaceInPosOnLine(int line, int pos) {
+		SpaceBox boxToGet = null;
+		int currentSpace = -1;
+		
+		for (Node node : lines.get(line).getChildren()) {
+			WordBox wordBox = (WordBox) node;
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				
+				currentSpace++;
+				if (currentSpace == pos) {
+					boxToGet = spaceBox;
+				}
+				
+			}
+		}
+		
+		return boxToGet;
+	}
+	
+	public int lineOfSpaceBox(int spaceID) {
+		int lineBoxIsOn = -1;
+		
+		for (HBox hbox : lines) {
+			lineBoxIsOn++;
+			for (Node node : hbox.getChildren()) {
+				WordBox wordBox = (WordBox) node;
+				for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+					if (spaceID == spaceBox.getSpace().getID()) {
+						return lineBoxIsOn;
+					}
+				}
+			}
+		}
+		
+		return lineBoxIsOn;
+	}
+	
 	public ArrayList<WordBox> getWordBoxes() {
 		ArrayList<WordBox> children = new ArrayList<WordBox>();
 		

@@ -105,29 +105,61 @@ public class CgramController {
 		
 		switch (keyCode) {
 		case UP:
-    		System.out.println("Arrow Key: UP");
+			spacesToAdjust = -1;
+			moveHilightVertically(spacesToAdjust);
 			break;
 		case DOWN:
-			System.out.println("Arrow Key: DOWN");
+			spacesToAdjust = 1;
+			moveHilightVertically(spacesToAdjust);
 			break;
 		case LEFT:
 			spacesToAdjust = -1;
+			moveHilightHorizontally(hilightedSpaceID, spacesToAdjust);
 			break;
 		case RIGHT:
 			spacesToAdjust = 1;
+			moveHilightHorizontally(hilightedSpaceID, spacesToAdjust);
 			break;
 		default:
 			break;
 		}
 		
-		hilightNewSpace(spacesToAdjust);
+		
 	}
 	
-	private void hilightNewSpace(int spacesToAdjust) {
+	private void moveHilightVertically(int spacesToAdjust) {
+		int nextIndex = -1;
+		int origLine = flow.lineOfSpaceBox(hilightedSpaceID);
+		int newLine = origLine + spacesToAdjust;
+		
+		if (newLine >= 0 && newLine < flow.lines()) {
+			int origPos = flow.positionOnLine(origLine, hilightedSpaceID);
+			try {
+				SpaceBox newSpaceBox = flow.spaceInPosOnLine(newLine, origPos);
+				if (newSpaceBox.getSpace().getSpaceType() == SpaceType.LETTER) {
+					nextIndex = letterBoxes.indexOf(newSpaceBox);
+					
+					if (nextIndex >= 0 && nextIndex < letterBoxes.size()) {
+						letterBoxes.get(nextIndex).setSelected();
+					}
+				} else {
+					// TODO: how do I get spaceToMoveFrom for moveHilightHorizontally?
+					// nextIndex is still -1 right now
+					// Can't go to a blank space or punctuation
+					//moveHilightHorizontally(nextIndex, 1);
+					System.out.println("Can't move there");
+				}
+			} catch (NullPointerException npe) {
+				System.out.println("No space found while trying to move vertically");
+			}
+		}
+	}
+	
+	private void moveHilightHorizontally(int spaceToMoveFrom, int spacesToAdjust) {
 		int nextIndex = -1;
 		
 		for (SpaceBox spaceBox : letterBoxes) {
-			if (hilightedSpaceID == spaceBox.getSpace().getID()) {
+			if (spaceToMoveFrom == spaceBox.getSpace().getID()) {
 				nextIndex = letterBoxes.indexOf(spaceBox) + spacesToAdjust;
 			}
 		}
