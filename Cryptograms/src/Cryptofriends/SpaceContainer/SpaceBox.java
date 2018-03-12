@@ -20,8 +20,8 @@ public class SpaceBox extends VBox {
 	private boolean selected = false;
 	private boolean underlined = false;
 	
-	private Label answerChar = new Label();
-	private Label displayChar = new Label();
+	protected Label answerChar = new Label();
+	protected Label displayChar = new Label();
 	
 	public SpaceBox(Space space, CgramController controller) {
 		this.space = space;
@@ -48,16 +48,24 @@ public class SpaceBox extends VBox {
 			});
 
 		}
+		
+
+		this.setAlignment(Pos.TOP_CENTER);
+		answerChar.setAlignment(Pos.BOTTOM_CENTER);
+		displayChar.setAlignment(Pos.TOP_CENTER);
+	}
+	
+	public void setAlignment() {
+		if (space.getSpaceType() == SpaceType.PUNC) {
+			System.out.println("Setting aligntment in spaceBox for punc");
+		}
+		
 		answerChar.setFont(Font.font("Fira Mono", 20));
 		answerChar.setPadding(new Insets(0, 5, 0, 5));
 		
 		displayChar.setFont(Font.font("Fira Mono", 20));
 		displayChar.setPadding(new Insets(-5, 5, 0, 5));
 		
-		answerChar.setAlignment(Pos.BOTTOM_CENTER);
-		displayChar.setAlignment(Pos.TOP_CENTER);
-		
-		this.setAlignment(Pos.TOP_CENTER);
 		this.getChildren().add(answerChar);
 		this.getChildren().add(displayChar);
 		this.setStyle("-fx-border-color: transparent");
@@ -72,14 +80,13 @@ public class SpaceBox extends VBox {
 	public Space getSpace() { return space; }
 	
 	public void setUnderlined() {
-		underlined = space.isUnderlined();
-		if (underlined) {
+		if (space.getSpaceType() == SpaceType.LETTER) {
 			answerChar.setUnderline(true);
 		} else {
 			// Move punctuation closer to previous character
 			// also moves blank spaces but shouldn't be able to tell
-			answerChar.setAlignment(Pos.BASELINE_LEFT);
-			answerChar.setPadding(new Insets(0, 5, 0, -10));
+			//answerChar.setAlignment(Pos.BASELINE_LEFT);
+			//answerChar.setPadding(new Insets(0, 5, 0, -10));
 		}
 	}
 	public void setDisplayCharLabel() {
@@ -88,7 +95,7 @@ public class SpaceBox extends VBox {
 			displayChar.setText(" ");
 			break;
 		case PUNC:
-			displayChar.setText(" ");
+			displayChar.setText("");
 			break;
 		case LETTER:
 			displayChar.setText(String.valueOf(space.getDisplayChar()));

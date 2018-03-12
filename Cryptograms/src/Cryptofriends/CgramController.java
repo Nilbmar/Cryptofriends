@@ -3,6 +3,7 @@ package Cryptofriends;
 import java.util.ArrayList;
 
 import Cryptofriends.SpaceContainer.FlowBox;
+import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
 import core.GameManager;
@@ -40,11 +41,54 @@ public class CgramController {
 		this.gameMan = gameMan;
 	}
 	
+	private void setupPuncAlignment() {
+		ArrayList<SpaceBox> spaceBoxes = new ArrayList<SpaceBox>();
+		for (WordBox wordBox : flow.getWordBoxes()) {
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				spaceBoxes.add(spaceBox);
+			}
+		}
+		
+		SpaceBox spaceBox = null;
+		Space space = null;
+		SpaceType prevType = null;
+		SpaceType nextType = null;
+		int spaceBoxesSize = spaceBoxes.size();
+		int nextSpaceIndex = -1;
+		
+		for (int x = 0; x < spaceBoxesSize; x++) {
+			spaceBox = spaceBoxes.get(x);
+			space = spaceBox.getSpace();
+			
+			if (space.getSpaceType() == SpaceType.PUNC) {
+				((PuncBox) spaceBox).setPrevType(prevType);
+				nextSpaceIndex = x + 1;
+				if (spaceBoxesSize > nextSpaceIndex) {
+					nextType = spaceBoxes.get(nextSpaceIndex).getSpace().getSpaceType();
+				} else {
+					nextType = null;
+				}
+				((PuncBox) spaceBox).setNextType(nextType);
+				//((PuncBox) spaceBox).setAlignment();
+			}
+			
+			// Set prevType to be used in the next iteration
+			prevType = space.getSpaceType();
+		}
+		
+		// Finally setting alignment
+		for (SpaceBox puncBox : spaceBoxes) {
+			if (puncBox.getSpace().getSpaceType() != SpaceType.PUNC) {
+				puncBox.setAlignment();
+			} else {
+				((PuncBox) puncBox).setAlignment();
+			}
+		}
+	}
+	
 	private void setupLetterBoxArray() {
 		//int wordCount = flow.getChildren().size();
-		int wordCount = flow.getWordBoxes().size();
-		for (int x = 0; x < wordCount; x++) {
-			WordBox wordBox = (WordBox) flow.getWordBoxes().get(x);
+		for (WordBox wordBox : flow.getWordBoxes()) {
 			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
 				Space space = spaceBox.getSpace();
 				if (space.getSpaceType() == SpaceType.LETTER) {
@@ -207,6 +251,9 @@ public class CgramController {
 			setupLetterBoxArray();
 			// Keep the "next puzzle" updated
 			puzzleIndex++;
+			
+			// Reset alignment for punctuation
+			setupPuncAlignment();
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
@@ -218,7 +265,12 @@ public class CgramController {
 	public SpaceBox addSpaceBox(Space space) {
 		SpaceBox spaceBox = null;
 		if (flow != null) {
-			spaceBox = new SpaceBox(space, this);
+			if (space.getSpaceType() == SpaceType.PUNC) {
+				PuncBox puncBox = new PuncBox(space, this);
+				spaceBox = puncBox;
+			} else {
+				spaceBox = new SpaceBox(space, this);
+			}
 		}
 		return spaceBox;
 	}

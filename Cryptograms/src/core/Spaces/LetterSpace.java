@@ -71,8 +71,6 @@ public class LetterSpace extends Space implements Subject, Observer {
 		for (Observer obs : observers) {
 			if (obs.getType().contains("selection")) {
 				((SelectionObserver) obs).setCharToHilight(getDisplayChar());
-
-				System.out.println("Letterspace notifyObserver");
 			}
 			obs.update();
 		}
