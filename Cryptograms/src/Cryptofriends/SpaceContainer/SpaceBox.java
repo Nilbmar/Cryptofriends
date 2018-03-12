@@ -18,7 +18,6 @@ public class SpaceBox extends VBox {
 	private CgramController controller;
 	
 	private boolean selected = false;
-	private boolean underlined = false;
 	
 	protected Label answerChar = new Label();
 	protected Label displayChar = new Label();

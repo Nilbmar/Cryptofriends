@@ -6,7 +6,6 @@ import core.Spaces.SpaceType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 public class PuncBox extends SpaceBox {
 	private SpaceType prevSpaceType;
