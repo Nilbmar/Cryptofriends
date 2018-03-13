@@ -71,15 +71,27 @@ public class FlowBox extends VBox {
 	}
 	
 	public ArrayList<WordBox> getWordBoxes() {
-		ArrayList<WordBox> children = new ArrayList<WordBox>();
+		ArrayList<WordBox> wordBoxes = new ArrayList<WordBox>();
 		
 		for (HBox hbox : lines) {
 			for (Node wordBox : hbox.getChildren()) {
-				children.add((WordBox) wordBox);
+				wordBoxes.add((WordBox) wordBox);
 			}
 		}
 		
-		return children;
+		return wordBoxes;
+	}
+	
+	public ArrayList<SpaceBox> getSpaceBoxes() {
+		ArrayList<SpaceBox> spaceBoxes = new ArrayList<SpaceBox>();
+		
+		for (WordBox wordBox : getWordBoxes()) {
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				spaceBoxes.add(spaceBox);
+			}
+		}
+		
+		return spaceBoxes;
 	}
 	
 	public void setSpacesPerLine(int spaces) {

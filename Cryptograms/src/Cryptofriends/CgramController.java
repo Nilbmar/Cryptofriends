@@ -187,16 +187,58 @@ public class CgramController {
 						letterBoxes.get(nextIndex).setSelected();
 					}
 				} else {
-					// TODO: how do I get spaceToMoveFrom for moveHilightHorizontally?
-					// nextIndex is still -1 right now
-					// Can't go to a blank space or punctuation
-					//moveHilightHorizontally(nextIndex, 1);
-					System.out.println("Can't move there");
+
+					boolean moveForward = true;
+					newSpaceBox = getNextLetterBox(newSpaceBox.getSpace().getID(), moveForward);
+					// TODO: RETURNING NULL HOW TO SET IT INSTEAD?
+					
+					nextIndex = letterBoxes.indexOf(newSpaceBox);
+					
+					
+					// GET THE INDEX IN LETTERBOXES OF SPACEBOX WITH THE RETURNED ID NUMBER
+					if (nextIndex >= 0 && nextIndex < letterBoxes.size()) {
+						letterBoxes.get(nextIndex).setSelected();
+					} else {
+						System.out.println("Can't move there");
+					}
 				}
 			} catch (NullPointerException npe) {
 				System.out.println("No space found while trying to move vertically");
 			}
 		}
+	}
+	
+	private SpaceBox getNextLetterBox(int idToMoveFrom, boolean forward) {
+		// Loop through SpaceBox's to find the space to move from
+		// Then the next SpaceBox that contains a lettr is returned
+		SpaceBox nextLetterBox = null;
+		ArrayList<SpaceBox> spaceBoxes = flow.getSpaceBoxes();
+		int lastIndex = spaceBoxes.size();
+		int x; // allow movement forward or back
+		boolean loop = true; // Used to short circuit the loop after finding next letter
+		boolean setAtNextLetter = false;
+		
+		// Using a while loop so I can control whether to move forward or backward
+		// forward - x is set to zero and goes up to the size of the ArrayList
+		// backward - x is set to the size of the ArrayList and it counts down to zero
+		if (forward) { x = 0; } else { x = lastIndex; lastIndex = 0; }
+		
+		while (x != lastIndex && loop) {
+			SpaceBox spaceBox = spaceBoxes.get(x);
+			if (idToMoveFrom == spaceBox.getSpace().getID()) {
+				// Set next iterations looking for a Letter
+				setAtNextLetter = true;
+			}
+			
+			if (setAtNextLetter && spaceBox.getSpace().getSpaceType() == SpaceType.LETTER) {
+					nextLetterBox = spaceBox;
+					loop = false;
+			}
+			// control movement forward or back
+			if (forward) { x++; } else { x--; }
+		}
+
+		return nextLetterBox;
 	}
 	
 	private void moveHilightHorizontally(int spaceToMoveFrom, int spacesToAdjust) {
