@@ -54,11 +54,7 @@ public class SpaceBox extends VBox {
 		displayChar.setAlignment(Pos.TOP_CENTER);
 	}
 	
-	public void setAlignment() {
-		if (space.getSpaceType() == SpaceType.PUNC) {
-			System.out.println("Setting aligntment in spaceBox for punc");
-		}
-		
+	public void setAlignment() {		
 		answerChar.setFont(Font.font("Fira Mono", 20));
 		answerChar.setPadding(new Insets(0, 5, 0, 5));
 		

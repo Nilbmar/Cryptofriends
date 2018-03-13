@@ -13,7 +13,6 @@ public class FlowBox extends VBox {
 	
 	public FlowBox() {
 		lines = new ArrayList<HBox>();
-		this.setPadding(new Insets(5, 5, 5, 5));
 	}
 	
 	public int lines() { return lines.size(); }
