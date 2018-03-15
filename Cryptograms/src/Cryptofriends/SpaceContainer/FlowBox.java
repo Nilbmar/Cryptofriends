@@ -14,6 +14,10 @@ public class FlowBox extends VBox {
 		lines = new ArrayList<HBox>();
 	}
 	
+	public void clear() {
+		lines = new ArrayList<HBox>();
+		this.getChildren().clear();
+	}
 	public int lines() { return lines.size(); }
 	public int positionOnLine(int line, int spaceID) {
 		int pos = -1;

@@ -268,7 +268,7 @@ public class CgramController {
 	
 	public void loadNewPuzzle() {
 		// Clear game board
-		flow.getChildren().clear();
+		flow.clear();
 		
 		// Create new game board
 		String puzzlePhrase = null;
