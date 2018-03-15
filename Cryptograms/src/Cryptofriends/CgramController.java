@@ -42,12 +42,8 @@ public class CgramController {
 	}
 	
 	private void setupPuncAlignment() {
-		ArrayList<SpaceBox> spaceBoxes = new ArrayList<SpaceBox>();
-		for (WordBox wordBox : flow.getWordBoxes()) {
-			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
-				spaceBoxes.add(spaceBox);
-			}
-		}
+		ArrayList<SpaceBox> spaceBoxes = flow.getSpaceBoxes();
+		
 		
 		SpaceBox spaceBox = null;
 		Space space = null;
@@ -87,13 +83,11 @@ public class CgramController {
 	}
 	
 	private void setupLetterBoxArray() {
-		//int wordCount = flow.getChildren().size();
-		for (WordBox wordBox : flow.getWordBoxes()) {
-			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
-				Space space = spaceBox.getSpace();
-				if (space.getSpaceType() == SpaceType.LETTER) {
-					letterBoxes.add(spaceBox);
-				}
+		ArrayList<SpaceBox> spaceBoxes = flow.getSpaceBoxes();
+		for (SpaceBox spaceBox: spaceBoxes) {
+			Space space = spaceBox.getSpace();
+			if (space.getSpaceType() == SpaceType.LETTER) {
+				letterBoxes.add(spaceBox);
 			}
 		}
 	}
@@ -111,14 +105,10 @@ public class CgramController {
 		// important to clear array list every check
 		incorrectSpaces.clear();
 		
-		int wordCount = flow.getWordBoxes().size();
-		for (int x = 0; x < wordCount; x++) {
-			WordBox wordBox = (WordBox) flow.getWordBoxes().get(x);
-			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
-				Space space = spaceBox.getSpace();
-				if (space.getSpaceType() == SpaceType.LETTER) {
-					incorrectSpaces.add(!((LetterSpace) space).isCorrect());
-				}
+		for (SpaceBox spaceBox : letterBoxes) {
+			Space space = spaceBox.getSpace();
+			if (space.getSpaceType() == SpaceType.LETTER) {
+				incorrectSpaces.add(!((LetterSpace) space).isCorrect());
 			}
 		}
 		
