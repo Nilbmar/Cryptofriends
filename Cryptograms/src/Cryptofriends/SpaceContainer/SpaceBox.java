@@ -130,6 +130,13 @@ public class SpaceBox extends VBox {
 		
 	}
 	
+	public void clear() {
+		if (space.getSpaceType() == SpaceType.LETTER) {
+			((LetterSpace) space).setCurrentChar(' ');
+			setAnswerCharLabel(true);
+		}
+	}
+	
 	public boolean getSelected() {
 		return selected;
 	}

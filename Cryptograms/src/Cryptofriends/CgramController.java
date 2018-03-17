@@ -273,11 +273,8 @@ public class CgramController {
 	
 	public void clearPuzzle() {
 		if (!flow.isDisabled()) {
-			LetterSpace letterSpace = null;
 			for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-				letterSpace = (LetterSpace) spaceBox.getSpace();
-				letterSpace.setCurrentChar(' ');
-				spaceBox.setAnswerCharLabel(true);
+				spaceBox.clear();
 			}
 		}
 	}
