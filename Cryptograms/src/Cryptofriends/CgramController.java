@@ -128,8 +128,6 @@ public class CgramController {
 				letterBoxes.get(x).setCSS(true, true);
 			}
 		}
-		System.out.println("incorrectSpaces size: " + incorrectSpaces.size()
-				+ " all spaces size: " + letterBoxes.size());
 	}
 	
 	public void setAnswer(String answer) {
@@ -298,7 +296,6 @@ public class CgramController {
 			
 			// Reset alignment for punctuation
 			setupPuncAlignment();
-			System.out.println("new puzzle letterBoxes size: " + flow.getLetterBoxes().size());
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
@@ -352,8 +349,6 @@ public class CgramController {
 	public void createBoard() {
 		flow = new FlowBox();
 		flow.setSpacesPerLine(15);
-		//flow.setMinSize(355, 448);
-		//flow.setPrefSize(355, 448);
 		anchor.getChildren().add(flow);
 	}
 }
