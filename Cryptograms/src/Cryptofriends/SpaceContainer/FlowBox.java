@@ -2,6 +2,8 @@ package Cryptofriends.SpaceContainer;
 
 import java.util.ArrayList;
 
+import core.Spaces.Space;
+import core.Spaces.SpaceType;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -72,6 +74,17 @@ public class FlowBox extends VBox {
 		}
 		
 		return lineBoxIsOn;
+	}
+	
+	public ArrayList<SpaceBox> getLetterBoxes() {
+		ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
+		for (SpaceBox spaceBox : getSpaceBoxes()) {
+			if (spaceBox.getSpace().getSpaceType() == SpaceType.LETTER) {
+				letterBoxes.add(spaceBox);
+			}
+		}
+		
+		return letterBoxes;
 	}
 	
 	public ArrayList<WordBox> getWordBoxes() {

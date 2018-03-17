@@ -22,8 +22,7 @@ public class CgramController {
 	private GameManager gameMan;
 	private int puzzleIndex = 0;
 	private int hilightedSpaceID = 0;
-	private ArrayList<Boolean> incorrectSpaces = new ArrayList<Boolean>();
-	private ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
+	//private ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
 	
 	@FXML
 	private FlowBox flow; //FlowPane flow;
@@ -36,6 +35,9 @@ public class CgramController {
 	
 	@FXML
 	private MenuItem clearPuzzle;
+	
+	@FXML
+	private MenuItem mistakesMenu;
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
@@ -82,48 +84,59 @@ public class CgramController {
 		}
 	}
 	
-	private void setupLetterBoxArray() {
-		ArrayList<SpaceBox> spaceBoxes = flow.getSpaceBoxes();
-		for (SpaceBox spaceBox: spaceBoxes) {
-			Space space = spaceBox.getSpace();
-			if (space.getSpaceType() == SpaceType.LETTER) {
-				letterBoxes.add(spaceBox);
-			}
-		}
-	}
+	
 	
 	private void puzzleSolved() {
 		System.out.println("Congratulations! You won the game!");
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			spaceBox.setCSS(false, false);
+		}
 		flow.setDisable(true);
 	}
 	
-	private void checkForSolved() {
-		// Check to see if any space still contains a wrong answer
-		// if no spaces contain a wrong answer
-		// go to win condition
+	private ArrayList<Boolean> getIncorrectSpaces() {
+		ArrayList<Boolean> incorrectSpaces = new ArrayList<Boolean>();
 		
-		// important to clear array list every check
-		incorrectSpaces.clear();
-		
-		for (SpaceBox spaceBox : letterBoxes) {
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
 			Space space = spaceBox.getSpace();
 			if (space.getSpaceType() == SpaceType.LETTER) {
 				incorrectSpaces.add(!((LetterSpace) space).isCorrect());
 			}
 		}
 		
-		// true = incorrect answer
-		// only solved if list contains no incorrect answers
+		return incorrectSpaces;
+	}
+	
+	private void checkForSolved() {
+		// Check to see if any space still contains a wrong answer
+		// if no spaces contain a wrong answer
+		// go to win condition
+		// Only WIN if does not contain true
+		ArrayList<Boolean> incorrectSpaces = getIncorrectSpaces();
 		if (!incorrectSpaces.contains(true)) {
 			puzzleSolved();
 		}
+	}
+
+	public void hilightIncorrect() {
+		ArrayList<Boolean> incorrectSpaces = getIncorrectSpaces();
+		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
+		
+		for (int x = 0; x < incorrectSpaces.size(); x++) {
+			
+			if (incorrectSpaces.get(x)) {
+				letterBoxes.get(x).setCSS(true, true);
+			}
+		}
+		System.out.println("incorrectSpaces size: " + incorrectSpaces.size()
+				+ " all spaces size: " + letterBoxes.size());
 	}
 	
 	public void setAnswer(String answer) {
 		// Tells each selected SpaceBox to
 		// set answer label to letter input
 		LetterSpace letterSpace = null;
-		for (SpaceBox spaceBox : letterBoxes) {
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
 			letterSpace = (LetterSpace) spaceBox.getSpace();
 			if (letterSpace.getHilight()) {
 				letterSpace.setCurrentChar(answer.charAt(0));
@@ -165,6 +178,7 @@ public class CgramController {
 		int nextIndex = -1;
 		int origLine = flow.lineOfSpaceBox(hilightedSpaceID);
 		int newLine = origLine + spacesToAdjust;
+		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
 		
 		if (newLine >= 0 && newLine < flow.lines()) {
 			int origPos = flow.positionOnLine(origLine, hilightedSpaceID);
@@ -233,6 +247,7 @@ public class CgramController {
 	
 	private void moveHilightHorizontally(int spaceToMoveFrom, int spacesToAdjust) {
 		int nextIndex = -1;
+		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
 		
 		for (SpaceBox spaceBox : letterBoxes) {
 			if (spaceToMoveFrom == spaceBox.getSpace().getID()) {
@@ -250,24 +265,26 @@ public class CgramController {
 		// Tells each SpaceBox to hilight
 		// if it's space is selected (set to hilight)
 		LetterSpace letterSpace = null;
-		for (SpaceBox spaceBox : letterBoxes) {
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
 			letterSpace = (LetterSpace) spaceBox.getSpace();
-			spaceBox.setCSS(letterSpace.getHilight());
+			spaceBox.setCSS(letterSpace.getHilight(), false);
 		}
-		// MOVING FROM ARROW KEYS SETSELECTED
 	}
 	
 	public void clearPuzzle() {
-		LetterSpace letterSpace = null;
-		for (SpaceBox spaceBox : letterBoxes) {
-			letterSpace = (LetterSpace) spaceBox.getSpace();
-			letterSpace.setCurrentChar(' ');
-			spaceBox.setAnswerCharLabel(true);
+		if (!flow.isDisabled()) {
+			LetterSpace letterSpace = null;
+			for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+				letterSpace = (LetterSpace) spaceBox.getSpace();
+				letterSpace.setCurrentChar(' ');
+				spaceBox.setAnswerCharLabel(true);
+			}
 		}
 	}
 	
 	public void loadNewPuzzle() {
 		// Clear game board
+		flow.setDisable(false);
 		flow.clear();
 		
 		// Create new game board
@@ -279,13 +296,12 @@ public class CgramController {
 			puzzlePhrase = pLoader.getPhrase();
 			setupPuzzle(gameMan.getPuzzle(puzzlePhrase));
 			
-			// Used for updating only letter spaces
-			setupLetterBoxArray();
 			// Keep the "next puzzle" updated
 			puzzleIndex++;
 			
 			// Reset alignment for punctuation
 			setupPuncAlignment();
+			System.out.println("new puzzle letterBoxes size: " + flow.getLetterBoxes().size());
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");

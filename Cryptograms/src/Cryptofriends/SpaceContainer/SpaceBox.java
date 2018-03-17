@@ -137,9 +137,14 @@ public class SpaceBox extends VBox {
 	public void setSelected() {
 		selected = !selected;
 		
+		// Only wrap the single selected item in a border
+		// Rest only have background colored
+		if (selected) {
+			this.setStyle("-fx-border-color: black");
+		}
+		
 		// Notify observer to hilight all sharing this char
 		if (space.getSpaceType() == SpaceType.LETTER) {
-			//((LetterSpace) space).setHilight(selected);
 			((LetterSpace) space).notifyObserver();
 		}
 		
@@ -150,12 +155,24 @@ public class SpaceBox extends VBox {
 	 * Or set it back to default style when unselected 
 	 * TODO: MOVE THIS INTO A CSS FILE
 	 */
-	public void setCSS(boolean highlight) {
-		//vbox.setStyle("-fx-border-color: black");
-		if (highlight) {
-			this.setStyle("-fx-border-color: black");
+	public void setCSS(boolean hilight, boolean hilightIncorrect) {
+		String transBack = "-fx-background-color: transparent";
+		String transBorder = "-fx-border-color: transparent";
+		String hilightColor = null;
+		
+		if (!hilightIncorrect) {
+			hilightColor = "-fx-background-color: #4abdac";
 		} else {
-			this.setStyle("-fx-border-color: transparent");
+			hilightColor = "-fx-background-color: #fc4a1a";
+		}
+		
+		if (hilight) {
+			if (space.getSpaceType() == SpaceType.LETTER) {
+				answerChar.setStyle(hilightColor);
+			}
+		} else {
+			this.setStyle(transBorder);
+			answerChar.setStyle(transBack);
 		}
 		// Pale Red Color - CC6666
 		// TODO: THIS IS CAUSING VBOX TO JERK TO ONE SIDE

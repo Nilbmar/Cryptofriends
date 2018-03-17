@@ -49,7 +49,7 @@
                             <Menu mnemonicParsing="false" text="Reveal">
                                  <items>
                                     <MenuItem mnemonicParsing="false" text="Letter" />
-                                    <MenuItem mnemonicParsing="false" text="Mistakes" />
+                                    <MenuItem fx:id="mistakesMenu" mnemonicParsing="false" onAction="#hilightIncorrect" text="Mistakes" />
                                     <MenuItem mnemonicParsing="false" text="Answer Puzzle" />
                                  </items>
                             </Menu>
