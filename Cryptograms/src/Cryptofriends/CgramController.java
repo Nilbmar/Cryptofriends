@@ -8,6 +8,7 @@ import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
 import core.GameManager;
 import core.Loaders.PuzzleLoader;
+import core.Loaders.SQLLoader;
 import core.Spaces.LetterSpace;
 import core.Spaces.Phrase;
 import core.Spaces.Space;
@@ -286,6 +287,9 @@ public class CgramController {
 		String puzzlePhrase = null;
 		PuzzleLoader pLoader = new PuzzleLoader();
 		pLoader.setTarget(Integer.toString(puzzleIndex));
+		SQLLoader sqlLoader = new SQLLoader();
+		sqlLoader.setTarget(Integer.toString(puzzleIndex));
+		sqlLoader.connect();
 		
 		try {
 			puzzlePhrase = pLoader.getPhrase();
