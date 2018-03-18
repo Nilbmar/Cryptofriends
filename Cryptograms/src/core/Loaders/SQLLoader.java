@@ -14,8 +14,8 @@ public class SQLLoader implements Loader {
 	private String target;
 	private String phrase;
 	private String databasePath = "src/core/Assets";
-	//private String databaseFileName = "PhraseDatabase.sqlite3";
-	private String databaseFileName = "chinook.db";
+	private String databaseFileName = "PhraseDatabase.sqlite3";
+	//private String databaseFileName = "chinook.db";
 	private String jdbc = "jdbc:sqlite:";
 	private List<String> phrases;
 
