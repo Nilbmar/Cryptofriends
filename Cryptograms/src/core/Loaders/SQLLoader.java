@@ -18,6 +18,13 @@ public class SQLLoader implements Loader {
 	//private String databaseFileName = "chinook.db";
 	private String jdbc = "jdbc:sqlite:";
 	private List<String> phrases;
+	
+	private void loadPuzzles(Connection conn) {
+		System.out.println("Loading puzzles\n\n");
+		// TODO: 
+		// SELECT FROM TABLE PASS RESULTS TO PUZZLEMANAGER.ADD()
+		// ONE BY ONE
+	}
 
 	public void connect() {
 		Connection conn = null;
@@ -26,6 +33,8 @@ public class SQLLoader implements Loader {
 			String url = jdbc + path.toAbsolutePath();
 			conn = DriverManager.getConnection(url);
 			System.out.println("Connection to SQLite has been established.");
+			
+			loadPuzzles(conn);
 		} catch (SQLException sqlEx) {
 			System.out.println("SQL Opening Exception: " + sqlEx.getMessage());
 		} finally {
