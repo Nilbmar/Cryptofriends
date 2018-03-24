@@ -35,12 +35,46 @@ public class PuzzleManager {
 		return puzzle;
 	}
 	
+	public PuzzleData getPuzzleBySubject(String subject, int num) {
+		PuzzleData puzzle = null;
+		boolean found = false;
+		int mapSize = puzzleMap.size();
+		int instance = 0;
+		
+		
+		// Starts at 1 because primary key of database starts at 1
+		for (int x = 1; x <= mapSize; x++) {
+			puzzle = puzzleMap.get(x);
+			if (puzzle.getSubject().contains(subject)) {
+				instance++;
+				if (instance == num) {
+					return puzzle;
+				}
+			}
+		}
+		
+		if (!found) {
+			puzzle = null;
+		}
+		
+		return puzzle;
+	}
+	
 	public PuzzleData getPuzzleByAuthor(String author, int num) {
 		PuzzleData puzzle = null;
-		String key = author + ":" + num;
+		boolean found = false;
+		int mapSize = puzzleMap.size();
 		
-		if (puzzleMap.containsKey(key)) {
-			puzzle = puzzleMap.get(key);
+		// Starts at 1 because primary key of database starts at 1
+		for (int x = 1; x <= mapSize; x++) {
+			puzzle = puzzleMap.get(x);
+			if (puzzle.getAuthor().contains(author) && puzzle.getNumber() == num) {
+				return puzzle;
+			}
+		}
+		
+		if (!found) {
+			puzzle = null;
 		}
 		
 		return puzzle;

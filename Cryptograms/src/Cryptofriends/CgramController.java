@@ -299,11 +299,29 @@ public class CgramController {
 			
 			// Reset alignment for punctuation
 			setupPuncAlignment();
+			
+			System.out.println("Testing getPuzzleByAuthor\n\n");
+			testGetPuzzleByAuthor("funny", 1);
+			testGetPuzzleByAuthor("funny", 2);
+			testGetPuzzleByAuthor("literature", 1);
+			testGetPuzzleByAuthor("personality", 2);
+			testGetPuzzleByAuthor("personality", 1);
+			testGetPuzzleByAuthor("funny", 1);
+			
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
 			puzzleIndex = 1;
 			loadNewPuzzle();
+		}
+	}
+	
+	private void testGetPuzzleByAuthor(String subject, int num) {
+		try {
+			PuzzleData testPuzzle = puzzleMan.getPuzzleBySubject(subject, num);
+			System.out.println(testPuzzle.getPhrase());
+		} catch (NullPointerException nullEx) {
+			System.out.println("NullPointerEXception on " + subject + ":" + num);
 		}
 	}
 	
