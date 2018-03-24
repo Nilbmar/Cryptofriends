@@ -5,18 +5,18 @@ import java.util.HashMap;
 import core.Data.PuzzleData;
 
 public class PuzzleManager {
-	private HashMap<String, PuzzleData> puzzleMap = null;
+	private HashMap<Integer, PuzzleData> puzzleMap = null;
 	
 	public PuzzleManager() {
-		puzzleMap = new HashMap<String, PuzzleData>();
+		puzzleMap = new HashMap<Integer, PuzzleData>();
 	}
 	
-	public void addPuzzle(String key, String phrase, String subject) {
-		PuzzleData puzzle = new PuzzleData(key, phrase, subject);
+	public void addPuzzle(int key, String phrase, String subject, String author, int numOfAuthorQuote) {
+		PuzzleData puzzle = new PuzzleData(key, phrase, subject, author, numOfAuthorQuote);
 		puzzleMap.put(key, puzzle);
 	}
 	
-	public void print(String key) {
+	public void print(int key) {
 		PuzzleData puzzle = getPuzzle(key);
 		if (puzzle != null) {
 			System.out.println(puzzle.getAuthor() + " on the subject of " 
@@ -25,8 +25,19 @@ public class PuzzleManager {
 		}
 	}
 	
-	public PuzzleData getPuzzle(String key) {
+	public PuzzleData getPuzzle(int key) {
 		PuzzleData puzzle = null;
+		
+		if (puzzleMap.containsKey(key)) {
+			puzzle = puzzleMap.get(key);
+		}
+		
+		return puzzle;
+	}
+	
+	public PuzzleData getPuzzleByAuthor(String author, int num) {
+		PuzzleData puzzle = null;
+		String key = author + ":" + num;
 		
 		if (puzzleMap.containsKey(key)) {
 			puzzle = puzzleMap.get(key);

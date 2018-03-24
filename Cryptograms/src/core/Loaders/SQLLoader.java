@@ -17,12 +17,9 @@ import core.Managers.PuzzleManager;
 public class SQLLoader implements Loader {
 	private PuzzleManager puzzleMan;
 	private String target;
-	private String phrase;
 	private String databasePath = "src/core/Assets";
 	private String databaseFileName = "PuzzleDatabase.sqlite3";
-	//private String databaseFileName = "chinook.db";
 	private String jdbc = "jdbc:sqlite:";
-	private List<String> phrases;
 	
 	public SQLLoader(PuzzleManager puzzleMan) {
 		this.puzzleMan = puzzleMan;
@@ -30,24 +27,25 @@ public class SQLLoader implements Loader {
 	
 	private void loadPuzzles(Connection conn) {
 		System.out.println("Loading puzzles\n\n");
-		String sql = "SELECT Author, NumOfAuthorQuote, Quote, Subject FROM Phrase";
+		String sql = "SELECT Key, Author, NumOfAuthorQuote, Quote, Subject FROM Phrase";
 		
 		try {
 			Statement stmt = conn.createStatement();
-			ResultSet resultSet = stmt.executeQuery(sql);
-			String key = null;
+			ResultSet resultSet = stmt.executeQuery(sql);			
 			
 			// Add each result from database to PuzzleManager
 			while (resultSet.next()) {
-                key = resultSet.getString("Author") + ":" + resultSet.getInt("NumOfAuthorQuote");
-                puzzleMan.addPuzzle(key, resultSet.getString("Quote"), resultSet.getString("Subject"));
+                puzzleMan.addPuzzle(
+                		resultSet.getInt("Key"), resultSet.getString("Quote"), 
+                		resultSet.getString("Subject"), resultSet.getString("Author"),
+                		resultSet.getInt("NumOfAuthorQuote"));
 			}
 		} catch (SQLException sqlEx) {
 			System.out.println("Problem creating SQL statement: " + sqlEx.getMessage());
 		}
 	}
 
-	public void connect() {
+	private void connect() {
 		Connection conn = null;
 		Path path = FileSystems.getDefault().getPath(databasePath, databaseFileName);
 		try {
@@ -82,14 +80,7 @@ public class SQLLoader implements Loader {
 
 	@Override
 	public void load() {
-		Path path = FileSystems.getDefault().getPath(databasePath, databaseFileName);
-		if (databasePath != null && Files.exists(path, new LinkOption[]{LinkOption.NOFOLLOW_LINKS})) {
-			try {
-				phrases = Files.readAllLines(path);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		connect();
 	}
 
 }

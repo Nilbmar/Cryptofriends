@@ -289,10 +289,8 @@ public class CgramController {
 		
 		// Create new game board
 		try {
-			sqlLoader.setTarget(Integer.toString(puzzleIndex));
-			sqlLoader.connect();
 			
-			PuzzleData puzzleData = puzzleMan.getPuzzle("Groucho Marx:1");
+			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
 			String puzzlePhrase = puzzleData.getPhrase(); 
 					//pLoader.getPhrase();
 			setupPuzzle(gameMan.getPuzzle(puzzlePhrase));
@@ -305,7 +303,7 @@ public class CgramController {
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
-			puzzleIndex = 0;
+			puzzleIndex = 1;
 			loadNewPuzzle();
 		}
 	}
@@ -356,6 +354,9 @@ public class CgramController {
 		flow = new FlowBox();
 		flow.setSpacesPerLine(15);
 		anchor.getChildren().add(flow);
-		
+
+		puzzleIndex = 1;
+		sqlLoader.setTarget(Integer.toString(puzzleIndex));
+		sqlLoader.load();
 	}
 }
