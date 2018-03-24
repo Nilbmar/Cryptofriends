@@ -9,7 +9,6 @@ import Cryptofriends.SpaceContainer.WordBox;
 import core.GameManager;
 import core.Data.PuzzleData;
 import core.Loaders.PuzzleLoader;
-import core.Loaders.SQLLoader;
 import core.Managers.PuzzleManager;
 import core.Spaces.LetterSpace;
 import core.Spaces.Phrase;
@@ -24,7 +23,7 @@ import javafx.scene.layout.AnchorPane;
 public class CgramController {
 	private GameManager gameMan;
 	private PuzzleManager puzzleMan = new PuzzleManager();
-	private SQLLoader sqlLoader = new SQLLoader(puzzleMan);
+	private PuzzleLoader sqlLoader = new PuzzleLoader(puzzleMan);
 	private int puzzleIndex = 0;
 	private int hilightedSpaceID = 0;
 	//private ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
