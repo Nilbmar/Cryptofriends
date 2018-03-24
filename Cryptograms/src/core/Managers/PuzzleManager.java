@@ -1,6 +1,5 @@
 package core.Managers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import core.Data.PuzzleData;

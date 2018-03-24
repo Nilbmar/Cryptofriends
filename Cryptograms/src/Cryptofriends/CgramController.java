@@ -7,8 +7,10 @@ import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
 import core.GameManager;
+import core.Data.PuzzleData;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.SQLLoader;
+import core.Managers.PuzzleManager;
 import core.Spaces.LetterSpace;
 import core.Spaces.Phrase;
 import core.Spaces.Space;
@@ -21,6 +23,8 @@ import javafx.scene.layout.AnchorPane;
 
 public class CgramController {
 	private GameManager gameMan;
+	private PuzzleManager puzzleMan = new PuzzleManager();
+	private SQLLoader sqlLoader = new SQLLoader(puzzleMan);
 	private int puzzleIndex = 0;
 	private int hilightedSpaceID = 0;
 	//private ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
@@ -284,15 +288,13 @@ public class CgramController {
 		flow.clear();
 		
 		// Create new game board
-		String puzzlePhrase = null;
-		PuzzleLoader pLoader = new PuzzleLoader();
-		pLoader.setTarget(Integer.toString(puzzleIndex));
-		SQLLoader sqlLoader = new SQLLoader();
-		sqlLoader.setTarget(Integer.toString(puzzleIndex));
-		sqlLoader.connect();
-		
 		try {
-			puzzlePhrase = pLoader.getPhrase();
+			sqlLoader.setTarget(Integer.toString(puzzleIndex));
+			sqlLoader.connect();
+			
+			PuzzleData puzzleData = puzzleMan.getPuzzle("Groucho Marx:1");
+			String puzzlePhrase = puzzleData.getPhrase(); 
+					//pLoader.getPhrase();
 			setupPuzzle(gameMan.getPuzzle(puzzlePhrase));
 			
 			// Keep the "next puzzle" updated
@@ -354,5 +356,6 @@ public class CgramController {
 		flow = new FlowBox();
 		flow.setSpacesPerLine(15);
 		anchor.getChildren().add(flow);
+		
 	}
 }

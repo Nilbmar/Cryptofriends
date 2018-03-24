@@ -7,23 +7,44 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
+import core.Managers.PuzzleManager;
+
 public class SQLLoader implements Loader {
+	private PuzzleManager puzzleMan;
 	private String target;
 	private String phrase;
 	private String databasePath = "src/core/Assets";
-	private String databaseFileName = "PhraseDatabase.sqlite3";
+	private String databaseFileName = "PuzzleDatabase.sqlite3";
 	//private String databaseFileName = "chinook.db";
 	private String jdbc = "jdbc:sqlite:";
 	private List<String> phrases;
 	
+	public SQLLoader(PuzzleManager puzzleMan) {
+		this.puzzleMan = puzzleMan;
+	}
+	
 	private void loadPuzzles(Connection conn) {
 		System.out.println("Loading puzzles\n\n");
-		// TODO: 
-		// SELECT FROM TABLE PASS RESULTS TO PUZZLEMANAGER.ADD()
-		// ONE BY ONE
+		String sql = "SELECT Author, NumOfAuthorQuote, Quote, Subject FROM Phrase";
+		
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet resultSet = stmt.executeQuery(sql);
+			String key = null;
+			
+			// Add each result from database to PuzzleManager
+			while (resultSet.next()) {
+                key = resultSet.getString("Author") + ":" + resultSet.getInt("NumOfAuthorQuote");
+                puzzleMan.addPuzzle(key, resultSet.getString("Quote"), resultSet.getString("Subject"));
+			}
+		} catch (SQLException sqlEx) {
+			System.out.println("Problem creating SQL statement: " + sqlEx.getMessage());
+		}
 	}
 
 	public void connect() {
