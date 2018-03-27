@@ -101,6 +101,21 @@ public class CgramController {
 		flow.setDisable(true);
 	}
 	
+	private ArrayList<SpaceBox> getIncorrectSpaceBoxes() {
+		ArrayList<SpaceBox> incorrectSpaceBoxes = new ArrayList<SpaceBox>();
+		
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			Space space = spaceBox.getSpace();
+			if (space.getSpaceType() == SpaceType.LETTER) {
+				if (!((LetterSpace) space).isCorrect()) {
+					incorrectSpaceBoxes.add(spaceBox);
+				}
+			}
+		}
+		
+		return incorrectSpaceBoxes;
+	}
+	
 	private ArrayList<Boolean> getIncorrectSpaces() {
 		ArrayList<Boolean> incorrectSpaces = new ArrayList<Boolean>();
 		
@@ -119,37 +134,31 @@ public class CgramController {
 		// if no spaces contain a wrong answer
 		// go to win condition
 		// Only WIN if does not contain true
-		ArrayList<Boolean> incorrectSpaces = getIncorrectSpaces();
-		if (!incorrectSpaces.contains(true)) {
+		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
+		if (incorrectSpaceBoxes.size() == 0) {
 			puzzleSolved();
 		}
 	}
 	
 	public void clearIncorrect() {
-		ArrayList<Boolean> incorrectSpaces = getIncorrectSpaces();
-		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
+		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
 		LetterSpace letterSpace = null;
-		for (int x = 0; x < incorrectSpaces.size(); x++) {
-			if (incorrectSpaces.get(x)) {
-				letterSpace = (LetterSpace) letterBoxes.get(x).getSpace();
-				letterSpace.setCurrentChar(' ');
-				letterBoxes.get(x).setAnswerCharLabel(true);
-			}
-			letterBoxes.get(x).setCSS(false, false);	
+		for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
+			letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
+			letterSpace.setCurrentChar(' ');
+			incorrectSpaceBoxes.get(x).setAnswerCharLabel(true);
+			incorrectSpaceBoxes.get(x).setCSS(false, false);	
 		}
 	}
-
+	
 	public void hilightIncorrect() {
-		ArrayList<Boolean> incorrectSpaces = getIncorrectSpaces();
-		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
+		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
 		LetterSpace letterSpace = null;
-		for (int x = 0; x < incorrectSpaces.size(); x++) {
-			if (incorrectSpaces.get(x)) {
-				letterSpace = (LetterSpace) letterBoxes.get(x).getSpace();
-				if (!letterSpace.isBlank()) {
-					letterBoxes.get(x).setCSS(true, true);	
-				}
-			}
+		for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
+			letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
+			if (!letterSpace.isBlank()) {
+				incorrectSpaceBoxes.get(x).setCSS(true, true);	
+			}	
 		}
 	}
 	
