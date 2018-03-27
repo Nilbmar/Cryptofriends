@@ -162,15 +162,30 @@ public class CgramController {
 		}
 	}
 	
+	public void displayLetter() {
+		LetterSpace letterSpace = null;
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			letterSpace = (LetterSpace) spaceBox.getSpace();
+			if (letterSpace.getHilight()) {
+				letterSpace.setCurrentChar(letterSpace.getCorrectChar());
+				spaceBox.setAnswerCharLabel(true);
+				spaceBox.setCSS(false,  false);
+				spaceBox.setDisable(true);
+			}
+		}
+	}
+	
 	public void setAnswer(String answer) {
 		// Tells each selected SpaceBox to
 		// set answer label to letter input
 		LetterSpace letterSpace = null;
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			letterSpace = (LetterSpace) spaceBox.getSpace();
-			if (letterSpace.getHilight()) {
-				letterSpace.setCurrentChar(answer.charAt(0));
-				spaceBox.setAnswerCharLabel(true);
+			if (!spaceBox.isDisabled()) {
+				letterSpace = (LetterSpace) spaceBox.getSpace();
+				if (letterSpace.getHilight()) {
+					letterSpace.setCurrentChar(answer.charAt(0));
+					spaceBox.setAnswerCharLabel(true);
+				}
 			}
 		}
 		
@@ -304,7 +319,9 @@ public class CgramController {
 	public void clearPuzzle() {
 		if (!flow.isDisabled()) {
 			for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-				spaceBox.clear();
+				if (!spaceBox.isDisabled()) {
+					spaceBox.clear();
+				}
 			}
 		}
 	}
