@@ -41,6 +41,9 @@ public class CgramController {
 	private MenuItem clearPuzzle;
 	
 	@FXML
+	private MenuItem clearIncorrect;
+	
+	@FXML
 	private MenuItem mistakesMenu;
 	
 	public void setGameManager(GameManager gameMan) {
@@ -119,6 +122,20 @@ public class CgramController {
 		ArrayList<Boolean> incorrectSpaces = getIncorrectSpaces();
 		if (!incorrectSpaces.contains(true)) {
 			puzzleSolved();
+		}
+	}
+	
+	public void clearIncorrect() {
+		ArrayList<Boolean> incorrectSpaces = getIncorrectSpaces();
+		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
+		LetterSpace letterSpace = null;
+		for (int x = 0; x < incorrectSpaces.size(); x++) {
+			if (incorrectSpaces.get(x)) {
+				letterSpace = (LetterSpace) letterBoxes.get(x).getSpace();
+				letterSpace.setCurrentChar(' ');
+				letterBoxes.get(x).setAnswerCharLabel(true);
+			}
+			letterBoxes.get(x).setCSS(false, false);	
 		}
 	}
 

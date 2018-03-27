@@ -33,8 +33,8 @@ public class LetterSpace extends Space implements Subject, Observer {
 	
 	public char getCurrentChar() { return currentChar; }
 	public void setCurrentChar(char letter) { 
-		currentChar = letter; 
-		filled = true;
+		currentChar = letter;
+		filled = (currentChar != ' ');
 	}
 	
 	public boolean isBlank() {
