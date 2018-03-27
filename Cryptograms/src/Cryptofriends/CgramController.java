@@ -116,19 +116,6 @@ public class CgramController {
 		return incorrectSpaceBoxes;
 	}
 	
-	private ArrayList<Boolean> getIncorrectSpaces() {
-		ArrayList<Boolean> incorrectSpaces = new ArrayList<Boolean>();
-		
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			Space space = spaceBox.getSpace();
-			if (space.getSpaceType() == SpaceType.LETTER) {
-				incorrectSpaces.add(!((LetterSpace) space).isCorrect());
-			}
-		}
-		
-		return incorrectSpaces;
-	}
-	
 	private void checkForSolved() {
 		// Check to see if any space still contains a wrong answer
 		// if no spaces contain a wrong answer
