@@ -44,7 +44,10 @@ public class CgramController {
 	private MenuItem clearIncorrect;
 	
 	@FXML
-	private MenuItem mistakesMenu;
+	private MenuItem displayMistakes;
+	
+	@FXML
+	private MenuItem dislplayLetter;
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
@@ -120,10 +123,17 @@ public class CgramController {
 		// Check to see if any space still contains a wrong answer
 		// if no spaces contain a wrong answer
 		// go to win condition
-		// Only WIN if does not contain true
+		// Only WIN if does not contain a spacebox
 		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
 		if (incorrectSpaceBoxes.size() == 0) {
 			puzzleSolved();
+		}
+	}
+	
+	private void clearHilights() {
+		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
+		for (int x = 0; x < letterBoxes.size(); x++) {
+			letterBoxes.get(x).setCSS(false,  false);
 		}
 	}
 	
@@ -134,11 +144,14 @@ public class CgramController {
 			letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
 			letterSpace.setCurrentChar(' ');
 			incorrectSpaceBoxes.get(x).setAnswerCharLabel(true);
-			incorrectSpaceBoxes.get(x).setCSS(false, false);	
 		}
+		
+		clearHilights();
 	}
 	
 	public void hilightIncorrect() {
+		clearHilights();
+		
 		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
 		LetterSpace letterSpace = null;
 		for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
