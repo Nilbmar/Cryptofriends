@@ -37,6 +37,10 @@ public class LetterSpace extends Space implements Subject, Observer {
 		filled = true;
 	}
 	
+	public boolean isBlank() {
+		return !filled;
+	}
+	
 	public boolean isCorrect() { 
 		boolean correct = false;
 		if (filled) {

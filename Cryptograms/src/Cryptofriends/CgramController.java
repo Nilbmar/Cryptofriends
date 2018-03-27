@@ -125,11 +125,13 @@ public class CgramController {
 	public void hilightIncorrect() {
 		ArrayList<Boolean> incorrectSpaces = getIncorrectSpaces();
 		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
-		
+		LetterSpace letterSpace = null;
 		for (int x = 0; x < incorrectSpaces.size(); x++) {
-			
 			if (incorrectSpaces.get(x)) {
-				letterBoxes.get(x).setCSS(true, true);
+				letterSpace = (LetterSpace) letterBoxes.get(x).getSpace();
+				if (!letterSpace.isBlank()) {
+					letterBoxes.get(x).setCSS(true, true);	
+				}
 			}
 		}
 	}
@@ -299,29 +301,11 @@ public class CgramController {
 			
 			// Reset alignment for punctuation
 			setupPuncAlignment();
-			
-			System.out.println("Testing getPuzzleByAuthor\n\n");
-			testGetPuzzleByAuthor("funny", 1);
-			testGetPuzzleByAuthor("funny", 2);
-			testGetPuzzleByAuthor("literature", 1);
-			testGetPuzzleByAuthor("personality", 2);
-			testGetPuzzleByAuthor("personality", 1);
-			testGetPuzzleByAuthor("funny", 1);
-			
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
 			puzzleIndex = 1;
 			loadNewPuzzle();
-		}
-	}
-	
-	private void testGetPuzzleByAuthor(String subject, int num) {
-		try {
-			PuzzleData testPuzzle = puzzleMan.getPuzzleBySubject(subject, num);
-			System.out.println(testPuzzle.getPhrase());
-		} catch (NullPointerException nullEx) {
-			System.out.println("NullPointerEXception on " + subject + ":" + num);
 		}
 	}
 	
