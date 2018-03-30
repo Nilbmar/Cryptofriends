@@ -1,4 +1,4 @@
-package core;
+package core.Data;
 
 public class Player {
 	private String name;

@@ -3,7 +3,7 @@ package core.Managers;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import core.Player;
+import core.Data.Player;
 
 public class PlayerManager {
 	private LinkedHashMap<String, Player> players;
