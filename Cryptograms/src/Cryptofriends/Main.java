@@ -1,6 +1,6 @@
 package Cryptofriends;
 
-import core.GameManager;
+import core.Managers.GameManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;

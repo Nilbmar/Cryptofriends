@@ -1,7 +1,5 @@
-package core;
+package core.Managers;
 
-import core.Managers.PlayerManager;
-import core.Managers.SelectionManager;
 import core.Spaces.Phrase;
 import core.Spaces.SpaceList;
 
