@@ -44,10 +44,13 @@ public class CgramController {
 	private MenuItem clearIncorrect;
 	
 	@FXML
+	private MenuItem dislplayLetter;
+	
+	@FXML
 	private MenuItem displayMistakes;
 	
 	@FXML
-	private MenuItem dislplayLetter;
+	private MenuItem displayAllLetters;
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
@@ -173,6 +176,21 @@ public class CgramController {
 				spaceBox.setDisable(true);
 			}
 		}
+	}
+	
+	public void displayAllLetters() {
+		LetterSpace letterSpace = null;
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			letterSpace = (LetterSpace) spaceBox.getSpace();
+			if (!spaceBox.isDisabled()) {
+				letterSpace.setCurrentChar(letterSpace.getCorrectChar());
+				spaceBox.setAnswerCharLabel(true);
+				spaceBox.setCSS(false,  false);
+				spaceBox.setDisable(true);
+			}
+		}
+		
+		flow.setDisable(true);
 	}
 	
 	public void setAnswer(String answer) {

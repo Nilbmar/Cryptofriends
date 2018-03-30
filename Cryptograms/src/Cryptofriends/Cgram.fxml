@@ -51,7 +51,7 @@
                                  <items>
                                     <MenuItem fx:id="dislplayLetter" mnemonicParsing="false" onAction="#displayLetter" text="Letter" />
                                     <MenuItem fx:id="displayMistakes" mnemonicParsing="false" onAction="#hilightIncorrect" text="Mistakes" />
-                                    <MenuItem mnemonicParsing="false" text="Answer Puzzle" />
+                                    <MenuItem fx:id="displayAllLetters" mnemonicParsing="false" onAction="#displayAllLetters" text="Answer Puzzle" />
                                  </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Help">
