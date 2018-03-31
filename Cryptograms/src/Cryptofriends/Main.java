@@ -4,6 +4,7 @@ import core.Managers.GameManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
@@ -25,10 +26,15 @@ public class Main extends Application {
 	        	// Letter Input
 	        	if (keyEvent.getCode().isLetterKey()) {
 	            	controller.setAnswer(keyEvent.getCode().toString());
+	            	controller.checkForSolved();
 	            }
 	        	
 	        	if (keyEvent.getCode().isArrowKey()) {
 	        		controller.moveSelection(keyEvent.getCode());
+	        	}
+	        	
+	        	if (keyEvent.getCode() == KeyCode.DELETE) {
+	        		controller.clearLetter();
 	        	}
 	        });
 			

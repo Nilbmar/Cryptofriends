@@ -8,6 +8,7 @@ import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
 import core.Data.Phrase;
 import core.Data.PuzzleData;
+import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
 import core.Managers.GameManager;
 import core.Managers.PuzzleManager;
@@ -104,6 +105,8 @@ public class CgramController {
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
 			spaceBox.setCSS(false, false);
 		}
+		
+		gameMan.setPuzzleState(PuzzleState.WON);
 		flow.setDisable(true);
 	}
 	
@@ -122,14 +125,16 @@ public class CgramController {
 		return incorrectSpaceBoxes;
 	}
 	
-	private void checkForSolved() {
+	public void checkForSolved() {
 		// Check to see if any space still contains a wrong answer
 		// if no spaces contain a wrong answer
 		// go to win condition
 		// Only WIN if does not contain a spacebox
-		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
-		if (incorrectSpaceBoxes.size() == 0) {
-			puzzleSolved();
+		if (gameMan.getPuzzleState() == PuzzleState.PLAYING) {
+			ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
+			if (incorrectSpaceBoxes.size() == 0) {
+				puzzleSolved();
+			}
 		}
 	}
 	
@@ -138,6 +143,10 @@ public class CgramController {
 		for (int x = 0; x < letterBoxes.size(); x++) {
 			letterBoxes.get(x).setCSS(false,  false);
 		}
+	}
+	
+	public void clearLetter() {
+		setAnswer(" ");
 	}
 	
 	public void clearIncorrect() {
@@ -190,6 +199,7 @@ public class CgramController {
 			}
 		}
 		
+		gameMan.setPuzzleState(PuzzleState.FAILED);
 		flow.setDisable(true);
 	}
 	
@@ -207,7 +217,7 @@ public class CgramController {
 			}
 		}
 		
-		checkForSolved();
+		//checkForSolved();
 	}
 	
 	public void moveSelection(KeyCode keyCode) {
@@ -348,6 +358,7 @@ public class CgramController {
 		// Clear game board
 		flow.setDisable(false);
 		flow.clear();
+		gameMan.setPuzzleState(PuzzleState.PLAYING);
 		
 		// Create new game board
 		try {			

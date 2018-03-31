@@ -1,11 +1,13 @@
 package core.Managers;
 
+import core.Data.PuzzleState;
 import core.Score.ScoreManager;
 
 public class GameManager {
 	private SelectionManager selectMan;
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
+	private PuzzleState puzzleState = PuzzleState.PLAYING;
 	
 	public GameManager() {
 		playerMan = new PlayerManager();
@@ -16,6 +18,11 @@ public class GameManager {
 	public void update() {
 		playerMan.update();
 		selectMan.update();
+	}
+	
+	public PuzzleState getPuzzleState() { return puzzleState; }
+	public void setPuzzleState(PuzzleState puzzleState) { 
+		this.puzzleState = puzzleState; 
 	}
 	
 	public PlayerManager getPlayerManager() { return playerMan; }
