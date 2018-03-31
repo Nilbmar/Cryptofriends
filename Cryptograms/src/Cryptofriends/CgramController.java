@@ -6,12 +6,12 @@ import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
+import core.Data.Phrase;
 import core.Data.PuzzleData;
 import core.Loaders.PuzzleLoader;
 import core.Managers.GameManager;
 import core.Managers.PuzzleManager;
 import core.Spaces.LetterSpace;
-import core.Spaces.Phrase;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import core.Spaces.Word;
@@ -350,12 +350,9 @@ public class CgramController {
 		flow.clear();
 		
 		// Create new game board
-		try {
-			
+		try {			
 			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
-			String puzzlePhrase = puzzleData.getPhrase(); 
-					//pLoader.getPhrase();
-			setupPuzzle(gameMan.getPuzzle(puzzlePhrase));
+			setupPuzzle(puzzleData.getPuzzle());
 			
 			// Keep the "next puzzle" updated
 			puzzleIndex++;

@@ -1,6 +1,9 @@
-package core.Spaces;
+package core.Data;
 
 import java.util.ArrayList;
+
+import core.Spaces.Space;
+import core.Spaces.Word;
 
 public class Phrase {
 	private ArrayList<Word> phrase;

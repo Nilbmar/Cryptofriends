@@ -6,12 +6,8 @@ import java.util.Map.Entry;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import core.Data.Player;
 import core.Managers.GameManager;
-import core.Spaces.Phrase;
-import core.Spaces.Space;
-import core.Spaces.Word;
 
 public class GameManagerTest {
 	private GameManager gameMan;
@@ -19,17 +15,6 @@ public class GameManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		gameMan = new GameManager();
-	}
-	
-	@Test
-	public void getPuzzleTest() {
-		Phrase phrase = gameMan.getPuzzle("I love  - 300 Monkeys : bye!!");
-		System.out.println("\n\n--getPuzzleTest--\n");
-		for (Word word : phrase.getPhrase()) {
-			for (Space space : word.getWord()) {
-				System.out.print(space.getDisplayChar());
-			}
-		}
 	}
 
 	//@Test

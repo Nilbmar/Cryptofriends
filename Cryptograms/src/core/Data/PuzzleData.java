@@ -1,5 +1,7 @@
 package core.Data;
 
+import core.Spaces.SpaceList;
+
 public class PuzzleData {
 	private int key = -1;
 	private int numOfPhraseByAuthor = -1;
@@ -15,24 +17,18 @@ public class PuzzleData {
 		numOfPhraseByAuthor = num;
 	}
 	
-	/*
-	private void splitKey(String key) {
-		char charToSplitKey = ':';
-		int indexOfSplit = key.indexOf(charToSplitKey);
-		author = key.substring(0, indexOfSplit);
-		
-		try {
-			numOfPhraseByAuthor = Integer.valueOf(key.substring(indexOfSplit + 1));
-		} catch (Exception ex) {
-			System.out.println("Something went wrong with the key split");
-			
-		}
-	}
-	*/
 	public int getKey() { return key; }
 	public String getPhrase() { return phrase; }
 	public String getSubject() { return subject; }
 	public String getAuthor() { return author; }
 	public int getNumber() { return numOfPhraseByAuthor; }
 	
+	public Phrase getPuzzle() {
+		Phrase phrase = null;
+		SpaceList spaces = new SpaceList();
+		spaces.create(getPhrase());
+		phrase = spaces.getPhrase();
+		
+		return phrase;
+	}
 }

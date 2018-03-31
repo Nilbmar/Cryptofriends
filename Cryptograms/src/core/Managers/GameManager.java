@@ -1,15 +1,16 @@
 package core.Managers;
 
-import core.Spaces.Phrase;
-import core.Spaces.SpaceList;
+import core.Score.ScoreManager;
 
 public class GameManager {
 	private SelectionManager selectMan;
 	private PlayerManager playerMan;
+	private ScoreManager scoreMan;
 	
 	public GameManager() {
 		playerMan = new PlayerManager();
 		selectMan = new SelectionManager();
+		scoreMan = new ScoreManager();
 	}
 	
 	public void update() {
@@ -19,14 +20,5 @@ public class GameManager {
 	
 	public PlayerManager getPlayerManager() { return playerMan; }
 	public SelectionManager getSelectionManager() { return selectMan; }
-	
-	// TODO: SEPERATE THIS TO A PUZZLEMANAGER
-	public Phrase getPuzzle(String puzzlePhrase) {
-		Phrase phrase = null;
-		SpaceList spaces = new SpaceList();
-		spaces.create(puzzlePhrase);
-		phrase = spaces.getPhrase();
-		
-		return phrase;
-	}
+	public ScoreManager getScoreManager() { return scoreMan; }
 }
