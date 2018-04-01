@@ -17,9 +17,13 @@ import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import core.Spaces.Word;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class CgramController {
 	private GameManager gameMan;
@@ -27,10 +31,15 @@ public class CgramController {
 	private PuzzleLoader sqlLoader = new PuzzleLoader(puzzleMan);
 	private int puzzleIndex = 0;
 	private int hilightedSpaceID = 0;
-	//private ArrayList<SpaceBox> letterBoxes = new ArrayList<SpaceBox>();
 	
 	@FXML
-	private FlowBox flow; //FlowPane flow;
+	private FlowBox flow;
+	
+	@FXML
+	private Label lblAuthor;
+	
+	@FXML
+	private Label lblSubject;
 	
 	@FXML
 	private AnchorPane anchor;
@@ -53,8 +62,41 @@ public class CgramController {
 	@FXML
 	private MenuItem displayAllLetters;
 	
+	@FXML
+	private Button btnClearIncorrectYes;
+
+	@FXML
+	private Button btnClearIncorrectNo;
+	
+	@FXML
+	private AnchorPane anchorDisplayItems;
+	
+	@FXML
+	private VBox vboxDisplayItems;
+	
+	@FXML
+	private HBox hboxClearIncorrect;
+	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
+		showClearIncorrectBtns();
+	}
+	
+	public void showClearIncorrectBtns() {
+		if (hboxClearIncorrect.isDisabled()) {
+			hboxClearIncorrect.setDisable(false);
+			
+			// TODO: How to reveal/hide node
+			/*
+			anchorDisplayItems.setMinHeight(25);
+			anchorDisplayItems.setMaxHeight(25);
+			vboxDisplayItems.setMaxHeight(25);
+			*/
+		} else {
+			hboxClearIncorrect.setDisable(true);
+			vboxDisplayItems.setPrefHeight(vboxDisplayItems.getMaxHeight());
+			
+		}
 	}
 	
 	private void setupPuncAlignment() {
@@ -159,6 +201,7 @@ public class CgramController {
 		}
 		
 		clearHilights();
+		showClearIncorrectBtns();
 	}
 	
 	public void hilightIncorrect() {
@@ -172,6 +215,8 @@ public class CgramController {
 				incorrectSpaceBoxes.get(x).setCSS(true, true);	
 			}	
 		}
+
+		showClearIncorrectBtns();
 	}
 	
 	public void displayLetter() {
@@ -364,6 +409,8 @@ public class CgramController {
 		try {			
 			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
 			setupPuzzle(puzzleData.getPuzzle());
+			lblAuthor.setText(puzzleData.getAuthor());
+			lblSubject.setText(puzzleData.getSubject());
 			
 			// Keep the "next puzzle" updated
 			puzzleIndex++;
