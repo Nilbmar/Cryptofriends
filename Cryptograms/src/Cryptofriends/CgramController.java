@@ -6,7 +6,7 @@ import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
-import core.Data.Phrase;
+import core.Data.Puzzle;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
@@ -51,9 +51,6 @@ public class CgramController {
 	private MenuItem clearPuzzle;
 	
 	@FXML
-	private MenuItem clearIncorrect;
-	
-	@FXML
 	private MenuItem dislplayLetter;
 	
 	@FXML
@@ -79,23 +76,18 @@ public class CgramController {
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
+		hboxClearIncorrect.setManaged(true);
 		showClearIncorrectBtns();
 	}
 	
 	public void showClearIncorrectBtns() {
-		if (hboxClearIncorrect.isDisabled()) {
-			hboxClearIncorrect.setDisable(false);
+		if (hboxClearIncorrect.isVisible()) {
+			hboxClearIncorrect.setVisible(false);
 			
-			// TODO: How to reveal/hide node
-			/*
-			anchorDisplayItems.setMinHeight(25);
-			anchorDisplayItems.setMaxHeight(25);
-			vboxDisplayItems.setMaxHeight(25);
-			*/
+			vboxDisplayItems.setPrefHeight(55);
 		} else {
-			hboxClearIncorrect.setDisable(true);
-			vboxDisplayItems.setPrefHeight(vboxDisplayItems.getMaxHeight());
-			
+			hboxClearIncorrect.setVisible(true);
+			vboxDisplayItems.setPrefHeight(90);
 		}
 	}
 	
@@ -461,8 +453,8 @@ public class CgramController {
 		flow.addWordBox(wordBox);
 	}
 	
-	public void setupPuzzle(Phrase phrase) {
-		for (Word word : phrase.getPhrase()) {
+	public void setupPuzzle(Puzzle puzzle) {
+		for (Word word : puzzle.getPhrase()) {
 			addWord(word);
 		}
 	}

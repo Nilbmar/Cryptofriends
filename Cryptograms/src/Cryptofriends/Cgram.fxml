@@ -27,82 +27,77 @@
       </ScrollPane>
    </center>
    <top>
-      <SplitPane prefHeight="69.0" prefWidth="375.0" BorderPane.alignment="CENTER">
+      <SplitPane maxHeight="90.0" minHeight="0.0" prefWidth="375.0" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane fx:id="anchorDisplayItems" maxHeight="90.0" minHeight="90.0" minWidth="0.0" prefHeight="90.0" prefWidth="373.0">
+            <VBox fx:id="vboxDisplayItems" maxHeight="90.0" minHeight="0.0" prefHeight="55.0" prefWidth="373.0">
                <children>
-                  <VBox fx:id="vboxDisplayItems" maxHeight="90.0" minHeight="0.0" prefHeight="90.0" prefWidth="373.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <MenuBar prefHeight="22.0" prefWidth="327.0">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="Puzzle">
+                        <items>
+                              <MenuItem id="clearIncorrect" fx:id="clearPuzzle" mnemonicParsing="false" onAction="#clearPuzzle" text="Clear Letters" />
+                              <MenuItem id="newPuzzle" fx:id="newPuzzle" mnemonicParsing="false" onAction="#loadNewPuzzle" text="New Puzzle" />
+                              <MenuItem mnemonicParsing="false" text="Random Puzzle" />
+                          <MenuItem mnemonicParsing="false" text="Close Game" />
+                        </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Reveal">
+                           <items>
+                              <MenuItem fx:id="dislplayLetter" mnemonicParsing="false" onAction="#displayLetter" text="Letter" />
+                              <MenuItem fx:id="displayMistakes" mnemonicParsing="false" onAction="#hilightIncorrect" text="Mistakes" />
+                              <MenuItem fx:id="displayAllLetters" mnemonicParsing="false" onAction="#displayAllLetters" text="Answer Puzzle" />
+                           </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Help">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="About" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+                  <HBox alignment="CENTER" prefHeight="22.0" prefWidth="378.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="22.0" prefWidth="378.0">
-                           <children>
-                              <Label fx:id="lblAuthor" alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" text="Author">
-                                 <font>
-                                    <Font name="Envy Code R Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblAuthorSubject1" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="22.0" text=" - " textAlignment="CENTER">
-                                 <font>
-                                    <Font name="Envy Code R Italic" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblSubject" alignment="CENTER" contentDisplay="CENTER" layoutX="107.0" layoutY="10.0" prefHeight="22.0" text="Subject" textAlignment="RIGHT">
-                                 <font>
-                                    <Font name="Envy Code R Italic" size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <MenuBar prefHeight="22.0" prefWidth="327.0">
-                          <menus>
-                            <Menu mnemonicParsing="false" text="Puzzle">
-                              <items>
-                                    <MenuItem id="clearIncorrect" fx:id="clearPuzzle" mnemonicParsing="false" onAction="#clearPuzzle" text="Clear Letters" />
-                                    <MenuItem id="clearPuzzle" fx:id="clearIncorrect" mnemonicParsing="false" onAction="#clearIncorrect" text="Clear Incorrect" />
-                                    <MenuItem id="newPuzzle" fx:id="newPuzzle" mnemonicParsing="false" onAction="#loadNewPuzzle" text="New Puzzle" />
-                                    <MenuItem mnemonicParsing="false" text="Random Puzzle" />
-                                <MenuItem mnemonicParsing="false" text="Close Game" />
-                              </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Reveal">
-                                 <items>
-                                    <MenuItem fx:id="dislplayLetter" mnemonicParsing="false" onAction="#displayLetter" text="Letter" />
-                                    <MenuItem fx:id="displayMistakes" mnemonicParsing="false" onAction="#hilightIncorrect" text="Mistakes" />
-                                    <MenuItem fx:id="displayAllLetters" mnemonicParsing="false" onAction="#displayAllLetters" text="Answer Puzzle" />
-                                 </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Help">
-                              <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
-                              </items>
-                            </Menu>
-                          </menus>
-                        </MenuBar>
-                        <HBox fx:id="hboxClearIncorrect" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label prefHeight="50.0" prefWidth="200.0" text="Clear Incorrect?">
-                                 <font>
-                                    <Font name="Envy Code R" size="22.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                            <Button fx:id="btnClearIncorrectYes" mnemonicParsing="false" onAction="#clearIncorrect" prefWidth="50.0" text="Yes">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="btnClearIncorrectNo" mnemonicParsing="false" onAction="#showClearIncorrectBtns" prefWidth="50.0" text="No">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
+                        <Label fx:id="lblAuthor" alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" text="Author">
+                           <font>
+                              <Font name="Envy Code R Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblAuthorSubject1" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="22.0" text=" - " textAlignment="CENTER">
+                           <font>
+                              <Font name="Envy Code R Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblSubject" alignment="CENTER" contentDisplay="CENTER" layoutX="107.0" layoutY="10.0" prefHeight="22.0" text="Subject" textAlignment="RIGHT">
+                           <font>
+                              <Font name="Envy Code R Italic" size="15.0" />
+                           </font>
+                        </Label>
                      </children>
-                  </VBox>
+                  </HBox>
+                  <HBox fx:id="hboxClearIncorrect" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="50.0" prefWidth="200.0" text="Clear Incorrect?">
+                           <font>
+                              <Font name="Envy Code R" size="22.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                      <Button fx:id="btnClearIncorrectYes" mnemonicParsing="false" onAction="#clearIncorrect" prefWidth="50.0" text="Yes">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnClearIncorrectNo" mnemonicParsing="false" onAction="#showClearIncorrectBtns" prefWidth="50.0" text="No">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-            </AnchorPane>
+            </VBox>
         </items>
       </SplitPane>
    </top>

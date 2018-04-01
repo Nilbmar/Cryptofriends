@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import core.Data.Phrase;
+import core.Data.Puzzle;
 import core.Processes.PhraseParser;
 
 public class SpaceList {
 	private ArrayList<Space> spaceList;
 	private String displayChars;
-	private Phrase phraseContainer = new Phrase();
+	private Puzzle phraseContainer = new Puzzle();
 	
 	public SpaceList() {
 		spaceList = new ArrayList<Space>();
@@ -76,7 +76,7 @@ public class SpaceList {
 		}
 	}
 
-	public Phrase getPhrase() { return phraseContainer; }
+	public Puzzle getPhrase() { return phraseContainer; }
 	
 	public ArrayList<Space> getList() { return spaceList; }
 	public Space getSpace(int index) {

@@ -23,12 +23,12 @@ public class PuzzleData {
 	public String getAuthor() { return author; }
 	public int getNumber() { return numOfPhraseByAuthor; }
 	
-	public Phrase getPuzzle() {
-		Phrase phrase = null;
+	public Puzzle getPuzzle() {
+		Puzzle puzzle = null;
 		SpaceList spaces = new SpaceList();
 		spaces.create(getPhrase());
-		phrase = spaces.getPhrase();
+		puzzle = spaces.getPhrase();
 		
-		return phrase;
+		return puzzle;
 	}
 }

@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import core.Spaces.Space;
 import core.Spaces.Word;
 
-public class Phrase {
+public class Puzzle {
 	private ArrayList<Word> phrase;
 	private ArrayList<Integer> wordBreakIndexes;
 	
-	public Phrase() {
+	public Puzzle() {
 		phrase = new ArrayList<Word>();
 		wordBreakIndexes = new ArrayList<Integer>();
 	}

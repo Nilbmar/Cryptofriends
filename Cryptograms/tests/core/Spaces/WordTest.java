@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import core.Data.Phrase;
+import core.Data.Puzzle;
 
 public class WordTest {
 	private SpaceList spaces;
@@ -22,10 +22,10 @@ public class WordTest {
 		int blanksSpacesInTestPhrase = 4;
 		String testPhrase = "I love you, so much!";
 		spaces.create(testPhrase);
-		Phrase phrase = spaces.getPhrase();
+		Puzzle puzzle = spaces.getPhrase();
 		
 		int countBlankSpaces = 0;
-		for (Word word : phrase.getPhrase()) {
+		for (Word word : puzzle.getPhrase()) {
 			System.out.print("\n" + word.isBlankSpace());
 			if (word.isBlankSpace()) {
 				countBlankSpaces++;
