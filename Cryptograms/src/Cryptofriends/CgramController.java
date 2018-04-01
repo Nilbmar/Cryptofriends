@@ -175,18 +175,18 @@ public class CgramController {
 	private void clearHilights() {
 		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
 		SpaceBox selectedBox = null;
-		SpaceBox currentBox = null;
 		for (int x = 0; x < letterBoxes.size(); x++) {
-			currentBox = letterBoxes.get(x);
 			// Set selectedBox's selected to false
 			// and prepare to set it to true after
-			if (currentBox.getSelected()) {
-				selectedBox = currentBox;
+			if (letterBoxes.get(x).getSelected()) {
+				selectedBox = letterBoxes.get(x);
 				selectedBox.setSelected();
 			}
-			currentBox.setCSS(false,  false);
+			
+			letterBoxes.get(x).setCSS(false,  false);
 		}
 		
+		// Make sure the original selected box remains selected
 		selectedBox.setSelected();
 	}
 	
