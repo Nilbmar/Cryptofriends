@@ -74,7 +74,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox fx:id="hboxClearIncorrect" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <HBox fx:id="hboxClearIncorrect" alignment="CENTER" prefHeight="100.0">
                      <children>
                         <Label prefHeight="50.0" prefWidth="200.0" text="Clear Incorrect?">
                            <font>

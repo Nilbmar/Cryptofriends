@@ -11,8 +11,8 @@ public class PuncBox extends SpaceBox {
 	private SpaceType prevSpaceType;
 	private SpaceType nextSpaceType;
 
-	public PuncBox(Space space, CgramController controller) {
-		super(space, controller);
+	public PuncBox(Space space, CgramController controller, FlowBox flow) {
+		super(space, controller, flow);
 	}
 
 	public void setPrevType(SpaceType prevSpaceType) {

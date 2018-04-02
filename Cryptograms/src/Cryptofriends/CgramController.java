@@ -174,20 +174,17 @@ public class CgramController {
 	
 	private void clearHilights() {
 		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
-		SpaceBox selectedBox = null;
+		SpaceBox selectedBox = getCurrentlySelected();
 		for (int x = 0; x < letterBoxes.size(); x++) {
-			// Set selectedBox's selected to false
-			// and prepare to set it to true after
-			if (letterBoxes.get(x).getSelected()) {
-				selectedBox = letterBoxes.get(x);
-				selectedBox.setSelected();
-			}
-			
 			letterBoxes.get(x).setCSS(false,  false);
 		}
 		
 		// Make sure the original selected box remains selected
-		selectedBox.setSelected();
+		flow.clearSelection();
+		if (selectedBox != null) {
+			selectedBox.toggleSelection();
+			
+		}
 	}
 	
 	public void clearLetter() {
@@ -264,8 +261,17 @@ public class CgramController {
 				}
 			}
 		}
+	}
+	
+	public SpaceBox getCurrentlySelected() {
+		SpaceBox selected = null;
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			if (spaceBox.getSelected()) {
+				selected = spaceBox;
+			}
+		}
 		
-		//checkForSolved();
+		return selected;
 	}
 	
 	public void moveSelection(KeyCode keyCode) {
@@ -294,77 +300,14 @@ public class CgramController {
 		
 		
 	}
-	
-	private void moveHilightVertically(int spacesToAdjust) {
-		int nextIndex = -1;
-		int origLine = flow.lineOfSpaceBox(hilightedSpaceID);
-		int newLine = origLine + spacesToAdjust;
-		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
-		
-		if (newLine >= 0 && newLine < flow.lines()) {
-			int origPos = flow.positionOnLine(origLine, hilightedSpaceID);
-			try {
-				SpaceBox newSpaceBox = flow.spaceInPosOnLine(newLine, origPos);
-				if (newSpaceBox.getSpace().getSpaceType() == SpaceType.LETTER) {
-					nextIndex = letterBoxes.indexOf(newSpaceBox);
-					
-					if (nextIndex >= 0 && nextIndex < letterBoxes.size()) {
-						letterBoxes.get(nextIndex).setSelected();
-					}
-				} else {
 
-					boolean moveForward = true;
-					newSpaceBox = getNextLetterBox(newSpaceBox.getSpace().getID(), moveForward);
-					// TODO: RETURNING NULL HOW TO SET IT INSTEAD?
-					
-					nextIndex = letterBoxes.indexOf(newSpaceBox);
-					
-					
-					// GET THE INDEX IN LETTERBOXES OF SPACEBOX WITH THE RETURNED ID NUMBER
-					if (nextIndex >= 0 && nextIndex < letterBoxes.size()) {
-						letterBoxes.get(nextIndex).setSelected();
-					} else {
-						System.out.println("Can't move there");
-					}
-				}
-			} catch (NullPointerException npe) {
-				System.out.println("No space found while trying to move vertically");
-			}
-		}
-	}
-	
 	private SpaceBox getNextLetterBox(int idToMoveFrom, boolean forward) {
-		// Loop through SpaceBox's to find the space to move from
-		// Then the next SpaceBox that contains a lettr is returned
 		SpaceBox nextLetterBox = null;
-		ArrayList<SpaceBox> spaceBoxes = flow.getSpaceBoxes();
-		int lastIndex = spaceBoxes.size();
-		int x; // allow movement forward or back
-		boolean loop = true; // Used to short circuit the loop after finding next letter
-		boolean setAtNextLetter = false;
 		
-		// Using a while loop so I can control whether to move forward or backward
-		// forward - x is set to zero and goes up to the size of the ArrayList
-		// backward - x is set to the size of the ArrayList and it counts down to zero
-		if (forward) { x = 0; } else { x = lastIndex; lastIndex = 0; }
-		
-		while (x != lastIndex && loop) {
-			SpaceBox spaceBox = spaceBoxes.get(x);
-			if (idToMoveFrom == spaceBox.getSpace().getID()) {
-				// Set next iterations looking for a Letter
-				setAtNextLetter = true;
-			}
-			
-			if (setAtNextLetter && spaceBox.getSpace().getSpaceType() == SpaceType.LETTER) {
-					nextLetterBox = spaceBox;
-					loop = false;
-			}
-			// control movement forward or back
-			if (forward) { x++; } else { x--; }
-		}
-
 		return nextLetterBox;
 	}
+	
+	
 	
 	private void moveHilightHorizontally(int spaceToMoveFrom, int spacesToAdjust) {
 		int nextIndex = -1;
@@ -376,8 +319,63 @@ public class CgramController {
 			}
 		}
 		
+		flow.clearSelection();
+		
 		if (nextIndex >= 0 && nextIndex < letterBoxes.size()) {
-			letterBoxes.get(nextIndex).setSelected();
+			letterBoxes.get(nextIndex).toggleSelection();
+		}
+	}
+	
+	private void moveHilightVertically(int spacesToAdjust) {
+		int nextIndex = -1;
+		int origLineNum = flow.lineOfSpaceBox(hilightedSpaceID);
+		int newLineNum = origLineNum + spacesToAdjust;
+		ArrayList<SpaceBox> newLine = null;
+		ArrayList<SpaceBox> letterBoxesOnNewLine = new ArrayList<SpaceBox>();
+		
+		if (newLineNum >= 0 && newLineNum < flow.lines()) {
+			newLine = flow.spaceBoxesOnLine(newLineNum);
+						
+			int origPos = flow.positionOnLine(origLineNum, hilightedSpaceID);
+
+			// If that number exists on the line, select it
+			if (origPos < newLine.size()) {
+				SpaceBox spaceBox = newLine.get(origPos);
+				if (spaceBox.getSpace().getSpaceType() == SpaceType.LETTER) {
+					flow.clearSelection();
+					newLine.get(origPos).toggleSelection();
+				} else {
+					// The same space on new line is not a letter
+					// Find a nearby letter on the new line
+					int spaceBoxID = spaceBox.getSpace().getID();					
+					
+					// Try to go backward first
+					// More likely able to go back than forward
+					Space space = null;
+					if (origPos >= 1) {
+						for (SpaceBox currentSpaceBox : newLine) {
+							space = currentSpaceBox.getSpace();
+							if (space.getSpaceType() == SpaceType.LETTER && space.getID() < spaceBoxID) {
+								letterBoxesOnNewLine.add(currentSpaceBox);
+							}
+						}
+						
+						spaceBox = letterBoxesOnNewLine.get(letterBoxesOnNewLine.size() - 1);
+					} else if(origPos < newLine.size()) {
+						for (SpaceBox currentSpaceBox : newLine) {
+							space = currentSpaceBox.getSpace();
+							if (space.getSpaceType() == SpaceType.LETTER && space.getID() > spaceBoxID) {
+								letterBoxesOnNewLine.add(currentSpaceBox);
+							}
+						}
+						
+						spaceBox = letterBoxesOnNewLine.get(0);
+					}
+					
+					flow.clearSelection();
+					spaceBox.toggleSelection();
+				}
+			}
 		}
 	}
 	
@@ -432,10 +430,10 @@ public class CgramController {
 		SpaceBox spaceBox = null;
 		if (flow != null) {
 			if (space.getSpaceType() == SpaceType.PUNC) {
-				PuncBox puncBox = new PuncBox(space, this);
+				PuncBox puncBox = new PuncBox(space, this, flow);
 				spaceBox = puncBox;
 			} else {
-				spaceBox = new SpaceBox(space, this);
+				spaceBox = new SpaceBox(space, this, flow);
 			}
 		}
 		return spaceBox;

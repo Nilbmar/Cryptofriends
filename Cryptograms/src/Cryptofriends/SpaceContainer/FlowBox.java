@@ -19,6 +19,16 @@ public class FlowBox extends VBox {
 		lines = new ArrayList<HBox>();
 		this.getChildren().clear();
 	}
+	
+	public void clearSelection() {
+		for (SpaceBox spaceBox : getLetterBoxes()) {
+			// Set to true first so it's toggled to false
+			// then deselected
+			spaceBox.setSelected(true);
+			spaceBox.toggleSelection();
+		}
+	}
+	
 	public int lines() { return lines.size(); }
 	public int positionOnLine(int line, int spaceID) {
 		int pos = -1;
@@ -73,6 +83,21 @@ public class FlowBox extends VBox {
 		}
 		
 		return lineBoxIsOn;
+	}
+	
+	public ArrayList<SpaceBox> spaceBoxesOnLine(int lineNum) {
+		ArrayList<SpaceBox> spaceBoxes = new ArrayList<SpaceBox>();
+		HBox line = lines.get(lineNum);
+		WordBox wordBox = null;
+		
+		for (Object object : line.getChildren().toArray()) {
+			wordBox = (WordBox) object;
+			for (SpaceBox spaceBox : wordBox.getAllSpaceBoxes()) {
+				spaceBoxes.add(spaceBox);
+			}
+		}
+		
+		return spaceBoxes;
 	}
 	
 	public ArrayList<SpaceBox> getLetterBoxes() {

@@ -22,7 +22,7 @@ public class SpaceBox extends VBox {
 	protected Label answerChar = new Label();
 	protected Label displayChar = new Label();
 	
-	public SpaceBox(Space space, CgramController controller) {
+	public SpaceBox(Space space, CgramController controller, FlowBox flow) {
 		this.space = space;
 		this.controller = controller;
 
@@ -41,7 +41,8 @@ public class SpaceBox extends VBox {
 					// and hilight all LetterSpaces
 					// with same character
 					if (event.getButton() != null && event.getButton() == MouseButton.PRIMARY) {
-						setSelected();
+						flow.clearSelection();
+						toggleSelection();
 					}
 				}
 			});
@@ -137,11 +138,10 @@ public class SpaceBox extends VBox {
 		}
 	}
 	
-	public boolean getSelected() {
-		return selected;
-	}
+	public boolean getSelected() { return selected; }
+	public void setSelected(boolean select) { selected = select; }
 	
-	public void setSelected() {
+	public void toggleSelection() {
 		selected = !selected;
 		
 		// Only wrap the single selected item in a border
