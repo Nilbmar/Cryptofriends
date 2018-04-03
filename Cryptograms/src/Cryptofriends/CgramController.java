@@ -22,7 +22,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class CgramController {
@@ -72,22 +74,32 @@ public class CgramController {
 	private VBox vboxDisplayItems;
 	
 	@FXML
+	private VBox vboxBottomPanel;
+	
+	@FXML
+	private HBox hboxBottomPanel;
+	
+	@FXML
 	private HBox hboxClearIncorrect;
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
+		hboxBottomPanel.setManaged(true);
 		hboxClearIncorrect.setManaged(true);
 		showClearIncorrectBtns();
 	}
 	
 	public void showClearIncorrectBtns() {
 		if (hboxClearIncorrect.isVisible()) {
+			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
+			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
+			hboxBottomPanel.setVisible(true);
 			hboxClearIncorrect.setVisible(false);
-			
-			vboxDisplayItems.setPrefHeight(55);
 		} else {
+			vboxDisplayItems.setStyle("-fx-background-color: #fc4a1a;");
+			vboxBottomPanel.setStyle("-fx-background-color: #fc4a1a;");
 			hboxClearIncorrect.setVisible(true);
-			vboxDisplayItems.setPrefHeight(90);
+			hboxBottomPanel.setVisible(false);
 		}
 	}
 	
@@ -327,7 +339,6 @@ public class CgramController {
 	}
 	
 	private void moveHilightVertically(int spacesToAdjust) {
-		int nextIndex = -1;
 		int origLineNum = flow.lineOfSpaceBox(hilightedSpaceID);
 		int newLineNum = origLineNum + spacesToAdjust;
 		ArrayList<SpaceBox> newLine = null;
@@ -472,6 +483,13 @@ public class CgramController {
 		flow = new FlowBox();
 		flow.setSpacesPerLine(15);
 		anchor.getChildren().add(flow);
+		/*
+		Pane takeUpSpaceAtBottom = new Pane();
+		takeUpSpaceAtBottom.setManaged(false);
+		takeUpSpaceAtBottom.setMinWidth(200);
+		takeUpSpaceAtBottom.setMinHeight(50);
+		anchor.getChildren().add(takeUpSpaceAtBottom);
+		*/
 
 		puzzleIndex = 1;
 		sqlLoader.setTarget(Integer.toString(puzzleIndex));
