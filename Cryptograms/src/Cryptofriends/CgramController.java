@@ -321,11 +321,19 @@ public class CgramController {
 		int spaceBoxID = spaceBox.getSpace().getID();					
 		Space space = null;
 		
-		// TODO: MAKE THIS GO FORWARD FIRST, BECAUSE IT SHOULD ALWAYS
-		// TODO: BE ABLE TO GO BACKWARD
-		// Try to go backward first
-		// More likely able to go back than forward
-		if (origPos > 0) {
+		// Try to go forward first
+		if(origPos > 0 && origPos < newLine.size()) {
+			// Going backward would cause a NullPointer so go forward
+			// but make sure it's still on the newLine
+			// Finds the first LetterSpace after the space trying to move from
+			for (SpaceBox currentSpaceBox : newLine) {
+				space = currentSpaceBox.getSpace();
+				if (space.getSpaceType() == SpaceType.LETTER && space.getID() > spaceBoxID) {
+					spaceBox = currentSpaceBox;
+					return spaceBox;
+				}
+			}
+		} else if (origPos > 0) {
 			// Add LetterSpaces with an ID lower than the one trying to move from
 			// Ensures the last item in the array is the LetterSpace just before
 			// the space trying to move from
@@ -337,17 +345,6 @@ public class CgramController {
 			}
 			// The LetterSpace closest will be the last one in the array
 			spaceBox = letterBoxesOnNewLine.get(letterBoxesOnNewLine.size() - 1);
-		} else if(origPos < newLine.size()) {
-			// Going backward would cause a NullPointer so go forward
-			// but make sure it's still on the newLine
-			// Finds the first LetterSpace after the space trying to move from
-			for (SpaceBox currentSpaceBox : newLine) {
-				space = currentSpaceBox.getSpace();
-				if (space.getSpaceType() == SpaceType.LETTER && space.getID() > spaceBoxID) {
-					spaceBox = currentSpaceBox;
-					return spaceBox;
-				}
-			}
 		}
 		
 		return spaceBox;
@@ -374,11 +371,23 @@ public class CgramController {
 			}
 		}
 		
-		flow.clearSelection();
-		
 		// Make sure index does exist and toggle the selection on for that SpaceBox
-		if (nextIndex >= 0 && nextIndex < letterBoxes.size()) {
-			letterBoxes.get(nextIndex).toggleSelection();
+		if (nextIndex >= 0) {
+			if (nextIndex < letterBoxes.size()) {
+				// Within range handle normally
+				flow.clearSelection();
+				letterBoxes.get(nextIndex).toggleSelection();
+			} else if (nextIndex >= letterBoxes.size()) {
+				// If moving right from the last LetterSpace
+				// go to the first LetterSpace on the first line
+				flow.clearSelection();
+				letterBoxes.get(0).toggleSelection();
+			}
+		} else if (nextIndex < 0) {
+			// Allow cycling backward from first LetterSpace on first line
+			// to last LetterSpace on last line
+			flow.clearSelection();
+			letterBoxes.get(letterBoxes.size() - 1).toggleSelection();
 		}
 	}
 	
