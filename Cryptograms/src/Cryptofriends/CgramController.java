@@ -82,18 +82,25 @@ public class CgramController {
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
+		
+		// Allows setting the colors for these panels
 		hboxBottomPanel.setManaged(true);
 		hboxClearIncorrect.setManaged(true);
+		
+		// Start with hboxClearIncorrect hidden
+		// and default color for panels
 		showClearIncorrectBtns();
 	}
 	
 	public void showClearIncorrectBtns() {
 		if (hboxClearIncorrect.isVisible()) {
+			// Shows hboxClearIncorrect and set warning color
 			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
 			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
 			hboxBottomPanel.setVisible(true);
 			hboxClearIncorrect.setVisible(false);
 		} else {
+			// Hides hboxClearIncorrect and set default color
 			vboxDisplayItems.setStyle("-fx-background-color: #fc4a1a;");
 			vboxBottomPanel.setStyle("-fx-background-color: #fc4a1a;");
 			hboxClearIncorrect.setVisible(true);
@@ -125,7 +132,6 @@ public class CgramController {
 					nextType = null;
 				}
 				((PuncBox) spaceBox).setNextType(nextType);
-				//((PuncBox) spaceBox).setAlignment();
 			}
 			
 			// Set prevType to be used in the next iteration
@@ -146,10 +152,13 @@ public class CgramController {
 	
 	private void puzzleSolved() {
 		System.out.println("Congratulations! You won the game!");
+		
+		// Clears hilights and selection box
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
 			spaceBox.setCSS(false, false);
 		}
 		
+		// Disable puzzle so it can't be edited
 		gameMan.setPuzzleState(PuzzleState.WON);
 		flow.setDisable(true);
 	}
@@ -196,7 +205,7 @@ public class CgramController {
 			
 		}
 	}
-	
+
 	public void clearLetter() {
 		setAnswer(" ");
 	}
@@ -516,13 +525,6 @@ public class CgramController {
 		flow = new FlowBox();
 		flow.setSpacesPerLine(15);
 		anchor.getChildren().add(flow);
-		/*
-		Pane takeUpSpaceAtBottom = new Pane();
-		takeUpSpaceAtBottom.setManaged(false);
-		takeUpSpaceAtBottom.setMinWidth(200);
-		takeUpSpaceAtBottom.setMinHeight(50);
-		anchor.getChildren().add(takeUpSpaceAtBottom);
-		*/
 
 		puzzleIndex = 1;
 		sqlLoader.setTarget(Integer.toString(puzzleIndex));
