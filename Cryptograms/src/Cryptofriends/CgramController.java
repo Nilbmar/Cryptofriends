@@ -202,7 +202,6 @@ public class CgramController {
 		flow.clearSelection();
 		if (selectedBox != null) {
 			selectedBox.toggleSelection();
-			
 		}
 	}
 
@@ -224,18 +223,23 @@ public class CgramController {
 	}
 	
 	public void hilightIncorrect() {
-		clearHilights();
-		
-		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
-		LetterSpace letterSpace = null;
-		for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
-			letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
-			if (!letterSpace.isBlank()) {
-				incorrectSpaceBoxes.get(x).setCSS(true, true);	
-			}	
+		// Only needs to run if something has been selected on this puzzle
+		// Otherwise, the last SpaceBox would be hilighted by clearHilights()
+		SpaceBox selectedBox = getCurrentlySelected();
+		if (selectedBox != null) {
+			clearHilights();
+			
+			ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
+			LetterSpace letterSpace = null;
+			for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
+				letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
+				if (!letterSpace.isBlank()) {
+					incorrectSpaceBoxes.get(x).setCSS(true, true);	
+				}	
+			}
+	
+			showClearIncorrectBtns();
 		}
-
-		showClearIncorrectBtns();
 	}
 	
 	public void displayLetter() {
