@@ -348,7 +348,6 @@ public class CgramController {
 			for (SpaceBox currentSpaceBox : newLine) {
 				space = currentSpaceBox.getSpace();
 				if (space.getSpaceType() == SpaceType.LETTER && space.getID() > spaceBoxID) {
-					//spaceBoxToReturn = currentSpaceBox;
 					return currentSpaceBox;
 				}
 			}
@@ -369,7 +368,6 @@ public class CgramController {
 			}
 			// The LetterSpace closest will be the last one in the array
 			spaceBoxToReturn = letterBoxesOnNewLine.get(letterBoxesOnNewLine.size() - 1);
-			return spaceBoxToReturn;
 		}
 		
 		return spaceBoxToReturn;
