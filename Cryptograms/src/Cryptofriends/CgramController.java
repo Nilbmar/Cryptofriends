@@ -297,6 +297,11 @@ public class CgramController {
 		return selected;
 	}
 	
+	
+	/* Allows movement between SpaceBoxes with arrow keys
+	 * moveHilightVertically for Up (-1) / Down (1)
+	 * moveHilightHorizontally for Left (-1) / Right (1)
+	 */
 	public void moveSelection(KeyCode keyCode) {
 		int spacesToAdjust = 0;
 		
@@ -331,7 +336,8 @@ public class CgramController {
 	 */
 	private SpaceBox getClosestLetter(ArrayList<SpaceBox> newLine, SpaceBox spaceBox, int origPos) {
 		ArrayList<SpaceBox> letterBoxesOnNewLine = new ArrayList<SpaceBox>();
-		int spaceBoxID = spaceBox.getSpace().getID();					
+		SpaceBox spaceBoxToReturn = null;
+		int spaceBoxID = spaceBox.getSpace().getID();			
 		Space space = null;
 		
 		// Try to go forward first
@@ -342,11 +348,16 @@ public class CgramController {
 			for (SpaceBox currentSpaceBox : newLine) {
 				space = currentSpaceBox.getSpace();
 				if (space.getSpaceType() == SpaceType.LETTER && space.getID() > spaceBoxID) {
-					spaceBox = currentSpaceBox;
-					return spaceBox;
+					//spaceBoxToReturn = currentSpaceBox;
+					return currentSpaceBox;
 				}
 			}
-		} else if (origPos > 0) {
+		}
+
+		// Ensure not returning an null SpaceBox
+		// before, it could return a blank or puncuation space
+		// if it tried to move to the right but no LetterSpaces where available
+		if (spaceBoxToReturn == null) {
 			// Add LetterSpaces with an ID lower than the one trying to move from
 			// Ensures the last item in the array is the LetterSpace just before
 			// the space trying to move from
@@ -357,10 +368,11 @@ public class CgramController {
 				}
 			}
 			// The LetterSpace closest will be the last one in the array
-			spaceBox = letterBoxesOnNewLine.get(letterBoxesOnNewLine.size() - 1);
+			spaceBoxToReturn = letterBoxesOnNewLine.get(letterBoxesOnNewLine.size() - 1);
+			return spaceBoxToReturn;
 		}
 		
-		return spaceBox;
+		return spaceBoxToReturn;
 	}
 	
 	
