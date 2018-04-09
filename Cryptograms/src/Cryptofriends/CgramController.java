@@ -31,7 +31,6 @@ public class CgramController {
 	private PuzzleManager puzzleMan = new PuzzleManager();
 	private PuzzleLoader sqlLoader = new PuzzleLoader(puzzleMan);
 	private int puzzleIndex = 0;
-	private int hilightedSpaceID = 0;
 	
 	@FXML
 	private FlowBox flow;
@@ -308,23 +307,24 @@ public class CgramController {
 	 */
 	public void moveSelection(KeyCode keyCode) {
 		int spacesToAdjust = 0;
+		int selectedID = getCurrentlySelected().getSpace().getID();
 		
 		switch (keyCode) {
 		case UP:
 			spacesToAdjust = -1;
-			moveHilightVertically(spacesToAdjust);
+			moveHilightVertically(selectedID, spacesToAdjust);
 			break;
 		case DOWN:
 			spacesToAdjust = 1;
-			moveHilightVertically(spacesToAdjust);
+			moveHilightVertically(selectedID, spacesToAdjust);
 			break;
 		case LEFT:
 			spacesToAdjust = -1;
-			moveHilightHorizontally(hilightedSpaceID, spacesToAdjust);
+			moveHilightHorizontally(selectedID, spacesToAdjust);
 			break;
 		case RIGHT:
 			spacesToAdjust = 1;
-			moveHilightHorizontally(hilightedSpaceID, spacesToAdjust);
+			moveHilightHorizontally(selectedID, spacesToAdjust);
 			break;
 		default:
 			break;
@@ -418,14 +418,14 @@ public class CgramController {
 		}
 	}
 	
-	private void moveHilightVertically(int spacesToAdjust) {
-		int origLineNum = flow.lineOfSpaceBox(hilightedSpaceID);
+	private void moveHilightVertically(int selectedID, int spacesToAdjust) {
+		int origLineNum = flow.lineOfSpaceBox(selectedID);
 		int newLineNum = origLineNum + spacesToAdjust;
 		ArrayList<SpaceBox> newLine = null;
 		
 		if (newLineNum >= 0 && newLineNum < flow.lines()) {
 			newLine = flow.spaceBoxesOnLine(newLineNum);
-			int origPos = flow.positionOnLine(origLineNum, hilightedSpaceID);
+			int origPos = flow.positionOnLine(origLineNum, selectedID);
 
 			// If origPos exists on the newLine, and is a LetterSpace, select it
 			// Else get closest letter to that position on the newLine
@@ -451,7 +451,7 @@ public class CgramController {
 	}
 	
 	public void updateHilights(int id) {
-		hilightedSpaceID = id;
+		//hilightedSpaceID = id;
 		// Tells each SpaceBox to hilight
 		// if it's space is selected (set to hilight)
 		LetterSpace letterSpace = null;
