@@ -9,6 +9,7 @@ public class ScoreData {
 	}
 	
 	public int getScore() { return score; }
+	
 	public void addToScore(int amtToAdd) {
 		score += amtToAdd;
 	}

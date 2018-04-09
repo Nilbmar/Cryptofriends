@@ -82,7 +82,16 @@ public class CgramController {
 	private VBox vboxBottomPanel;
 	
 	@FXML
-	private HBox hboxBottomPanel;
+	private HBox hboxScorePanel;
+	
+	@FXML
+	private Label lblPlayerName;
+	
+	@FXML
+	private Label lblTime;
+	
+	@FXML
+	private Label lblScore;
 	
 	@FXML
 	private HBox hboxClearIncorrect;
@@ -91,7 +100,7 @@ public class CgramController {
 		this.gameMan = gameMan;
 		
 		// Allows setting the colors for these panels
-		hboxBottomPanel.setManaged(true);
+		hboxScorePanel.setManaged(true);
 		hboxClearIncorrect.setManaged(true);
 		
 		// Start with hboxClearIncorrect hidden
@@ -101,17 +110,20 @@ public class CgramController {
 	
 	public void showClearIncorrectBtns() {
 		if (hboxClearIncorrect.isVisible()) {
-			// Shows hboxClearIncorrect and set warning color
+			// Hides hboxClearIncorrect
+			// Show user data
+			// and set default color
+			lblPlayerName.setText(gameMan.getPlayerManager().getPlayers().toString());
 			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
 			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
-			hboxBottomPanel.setVisible(true);
+			hboxScorePanel.setVisible(true);
 			hboxClearIncorrect.setVisible(false);
 		} else {
-			// Hides hboxClearIncorrect and set default color
+			// Shows hboxClearIncorrect and set warning color
 			vboxDisplayItems.setStyle("-fx-background-color: #fc4a1a;");
 			vboxBottomPanel.setStyle("-fx-background-color: #fc4a1a;");
 			hboxClearIncorrect.setVisible(true);
-			hboxBottomPanel.setVisible(false);
+			hboxScorePanel.setVisible(false);
 		}
 	}
 	

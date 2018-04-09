@@ -82,7 +82,76 @@
    <bottom>
       <VBox fx:id="vboxBottomPanel" maxHeight="50.0" minHeight="0.0" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="hboxBottomPanel" maxHeight="50.0" minHeight="0.0" prefHeight="50.0" prefWidth="200.0" />
+            <HBox fx:id="hboxScorePanel" alignment="CENTER_RIGHT" maxHeight="50.0" minHeight="0.0" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Player">
+                           <font>
+                              <Font name="Envy Code R Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblPlayerName" text="Number 1">
+                           <font>
+                              <Font name="Envy Code R Italic" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER_RIGHT" prefHeight="200.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0">
+                           <children>
+                              <Label text="Score:" textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="Envy Code R Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblScore" alignment="CENTER_RIGHT" text="100%">
+                                 <font>
+                                    <Font name="Envy Code R Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0">
+                           <children>
+                              <Label text="Time: " textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="Envy Code R Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblTime" text="100m 60s">
+                                 <font>
+                                    <Font name="Envy Code R Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets right="15.0" />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></HBox>
             <HBox fx:id="hboxClearIncorrect" alignment="BOTTOM_CENTER" maxHeight="50.0" minHeight="0.0" prefHeight="0.0">
                <children>
                   <Label prefHeight="50.0" prefWidth="200.0" text="Clear Incorrect?">
