@@ -17,6 +17,7 @@ import core.Spaces.LetterSpace;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import core.Spaces.Word;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,6 +53,9 @@ public class CgramController {
 	
 	@FXML
 	private MenuItem randomPuzzle;
+	
+	@FXML
+	private MenuItem exitProgram;
 	
 	@FXML
 	private MenuItem dislplayLetter;
@@ -554,5 +558,10 @@ public class CgramController {
 		puzzleIndex = 1;
 		sqlLoader.setTarget(Integer.toString(puzzleIndex));
 		sqlLoader.load();
+	}
+	
+	public void exitProgram() {
+		System.out.println("Exiting Cyrptofriends.");
+		Platform.exit();
 	}
 }
