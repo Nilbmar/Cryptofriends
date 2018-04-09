@@ -1,6 +1,7 @@
 package Cryptofriends;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.PuncBox;
@@ -49,6 +50,9 @@ public class CgramController {
 	
 	@FXML
 	private MenuItem clearPuzzle;
+	
+	@FXML
+	private MenuItem randomPuzzle;
 	
 	@FXML
 	private MenuItem dislplayLetter;
@@ -455,6 +459,13 @@ public class CgramController {
 			letterSpace = (LetterSpace) spaceBox.getSpace();
 			spaceBox.setCSS(letterSpace.getHilight(), false);
 		}
+	}
+	
+	public void loadRandomPuzzle() {
+		int numOfPuzzles = puzzleMan.count();
+		int puzzleNum = ThreadLocalRandom.current().nextInt(0, numOfPuzzles);
+		puzzleIndex = puzzleNum;
+		loadNewPuzzle();
 	}
 	
 	public void clearPuzzle() {

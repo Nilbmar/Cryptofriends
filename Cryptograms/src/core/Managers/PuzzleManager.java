@@ -11,6 +11,10 @@ public class PuzzleManager {
 		puzzleMap = new HashMap<Integer, PuzzleData>();
 	}
 	
+	public int count() { 
+		return puzzleMap.size();
+	}
+	
 	public void addPuzzle(int key, String phrase, String subject, String author, int numOfAuthorQuote) {
 		PuzzleData puzzle = new PuzzleData(key, phrase, subject, author, numOfAuthorQuote);
 		puzzleMap.put(key, puzzle);

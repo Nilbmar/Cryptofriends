@@ -37,7 +37,7 @@
                         <items>
                               <MenuItem id="clearIncorrect" fx:id="clearPuzzle" mnemonicParsing="false" onAction="#clearPuzzle" text="Clear Letters" />
                               <MenuItem id="newPuzzle" fx:id="newPuzzle" mnemonicParsing="false" onAction="#loadNewPuzzle" text="New Puzzle" />
-                              <MenuItem mnemonicParsing="false" text="Random Puzzle" />
+                              <MenuItem fx:id="randomPuzzle" mnemonicParsing="false" onAction="#loadRandomPuzzle" text="Random Puzzle" />
                           <MenuItem mnemonicParsing="false" text="Close Game" />
                         </items>
                       </Menu>
