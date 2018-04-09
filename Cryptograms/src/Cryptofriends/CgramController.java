@@ -353,8 +353,8 @@ public class CgramController {
 			}
 		}
 
-		// Ensure not returning an null SpaceBox
-		// before, it could return a blank or puncuation space
+		// Ensure not returning a null SpaceBox
+		// without this, it could return a blank or punctuation space
 		// if it tried to move to the right but no LetterSpaces where available
 		if (spaceBoxToReturn == null) {
 			// Add LetterSpaces with an ID lower than the one trying to move from
