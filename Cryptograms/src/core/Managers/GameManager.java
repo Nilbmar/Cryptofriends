@@ -1,7 +1,6 @@
 package core.Managers;
 
 import core.Data.PuzzleState;
-import core.Score.ScoreManager;
 
 public class GameManager {
 	private SelectionManager selectMan;

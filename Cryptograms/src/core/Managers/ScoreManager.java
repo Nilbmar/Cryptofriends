@@ -1,6 +1,8 @@
-package core.Score;
+package core.Managers;
 
 import java.util.HashMap;
+
+import core.Data.ScoreData;
 
 public class ScoreManager {
 	private HashMap<String, ScoreData> playerScores = null;

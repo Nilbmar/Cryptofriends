@@ -1,4 +1,4 @@
-package core.Score;
+package core.Data;
 
 public class ScoreData {
 	private String playerName = null;
