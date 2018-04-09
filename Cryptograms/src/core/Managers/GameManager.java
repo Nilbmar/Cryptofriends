@@ -12,6 +12,12 @@ public class GameManager {
 		playerMan = new PlayerManager();
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
+		
+		// Create default player
+		// and switch to them so player is set
+		// for player info box
+		playerMan.addPlayer();
+		playerMan.switchPlayer();
 	}
 	
 	public void update() {

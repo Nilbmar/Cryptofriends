@@ -113,7 +113,10 @@ public class CgramController {
 			// Hides hboxClearIncorrect
 			// Show user data
 			// and set default color
-			lblPlayerName.setText(gameMan.getPlayerManager().getPlayers().toString());
+			if (gameMan.getPlayerManager() != null) {
+				String playerName = gameMan.getPlayerManager().getPlayer().getName();
+				lblPlayerName.setText(playerName);
+			}
 			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
 			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
 			hboxScorePanel.setVisible(true);
