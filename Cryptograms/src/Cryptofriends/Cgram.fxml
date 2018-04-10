@@ -48,6 +48,18 @@
                               <MenuItem fx:id="displayAllLetters" mnemonicParsing="false" onAction="#displayAllLetters" text="Answer Puzzle" />
                            </items>
                       </Menu>
+                        <Menu mnemonicParsing="false" text="Players">
+                          <items>
+                              <MenuItem fx:id="nextPlayer" mnemonicParsing="false" onAction="#switchPlayer" text="Next Player" />
+                              <Menu mnemonicParsing="false" text="Edit Players">
+                                 <items>
+                                    <MenuItem fx:id="renamePlayer" mnemonicParsing="false" onAction="#renamePlayer" text="Rename Player" />
+                                  <MenuItem fx:id="addPlayer" mnemonicParsing="false" onAction="#addPlayer" text="Add Player" />
+                                    <MenuItem fx:id="removePlayer" mnemonicParsing="false" onAction="#removePlayer" text="Remove Player" />
+                                 </items>
+                              </Menu>
+                          </items>
+                        </Menu>
                       <Menu mnemonicParsing="false" text="Help">
                         <items>
                           <MenuItem mnemonicParsing="false" text="About" />

@@ -67,6 +67,18 @@ public class CgramController {
 	private MenuItem displayAllLetters;
 	
 	@FXML
+	private MenuItem nextPlayer;
+	
+	@FXML 
+	private MenuItem addPlayer;
+	
+	@FXML 
+	private MenuItem renamePlayer;
+	
+	@FXML 
+	private MenuItem removePlayer;
+	
+	@FXML
 	private Button btnClearIncorrectYes;
 
 	@FXML
@@ -128,6 +140,24 @@ public class CgramController {
 			hboxClearIncorrect.setVisible(true);
 			hboxScorePanel.setVisible(false);
 		}
+	}
+	
+	public void addPlayer() {
+		gameMan.getPlayerManager().addPlayer();
+	}
+	
+	public void renamePlayer() {
+		System.out.println("Rename Player");
+	}
+	
+	public void removePlayer() {
+		System.out.println("Remove Player");
+	}
+	
+	public void switchPlayer() {
+		System.out.println("Switch Player");
+		gameMan.getPlayerManager().switchPlayer();
+		System.out.println(gameMan.getPlayerManager().getPlayer().getName());
 	}
 	
 	private void setupPuncAlignment() {

@@ -1,7 +1,10 @@
 package core.Managers;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import core.Data.Player;
 
@@ -22,34 +25,44 @@ public class PlayerManager {
 	}
 	
 	public void switchPlayer() {
-		String currentName = null;
-		while (players.entrySet().iterator().hasNext()) {
-			currentName = players.entrySet().iterator().next().getKey();
-			
-			if (currentPlayerName != null && currentName.contentEquals(currentPlayerName)) {
-				System.out.println("not null and contents equal");
-				currentPlayerName = players.entrySet().iterator().next().getKey();
+		boolean nextPlayer = false;
+		Iterator<Entry<String, Player>> it = players.entrySet().iterator();
+		while (it.hasNext()) {
+			// First run - set to first player
+			if (currentPlayerName == null) {
+				currentPlayerName = it.next().getKey();
 				break;
 			}
 			
-			if (currentPlayerName == null) {
-				System.out.println("player name null");
-				currentPlayerName = players.entrySet().iterator().next().getKey();
+			// Change the current player
+			if (nextPlayer) {
+				currentPlayerName = it.next().getKey();
+				nextPlayer = false;
 				break;
+			}
+			
+			// When find the current player
+			// set so next iteratior changes the current player
+			if (currentPlayerName.contentEquals(it.next().getKey())) {
+				nextPlayer = true;
 			}
 		}
+
+		// Allow for cycling back to first player
+		if (!it.hasNext() && nextPlayer == true) {
+			Set<String> set = players.keySet();
+			currentPlayerName = set.iterator().next();
+		}
+		
+		System.out.println("switched to player " + currentPlayerName);
 	}
 	
 	public Player getPlayer() {
 		Player player = null;
 		try {
-			System.out.println("Trying to get currentPlayerName");
 			player = players.get(currentPlayerName);
-			System.out.println("Got currentPlayerName");
 		} catch (Exception nullEx) {
 			player = players.entrySet().iterator().next().getValue();
-			//player = players.get(players.entrySet()
-			System.out.println("Current player not set.");
 		}
 		
 		return player;
