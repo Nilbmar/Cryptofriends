@@ -156,12 +156,13 @@ public class CgramController {
 	public void removePlayer() {
 		System.out.println("Remove Player");
 		gameMan.getPlayerManager().removePlayer();
+		lblPlayerName.setText(gameMan.getPlayerManager().getPlayer().getName());
 	}
 	
 	public void switchPlayer() {
 		System.out.println("Switch Player");
 		gameMan.getPlayerManager().switchPlayer();
-		System.out.println(gameMan.getPlayerManager().getPlayer().getName());
+		lblPlayerName.setText(gameMan.getPlayerManager().getPlayer().getName());
 	}
 	
 	private void setupPuncAlignment() {

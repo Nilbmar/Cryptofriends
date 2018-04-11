@@ -104,19 +104,11 @@ public class PlayerManager {
 	
 	public void removePlayer() {
 		String playerToRemove = currentPlayerName;
-		switchPlayer();
-		if (players.containsKey(playerToRemove)) {
+		if (players.containsKey(playerToRemove) && players.size() > 1) {
+			switchPlayer();
 			players.remove(playerToRemove);
-		}
-	}
-	
-	public void removePlayer(String name) {
-		if (players.containsKey(name)) {
-			players.remove(name);
-			System.out.println("Removed player " + name);
-			System.out.println("Players left: " + players.keySet().toString());
 		} else {
-			System.out.println("Can't remove player");
+			System.out.println("Could not remove player.");
 		}
 	}
 	
