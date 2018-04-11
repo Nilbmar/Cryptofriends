@@ -7,6 +7,7 @@ import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
+import core.Data.Player;
 import core.Data.Puzzle;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
@@ -143,15 +144,18 @@ public class CgramController {
 	}
 	
 	public void addPlayer() {
-		gameMan.getPlayerManager().addPlayer();
+		// Returned so it can be added to menu
+		Player playerAdded = gameMan.getPlayerManager().addPlayer();
 	}
 	
 	public void renamePlayer() {
 		System.out.println("Rename Player");
+		gameMan.getPlayerManager().renamePlayer();
 	}
 	
 	public void removePlayer() {
 		System.out.println("Remove Player");
+		gameMan.getPlayerManager().removePlayer();
 	}
 	
 	public void switchPlayer() {

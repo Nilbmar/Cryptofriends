@@ -20,13 +20,10 @@ public class GameManagerTest {
 	//@Test
 	public void addPlayerTest() {
 		//fail("Not yet implemented");
-		gameMan.getPlayerManager().addPlayer("ZebraTwo");
 		gameMan.getPlayerManager().addPlayer();
 		gameMan.getPlayerManager().addPlayer();
-		gameMan.getPlayerManager().addPlayer("Steve");
 		gameMan.getPlayerManager().addPlayer();
 		gameMan.getPlayerManager().addPlayer();
-		gameMan.getPlayerManager().addPlayer("George Anne");
 		assertNotNull(gameMan);
 		
 		// Testing iteration
