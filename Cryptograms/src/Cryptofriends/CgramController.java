@@ -1,8 +1,6 @@
 package Cryptofriends;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.GUI.PlayerMenu;

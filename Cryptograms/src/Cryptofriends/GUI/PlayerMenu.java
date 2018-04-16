@@ -17,7 +17,7 @@ public class PlayerMenu extends Menu {
 	public PlayerMenu(CgramController controller, Player player) {
 		this.controller = controller;
 		this.player = player;
-		numOfPlayer = player.getPlayerNum();
+		numOfPlayer = this.player.getPlayerNum();
 		this.setText(player.getName());
 		
 		

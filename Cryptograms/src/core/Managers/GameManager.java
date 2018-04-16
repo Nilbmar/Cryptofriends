@@ -22,7 +22,7 @@ public class GameManager {
 		// for player info box
 		Player firstPlayer = playerMan.addPlayer();
 		playerMan.switchPlayer();
-		controller.addPlayerMenuItem(firstPlayer);
+		this.controller.addPlayerMenuItem(firstPlayer);
 	}
 	
 	public void update() {
