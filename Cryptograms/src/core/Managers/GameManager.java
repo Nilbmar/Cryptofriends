@@ -1,14 +1,18 @@
 package core.Managers;
 
+import Cryptofriends.CgramController;
+import core.Data.Player;
 import core.Data.PuzzleState;
 
 public class GameManager {
+	private CgramController controller;
 	private SelectionManager selectMan;
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
 	private PuzzleState puzzleState = PuzzleState.PLAYING;
 	
-	public GameManager() {
+	public GameManager(CgramController controller) {
+		this.controller = controller;
 		playerMan = new PlayerManager();
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
@@ -16,8 +20,9 @@ public class GameManager {
 		// Create default player
 		// and switch to them so player is set
 		// for player info box
-		playerMan.addPlayer();
+		Player firstPlayer = playerMan.addPlayer();
 		playerMan.switchPlayer();
+		controller.addPlayerMenuItem(firstPlayer);
 	}
 	
 	public void update() {

@@ -41,7 +41,7 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Cryptograms");
 			
-			GameManager gameMan = new GameManager();
+			GameManager gameMan = new GameManager(controller);
 			controller.setGameManager(gameMan);
 			controller.createBoard();
 			controller.loadNewPuzzle();

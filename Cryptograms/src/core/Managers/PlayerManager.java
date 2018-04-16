@@ -80,37 +80,51 @@ public class PlayerManager {
 	// will make the player's name
 	// "Player #" based on whatever number (#) they are
 	public Player addPlayer() {
-		playerCount++;
-		int playerNum = playerCount;
+		Player player = null;
 		
-		// Player key and Player name can be different
-		String playerKey = "Player " + playerNum;
-		String playerName = playerKey;
-		
-		/*
-		// TODO: LIMIT INPUT LENGTH
-		// Ask player to input name other than the default
-		TextInputDialog textInput = new TextInputDialog();
-		textInput.setTitle("Player Name");
-		textInput.setHeaderText(playerKey + ", would you like to change your name?");
-		
-		Optional<String> result = textInput.showAndWait();
-		
-		if (result.isPresent() && !result.get().isEmpty()) {
-			playerName = result.get();
+		if (playerCount < 4) {
+			playerCount++;
+			int playerNum = playerCount;
+			
+			// Player key and Player name can be different
+			String playerKey = "Player " + playerNum;
+			String playerName = playerKey;
+			
+			/*
+			// TODO: LIMIT INPUT LENGTH
+			// Ask player to input name other than the default
+			TextInputDialog textInput = new TextInputDialog();
+			textInput.setTitle("Player Name");
+			textInput.setHeaderText(playerKey + ", would you like to change your name?");
+			
+			Optional<String> result = textInput.showAndWait();
+			
+			if (result.isPresent() && !result.get().isEmpty()) {
+				playerName = result.get();
+			}
+			*/
+			player = new Player(playerName, playerNum);
+			
+			players.put(playerKey, player);
+			System.out.println("Creating player" + player.getName());
+		} else {
+			System.out.println("No player added. Player limit reached");
 		}
-		*/
-		Player player = new Player(playerName, playerNum);
-		
-		players.put(playerKey, player);
 		
 		return player;
 	}
 	
-	public void removePlayer() {
-		String playerToRemove = currentPlayerName;
+	public void removePlayer(int numOfPlayer) {
+		String playerToRemove = "Player " + numOfPlayer;
 		if (players.containsKey(playerToRemove) && players.size() > 1) {
-			switchPlayer();
+			String nameOfPlayerToRemove = players.get(playerToRemove).getName();
+			
+			if (currentPlayerName.contentEquals(nameOfPlayerToRemove)) {
+				switchPlayer();
+			}
+			
+			players.get(playerToRemove).setRemoved(true);
+			
 			players.remove(playerToRemove);
 		} else {
 			System.out.println("Could not remove player.");
@@ -121,8 +135,8 @@ public class PlayerManager {
 	 * Does not change the key used to store the Player
 	 * in the LinkedHashMap
 	 */
-	public String renamePlayer() {
-		String playerKey = currentPlayerName;
+	public String renamePlayer(int numOfPlayer) {
+		String playerKey = "Player " + numOfPlayer;
 		String nameToReturn = null;
 		
 		if (players.containsKey(playerKey)) {
@@ -137,6 +151,8 @@ public class PlayerManager {
 				nameToReturn = result.get();
 				players.get(playerKey).setName(nameToReturn);
 			}
+		} else {
+			System.out.println(playerKey + " doesn't exist.");
 		}
 		
 		return nameToReturn;		

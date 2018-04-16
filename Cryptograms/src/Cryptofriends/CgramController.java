@@ -1,8 +1,11 @@
 package Cryptofriends;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
+import Cryptofriends.GUI.PlayerMenu;
 import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
@@ -22,6 +25,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -73,11 +77,8 @@ public class CgramController {
 	@FXML 
 	private MenuItem addPlayer;
 	
-	@FXML 
-	private MenuItem renamePlayer;
-	
-	@FXML 
-	private MenuItem removePlayer;
+	@FXML
+	private Menu playerMenu;
 	
 	@FXML
 	private Button btnClearIncorrectYes;
@@ -145,37 +146,53 @@ public class CgramController {
 	
 	// Changes the panel on the bottom that holds
 	// player name, score, and time
-	private void updatePlayerInfoBox(String playerName) {
-		if (playerName != null && !playerName.isEmpty()) {
-			lblPlayerName.setText(playerName);
+	private void updatePlayerInfoBox() {
+		Player player = gameMan.getPlayerManager().getCurrentPlayer();
+		
+		if (player != null) {
+			lblPlayerName.setText(player.getName());
+		}
+	}
+	
+	// Created separate function
+	// So GameManager can call after creating first player
+	// because it can't use the addPlayer() function
+	// that needs the yet-to-be-constructed GameManager
+	public void addPlayerMenuItem(Player player) {
+		if (player != null) {
+			int playerNum = player.getPlayerNum();
+			System.out.println("Number of players is : " + playerNum);
+			
+			PlayerMenu playerMenuItem = new PlayerMenu(this, player);
+			playerMenu.getItems().add(playerMenuItem);
 		}
 	}
 	
 	public void addPlayer() {
 		// Returned so it can be added to menu
-		Player playerAdded = gameMan.getPlayerManager().addPlayer();
+		Player player = gameMan.getPlayerManager().addPlayer();
+		addPlayerMenuItem(player);
 	}
 	
-	public void renamePlayer() {
+	public void renamePlayer(int numOfPlayer) {
 		System.out.println("Rename Player");
-		String newName = gameMan.getPlayerManager().renamePlayer();
+		gameMan.getPlayerManager().renamePlayer(numOfPlayer);
 		
-		updatePlayerInfoBox(newName);
+		updatePlayerInfoBox();
 	}
 	
-	public void removePlayer() {
+	public void removePlayer(int numOfPlayer) {
 		System.out.println("Remove Player");
-		gameMan.getPlayerManager().removePlayer();
-		String newCurrentPlayer = gameMan.getPlayerManager().getCurrentPlayer().getName(); 
+		gameMan.getPlayerManager().removePlayer(numOfPlayer);
 		
-		updatePlayerInfoBox(newCurrentPlayer);
+		updatePlayerInfoBox();
 	}
 	
 	public void switchPlayer() {
 		System.out.println("Switch Player");
-		String newCurrentPlayer = gameMan.getPlayerManager().switchPlayer();
+		gameMan.getPlayerManager().switchPlayer();
 		
-		updatePlayerInfoBox(newCurrentPlayer);
+		updatePlayerInfoBox();
 	}
 	
 	private void setupPuncAlignment() {

@@ -5,6 +5,7 @@ public class Player {
 	private int playerNum;
 	private int score;
 	private boolean turn;
+	private boolean removed;
 	
 	public Player(String name, int num) {
 		this.name = name;
@@ -22,4 +23,7 @@ public class Player {
 	
 	public void setTurn(boolean turn) { this.turn = turn; }
 	public boolean isPlayersTurn() { return turn; }
+	
+	public void setRemoved(boolean removed) { this.removed = removed; }
+	public boolean getRemoved() { return removed; }
 }
