@@ -82,34 +82,30 @@ public class PlayerManager {
 	public Player addPlayer() {
 		Player player = null;
 		
-		if (playerCount < 4) {
-			playerCount++;
-			int playerNum = playerCount;
-			
-			// Player key and Player name can be different
-			String playerKey = "Player " + playerNum;
-			String playerName = playerKey;
-			
-			/*
-			// TODO: LIMIT INPUT LENGTH
-			// Ask player to input name other than the default
-			TextInputDialog textInput = new TextInputDialog();
-			textInput.setTitle("Player Name");
-			textInput.setHeaderText(playerKey + ", would you like to change your name?");
-			
-			Optional<String> result = textInput.showAndWait();
-			
-			if (result.isPresent() && !result.get().isEmpty()) {
-				playerName = result.get();
-			}
-			*/
-			player = new Player(playerName, playerNum);
-			
-			players.put(playerKey, player);
-			System.out.println("Creating player" + player.getName());
-		} else {
-			System.out.println("No player added. Player limit reached");
+		playerCount++;
+		int playerNum = playerCount;
+		
+		// Player key and Player name can be different
+		String playerKey = "Player " + playerNum;
+		String playerName = playerKey;
+		
+		/*
+		// TODO: LIMIT INPUT LENGTH
+		// Ask player to input name other than the default
+		TextInputDialog textInput = new TextInputDialog();
+		textInput.setTitle("Player Name");
+		textInput.setHeaderText(playerKey + ", would you like to change your name?");
+		
+		Optional<String> result = textInput.showAndWait();
+		
+		if (result.isPresent() && !result.get().isEmpty()) {
+			playerName = result.get();
 		}
+		*/
+		player = new Player(playerName, playerNum);
+		
+		players.put(playerKey, player);
+		System.out.println("Creating player" + player.getName());
 		
 		return player;
 	}
