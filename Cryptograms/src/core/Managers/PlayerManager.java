@@ -12,7 +12,8 @@ import javafx.scene.control.TextInputDialog;
 
 public class PlayerManager {
 	private LinkedHashMap<String, Player> players;
-	private String currentPlayerName;
+	private String currentPlayerName = null;
+	private int playerCount = 0;
 	
 	public PlayerManager() {
 		players = new LinkedHashMap<String, Player>();
@@ -27,7 +28,7 @@ public class PlayerManager {
 	}
 	*/
 	public void switchPlayer() {
-		boolean nextPlayer = false;
+		boolean setNextPlayerToCurrent = false;
 		Iterator<Entry<String, Player>> it = players.entrySet().iterator();
 		while (it.hasNext()) {
 			// First run - set to first player
@@ -37,21 +38,23 @@ public class PlayerManager {
 			}
 			
 			// Change the current player
-			if (nextPlayer) {
+			// This is run in an iteration after
+			// the if that sets nextPlayer
+			if (setNextPlayerToCurrent) {
 				currentPlayerName = it.next().getKey();
-				nextPlayer = false;
+				setNextPlayerToCurrent = false;
 				break;
 			}
 			
 			// When find the current player
 			// set so next iteratior changes the current player
 			if (currentPlayerName.contentEquals(it.next().getKey())) {
-				nextPlayer = true;
+				setNextPlayerToCurrent = true;
 			}
 		}
 
 		// Allow for cycling back to first player
-		if (!it.hasNext() && nextPlayer == true) {
+		if (!it.hasNext() && setNextPlayerToCurrent == true) {
 			Set<String> set = players.keySet();
 			currentPlayerName = set.iterator().next();
 		}
@@ -59,6 +62,7 @@ public class PlayerManager {
 		System.out.println("switched to player " + currentPlayerName);
 	}
 	
+	public HashMap<String, Player> getPlayers() { return players; }
 	public Player getPlayer() {
 		Player player = null;
 		try {
@@ -70,19 +74,19 @@ public class PlayerManager {
 		return player;
 	}
 	
-	public HashMap<String, Player> getPlayers() { return players; }
-	
 	// Two different addPlayer methods
 	// One used for adding a player with no name
 	// will make the player's name
 	// "Player #" based on whatever number (#) they are
 	public Player addPlayer() {
-		int playerNum = players.size() + 1;
+		playerCount++;
+		int playerNum = playerCount;
 		
 		// Player key and Player name can be different
 		String playerKey = "Player " + playerNum;
 		String playerName = playerKey;
 		
+		/*
 		// TODO: LIMIT INPUT LENGTH
 		// Ask player to input name other than the default
 		TextInputDialog textInput = new TextInputDialog();
@@ -94,7 +98,7 @@ public class PlayerManager {
 		if (result.isPresent() && !result.get().isEmpty()) {
 			playerName = result.get();
 		}
-		
+		*/
 		Player player = new Player(playerName, playerNum);
 		
 		players.put(playerKey, player);
