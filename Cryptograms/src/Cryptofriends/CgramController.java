@@ -127,7 +127,7 @@ public class CgramController {
 			// Show user data
 			// and set default color
 			if (gameMan.getPlayerManager() != null) {
-				String playerName = gameMan.getPlayerManager().getPlayer().getName();
+				String playerName = gameMan.getPlayerManager().getCurrentPlayer().getName();
 				lblPlayerName.setText(playerName);
 			}
 			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
@@ -143,6 +143,14 @@ public class CgramController {
 		}
 	}
 	
+	// Changes the panel on the bottom that holds
+	// player name, score, and time
+	private void updatePlayerInfoBox(String playerName) {
+		if (playerName != null && !playerName.isEmpty()) {
+			lblPlayerName.setText(playerName);
+		}
+	}
+	
 	public void addPlayer() {
 		// Returned so it can be added to menu
 		Player playerAdded = gameMan.getPlayerManager().addPlayer();
@@ -150,19 +158,24 @@ public class CgramController {
 	
 	public void renamePlayer() {
 		System.out.println("Rename Player");
-		gameMan.getPlayerManager().renamePlayer();
+		String newName = gameMan.getPlayerManager().renamePlayer();
+		
+		updatePlayerInfoBox(newName);
 	}
 	
 	public void removePlayer() {
 		System.out.println("Remove Player");
 		gameMan.getPlayerManager().removePlayer();
-		lblPlayerName.setText(gameMan.getPlayerManager().getPlayer().getName());
+		String newCurrentPlayer = gameMan.getPlayerManager().getCurrentPlayer().getName(); 
+		
+		updatePlayerInfoBox(newCurrentPlayer);
 	}
 	
 	public void switchPlayer() {
 		System.out.println("Switch Player");
-		gameMan.getPlayerManager().switchPlayer();
-		lblPlayerName.setText(gameMan.getPlayerManager().getPlayer().getName());
+		String newCurrentPlayer = gameMan.getPlayerManager().switchPlayer();
+		
+		updatePlayerInfoBox(newCurrentPlayer);
 	}
 	
 	private void setupPuncAlignment() {

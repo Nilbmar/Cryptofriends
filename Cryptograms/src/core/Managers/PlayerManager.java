@@ -27,7 +27,7 @@ public class PlayerManager {
 		currentPlayerName = playerName;
 	}
 	*/
-	public void switchPlayer() {
+	public String switchPlayer() {
 		boolean setNextPlayerToCurrent = false;
 		Iterator<Entry<String, Player>> it = players.entrySet().iterator();
 		while (it.hasNext()) {
@@ -60,10 +60,11 @@ public class PlayerManager {
 		}
 		
 		System.out.println("switched to player " + currentPlayerName);
+		return currentPlayerName;
 	}
 	
 	public HashMap<String, Player> getPlayers() { return players; }
-	public Player getPlayer() {
+	public Player getCurrentPlayer() {
 		Player player = null;
 		try {
 			player = players.get(currentPlayerName);
@@ -120,8 +121,10 @@ public class PlayerManager {
 	 * Does not change the key used to store the Player
 	 * in the LinkedHashMap
 	 */
-	public void renamePlayer() {
+	public String renamePlayer() {
 		String playerKey = currentPlayerName;
+		String nameToReturn = null;
+		
 		if (players.containsKey(playerKey)) {
 			// Use Text Input Dialog to get new name of player
 			TextInputDialog textInput = new TextInputDialog();
@@ -131,8 +134,11 @@ public class PlayerManager {
 			Optional<String> result = textInput.showAndWait();
 			
 			if (result.isPresent() && !result.get().isEmpty()) {
-				players.get(playerKey).setName(result.get());
+				nameToReturn = result.get();
+				players.get(playerKey).setName(nameToReturn);
 			}
 		}
+		
+		return nameToReturn;		
 	}
 }
