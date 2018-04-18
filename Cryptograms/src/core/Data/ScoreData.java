@@ -1,21 +1,17 @@
 package core.Data;
 
 public class ScoreData {
-	private String playerName = null;
-	private int score = 0;
+	private String playerKey = null;
+	private float score = 100;
 	
-	public ScoreData(String playerName) {
-		this.playerName = playerName;
+	public ScoreData(String playerKey) {
+		this.playerKey = playerKey;
 	}
 	
-	public int getScore() { return score; }
+	public float getScore() { return score; }
 	
-	public void addToScore(int amtToAdd) {
-		score += amtToAdd;
-	}
-	
-	public void reduceScore(int amtToReduce) {
-		score -= amtToReduce;
+	public void reduceScore(float percentToReduce) {
+		score -= percentToReduce;
 	}
 
 }

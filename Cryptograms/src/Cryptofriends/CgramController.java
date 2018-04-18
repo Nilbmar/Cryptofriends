@@ -149,6 +149,9 @@ public class CgramController {
 		
 		if (player != null) {
 			lblPlayerName.setText(player.getName());
+			String playerKey = "Player " + gameMan.getPlayerManager().getCurrentPlayer().getPlayerNum();
+			float score = gameMan.getScoreManager().getPlayerScoreData(playerKey).getScore();
+			lblScore.setText("" + score);
 		}
 	}
 	
@@ -170,6 +173,8 @@ public class CgramController {
 		// Returned so it can be added to menu
 		Player player = gameMan.getPlayerManager().addPlayer();
 		addPlayerMenuItem(player);
+		String playerKey = "Player " + player.getPlayerNum();
+		gameMan.getScoreManager().addPlayer(playerKey);
 	}
 	
 	public void renamePlayer(int numOfPlayer) {
@@ -328,16 +333,26 @@ public class CgramController {
 	}
 	
 	public void displayLetter() {
+		int letterOccurances = 0;
 		LetterSpace letterSpace = null;
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			letterSpace = (LetterSpace) spaceBox.getSpace();
-			if (letterSpace.getHilight()) {
-				letterSpace.setCurrentChar(letterSpace.getCorrectChar());
-				spaceBox.setAnswerCharLabel(true);
-				spaceBox.setCSS(false,  false);
-				spaceBox.setDisable(true);
+			if (!spaceBox.isDisabled()) {
+				letterSpace = (LetterSpace) spaceBox.getSpace();
+				if (letterSpace.getHilight()) {
+					letterOccurances++;
+					letterSpace.setCurrentChar(letterSpace.getCorrectChar());
+					spaceBox.setAnswerCharLabel(true);
+					spaceBox.setCSS(false,  false);
+					spaceBox.setDisable(true);
+				}
 			}
 		}
+		
+		// TODO: GameManager needs to take care of this
+		String playerKey = "Player " + gameMan.getPlayerManager().getCurrentPlayer().getPlayerNum();
+		gameMan.getScoreManager().playerRevealedLetter(playerKey, letterOccurances, flow.getLetterBoxes().size());
+		
+		updatePlayerInfoBox();
 	}
 	
 	public void displayAllLetters() {

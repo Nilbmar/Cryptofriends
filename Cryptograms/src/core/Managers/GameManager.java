@@ -21,6 +21,8 @@ public class GameManager {
 		// and switch to them so player is set
 		// for player info box
 		Player firstPlayer = playerMan.addPlayer();
+		String playerKey = "Player 1";
+		getScoreManager().addPlayer(playerKey);
 		playerMan.switchPlayer();
 		this.controller.addPlayerMenuItem(firstPlayer);
 	}
