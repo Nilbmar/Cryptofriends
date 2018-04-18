@@ -66,6 +66,11 @@ public class PlayerManager {
 	public HashMap<String, Player> getPlayers() { return players; }
 	public Player getCurrentPlayer() {
 		Player player = null;
+		
+		if (currentPlayerName == null && players.size() > 0) {
+			currentPlayerName = players.get("Player 1").getName();
+		}
+		
 		try {
 			player = players.get(currentPlayerName);
 		} catch (Exception nullEx) {

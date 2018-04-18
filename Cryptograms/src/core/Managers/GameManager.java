@@ -18,13 +18,7 @@ public class GameManager {
 		scoreMan = new ScoreManager();
 		
 		// Create default player
-		// and switch to them so player is set
-		// for player info box
-		Player firstPlayer = playerMan.addPlayer();
-		String playerKey = "Player 1";
-		getScoreManager().addPlayer(playerKey);
-		playerMan.switchPlayer();
-		this.controller.addPlayerMenuItem(firstPlayer);
+		addPlayer();
 	}
 	
 	public void update() {
@@ -40,4 +34,24 @@ public class GameManager {
 	public PlayerManager getPlayerManager() { return playerMan; }
 	public SelectionManager getSelectionManager() { return selectMan; }
 	public ScoreManager getScoreManager() { return scoreMan; }
+	
+	public void addPlayer() {
+		// Returned so it can be added to menu
+		Player player = playerMan.addPlayer();
+		controller.addPlayerMenuItem(player);
+		String playerKey = "Player " + player.getPlayerNum();
+		scoreMan.addPlayer(playerKey);
+	}
+	
+	public void renamePlayer(int numOfPlayer) {
+		playerMan.renamePlayer(numOfPlayer);
+	}
+	
+	public void removePlayer(int numOfPlayer) {
+		playerMan.removePlayer(numOfPlayer);
+	}
+	
+	public void switchPlayer() {
+		playerMan.switchPlayer();
+	}
 }

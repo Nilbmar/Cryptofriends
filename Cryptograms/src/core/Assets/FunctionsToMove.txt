@@ -1,0 +1,41 @@
+// stays in controller
+moveSelection(KeyCode)
+
+
+
+// Move into FlowBox
+void setupPuncAlignment()
+
+// GameMan
+void puzzleSovled()
+void checkForSolved()
+loadRandomPuzzle()
+loadNewPuzzle()
+
+// ????
+clearPuzzle() 
+
+// helper functio
+ArrayList<SpaceBox> getIncorrectSpaceBoxes()
+
+updateHilights(int)
+clearHilights()
+clearLetter()
+clearIncorrect()
+hilightIncorrect()
+displayLetter()
+displayAllLetters()
+
+createBoard() // This may stay in controller and start flowbox
+setupPuzzle(Puzzle)
+SpaceBox addSpaceBox(Space)
+addWord(Word)
+
+
+setAnswer()
+SpaceBox getCurrentlySelected()
+
+SpaceBox getClosestLetter(ArrayList<SpaceBox> SpaceBox, int)
+moveHilightVertically(int, int)
+moveHilightHorizontally(int, int)
+

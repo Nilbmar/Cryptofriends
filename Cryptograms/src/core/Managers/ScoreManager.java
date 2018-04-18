@@ -1,6 +1,5 @@
 package core.Managers;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import core.Data.ScoreData;

@@ -126,9 +126,13 @@ public class CgramController {
 			// Show user data
 			// and set default color
 			if (gameMan.getPlayerManager() != null) {
-				String playerName = gameMan.getPlayerManager().getCurrentPlayer().getName();
-				lblPlayerName.setText(playerName);
+				try {
+					updatePlayerInfoBox();
+				} catch (NullPointerException nullEx) {
+					System.out.println("No player name yet.");
+				}
 			}
+			
 			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
 			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
 			hboxScorePanel.setVisible(true);
@@ -144,12 +148,12 @@ public class CgramController {
 	
 	// Changes the panel on the bottom that holds
 	// player name, score, and time
-	private void updatePlayerInfoBox() {
+	public void updatePlayerInfoBox() {
 		Player player = gameMan.getPlayerManager().getCurrentPlayer();
 		
 		if (player != null) {
 			lblPlayerName.setText(player.getName());
-			String playerKey = "Player " + gameMan.getPlayerManager().getCurrentPlayer().getPlayerNum();
+			String playerKey = "Player " + player.getPlayerNum();
 			float score = gameMan.getScoreManager().getPlayerScoreData(playerKey).getScore();
 			lblScore.setText("" + score);
 		}
@@ -169,32 +173,20 @@ public class CgramController {
 		}
 	}
 	
-	public void addPlayer() {
-		// Returned so it can be added to menu
-		Player player = gameMan.getPlayerManager().addPlayer();
-		addPlayerMenuItem(player);
-		String playerKey = "Player " + player.getPlayerNum();
-		gameMan.getScoreManager().addPlayer(playerKey);
-	}
+	public void addPlayer() { gameMan.addPlayer(); }
 	
 	public void renamePlayer(int numOfPlayer) {
-		System.out.println("Rename Player");
-		gameMan.getPlayerManager().renamePlayer(numOfPlayer);
-		
+		gameMan.renamePlayer(numOfPlayer);
 		updatePlayerInfoBox();
 	}
 	
 	public void removePlayer(int numOfPlayer) {
-		System.out.println("Remove Player");
-		gameMan.getPlayerManager().removePlayer(numOfPlayer);
-		
+		gameMan.removePlayer(numOfPlayer);
 		updatePlayerInfoBox();
 	}
 	
 	public void switchPlayer() {
-		System.out.println("Switch Player");
-		gameMan.getPlayerManager().switchPlayer();
-		
+		gameMan.switchPlayer();
 		updatePlayerInfoBox();
 	}
 	
@@ -238,8 +230,9 @@ public class CgramController {
 		}
 	}
 	
-	
-	
+	// TODO: A puzzleSolved() needs to be in gameMan
+	// that calls a function in controller
+	// that disables everything
 	private void puzzleSolved() {
 		System.out.println("Congratulations! You won the game!");
 		
@@ -253,6 +246,7 @@ public class CgramController {
 		flow.setDisable(true);
 	}
 	
+	// TODO: This needs to be in... ???? some Manager
 	private ArrayList<SpaceBox> getIncorrectSpaceBoxes() {
 		ArrayList<SpaceBox> incorrectSpaceBoxes = new ArrayList<SpaceBox>();
 		
@@ -268,6 +262,8 @@ public class CgramController {
 		return incorrectSpaceBoxes;
 	}
 	
+	
+	// TODO: This needs to be in GameMan
 	public void checkForSolved() {
 		// Check to see if any space still contains a wrong answer
 		// if no spaces contain a wrong answer
