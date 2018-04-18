@@ -8,7 +8,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 
 public class PlayerMenu extends Menu {
-	private CgramController controller = null;
+	private CgramController controller;
 	private Player player = null;
 	private int numOfPlayer = 0;
 	private MenuItem renamePlayer = new MenuItem("Rename Player");
