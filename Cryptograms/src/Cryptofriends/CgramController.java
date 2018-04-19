@@ -195,7 +195,14 @@ public class CgramController {
 	}
 
 	public void clearLetter() {
-		setAnswer(" ");
+		gameMan.getAnswerManager().setAnswer(" ");
+	}
+	
+	// TODO: MAIN is using this function for letter keys
+	// figure out how to move letter keys somewhere else
+	// that can have access to AnswerManager
+	public void setAnswer(String answer) {
+		gameMan.getAnswerManager().setAnswer(answer);
 	}
 	
 	public void clearIncorrect() {
@@ -217,58 +224,16 @@ public class CgramController {
 	}
 	
 	public void displayLetter() {
-		int letterOccurances = 0;
-		LetterSpace letterSpace = null;
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			if (!spaceBox.isDisabled()) {
-				letterSpace = (LetterSpace) spaceBox.getSpace();
-				if (letterSpace.getHilight()) {
-					letterOccurances++;
-					letterSpace.setCurrentChar(letterSpace.getCorrectChar());
-					spaceBox.setAnswerCharLabel(true);
-					spaceBox.setCSS(false,  false);
-					spaceBox.setDisable(true);
-				}
-			}
-		}
-		
-		// TODO: GameManager needs to take care of this
-		String playerKey = "Player " + gameMan.getPlayerManager().getCurrentPlayer().getPlayerNum();
-		gameMan.getScoreManager().playerRevealedLetter(playerKey, letterOccurances, flow.getLetterBoxes().size());
+		gameMan.getAnswerManager().displayLetter();
 		
 		updatePlayerInfoBox();
 	}
 	
 	public void displayAllLetters() {
-		LetterSpace letterSpace = null;
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			letterSpace = (LetterSpace) spaceBox.getSpace();
-			if (!spaceBox.isDisabled()) {
-				letterSpace.setCurrentChar(letterSpace.getCorrectChar());
-				spaceBox.setAnswerCharLabel(true);
-				spaceBox.setCSS(false,  false);
-				spaceBox.setDisable(true);
-			}
-		}
-		
-		gameMan.setPuzzleState(PuzzleState.FAILED);
-		flow.setDisable(true);
+		gameMan.getAnswerManager().displayAllLetters();
 	}
 	
-	public void setAnswer(String answer) {
-		// Tells each selected SpaceBox to
-		// set answer label to letter input
-		LetterSpace letterSpace = null;
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			if (!spaceBox.isDisabled()) {
-				letterSpace = (LetterSpace) spaceBox.getSpace();
-				if (letterSpace.getHilight()) {
-					letterSpace.setCurrentChar(answer.charAt(0));
-					spaceBox.setAnswerCharLabel(true);
-				}
-			}
-		}
-	}
+
 	
 	/* Allows movement between SpaceBoxes with arrow keys
 	 * moveHilightVertically for Up (-1) / Down (1)
@@ -420,14 +385,11 @@ public class CgramController {
 	}
 	
 	public void updateHilights(int id) {
-		//hilightedSpaceID = id;
-		// Tells each SpaceBox to hilight
-		// if it's space is selected (set to hilight)
-		LetterSpace letterSpace = null;
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			letterSpace = (LetterSpace) spaceBox.getSpace();
-			spaceBox.setCSS(letterSpace.getHilight(), false);
-		}
+		// TODO:
+		// This function is called by SpaceBox
+		// Might need to change how SpaceBox runs the update
+		// give it access to AnswerManager???
+		gameMan.getAnswerManager().updateHilights(id);
 	}
 	
 	public void loadRandomPuzzle() {

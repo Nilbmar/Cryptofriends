@@ -1,9 +1,12 @@
-MOVED
+MOVED into AnswerManager
 ArrayList<SpaceBox> getIncorrectSpaceBoxes()
 clearIncorrect()
 hilightIncorrect()
+clearHilights()
 puzzleSovled()
 checkForSolved()
+updateHilights(int)
+clearLetter()
 
 
 // stays in controller
@@ -17,9 +20,9 @@ loadNewPuzzle()
 // ????
 clearPuzzle() 
 
-updateHilights(int)
-clearHilights()
-clearLetter()
+
+// DO THESE NEXT!
+
 
 
 displayLetter()
