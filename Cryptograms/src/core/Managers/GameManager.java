@@ -7,6 +7,7 @@ import core.Data.PuzzleState;
 public class GameManager {
 	private CgramController controller;
 	private SelectionManager selectMan;
+	private AnswerManager answerMan;
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
 	
@@ -18,6 +19,7 @@ public class GameManager {
 		playerMan = new PlayerManager();
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
+		answerMan = new AnswerManager(this);
 		
 		// Create default player
 		addPlayer();
@@ -34,6 +36,7 @@ public class GameManager {
 	}
 	
 	public PlayerManager getPlayerManager() { return playerMan; }
+	public AnswerManager getAnswerManager() { return answerMan; }
 	public SelectionManager getSelectionManager() { return selectMan; }
 	public ScoreManager getScoreManager() { return scoreMan; }
 	

@@ -1,23 +1,27 @@
+MOVED
+ArrayList<SpaceBox> getIncorrectSpaceBoxes()
+clearIncorrect()
+hilightIncorrect()
+puzzleSovled()
+checkForSolved()
+
+
 // stays in controller
 moveSelection(KeyCode)
 
 // GameMan
-void puzzleSovled()
-void checkForSolved()
+
 loadRandomPuzzle()
 loadNewPuzzle()
 
 // ????
 clearPuzzle() 
 
-// helper functio
-ArrayList<SpaceBox> getIncorrectSpaceBoxes()
-
 updateHilights(int)
 clearHilights()
 clearLetter()
-clearIncorrect()
-hilightIncorrect()
+
+
 displayLetter()
 displayAllLetters()
 

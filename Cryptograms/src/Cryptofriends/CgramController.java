@@ -190,53 +190,8 @@ public class CgramController {
 		updatePlayerInfoBox();
 	}
 	
-
-	
-	// TODO: A puzzleSolved() needs to be in gameMan
-	// that calls a function in controller
-	// that disables everything
-	private void puzzleSolved() {
-		System.out.println("Congratulations! You won the game!");
-		
-		// Clears hilights and selection box
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			spaceBox.setCSS(false, false);
-		}
-		
-		// Disable puzzle so it can't be edited
-		gameMan.setPuzzleState(PuzzleState.WON);
-		flow.setDisable(true);
-	}
-	
-
-	
-	
-	// TODO: This needs to be in GameMan
 	public void checkForSolved() {
-		// Check to see if any space still contains a wrong answer
-		// if no spaces contain a wrong answer
-		// go to win condition
-		// Only WIN if does not contain a spacebox
-		if (gameMan.getPuzzleState() == PuzzleState.PLAYING) {
-			ArrayList<SpaceBox> incorrectSpaceBoxes = flow.getIncorrectSpaceBoxes();
-			if (incorrectSpaceBoxes.size() == 0) {
-				puzzleSolved();
-			}
-		}
-	}
-	
-	private void clearHilights() {
-		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
-		SpaceBox selectedBox = getCurrentlySelected();
-		for (int x = 0; x < letterBoxes.size(); x++) {
-			letterBoxes.get(x).setCSS(false,  false);
-		}
-		
-		// Make sure the original selected box remains selected
-		flow.clearSelection();
-		if (selectedBox != null) {
-			selectedBox.toggleSelection();
-		}
+		gameMan.getAnswerManager().checkForSolved();
 	}
 
 	public void clearLetter() {
@@ -244,28 +199,19 @@ public class CgramController {
 	}
 	
 	public void clearIncorrect() {
-		flow.clearIncorrect();
-		
-		clearHilights();
+		gameMan.getAnswerManager().clearIncorrect();
 		showClearIncorrectBtns();
 	}
 	
 	public void hilightIncorrect() {
 		// Only needs to run if something has been selected on this puzzle
-		// Otherwise, the last SpaceBox would be hilighted by clearHilights()
-		SpaceBox selectedBox = getCurrentlySelected();
-		if (selectedBox != null) {
-			clearHilights();
-			
-			ArrayList<SpaceBox> incorrectSpaceBoxes = flow.getIncorrectSpaceBoxes();
-			LetterSpace letterSpace = null;
-			for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
-				letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
-				if (!letterSpace.isBlank()) {
-					incorrectSpaceBoxes.get(x).setCSS(true, true);	
-				}	
-			}
-	
+		// And there are items that are incorrect
+		SpaceBox selectedBox = flow.getCurrentlySelected();
+		int numFilled = gameMan.getAnswerManager().getFilledSpaceBoxes().size();
+		int numIncorrect = gameMan.getAnswerManager().getIncorrectSpaceBoxes().size();
+		
+		if (selectedBox != null && numFilled > 0 && numIncorrect > 0) {
+			gameMan.getAnswerManager().hilightIncorrect();
 			showClearIncorrectBtns();
 		}
 	}
@@ -324,25 +270,13 @@ public class CgramController {
 		}
 	}
 	
-	public SpaceBox getCurrentlySelected() {
-		SpaceBox selected = null;
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			if (spaceBox.getSelected()) {
-				selected = spaceBox;
-			}
-		}
-		
-		return selected;
-	}
-	
-	
 	/* Allows movement between SpaceBoxes with arrow keys
 	 * moveHilightVertically for Up (-1) / Down (1)
 	 * moveHilightHorizontally for Left (-1) / Right (1)
 	 */
 	public void moveSelection(KeyCode keyCode) {
 		int spacesToAdjust = 0;
-		int selectedID = getCurrentlySelected().getSpace().getID();
+		int selectedID = flow.getCurrentlySelected().getSpace().getID();
 		
 		switch (keyCode) {
 		case UP:
@@ -585,6 +519,8 @@ public class CgramController {
 		flow = new FlowBox();
 		flow.setSpacesPerLine(15);
 		anchor.getChildren().add(flow);
+		
+		gameMan.getAnswerManager().setFlowBox(flow);
 
 		puzzleIndex = 1;
 		sqlLoader.setTarget(Integer.toString(puzzleIndex));

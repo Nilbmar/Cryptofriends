@@ -22,6 +22,17 @@ public class FlowBox extends VBox {
 		this.getChildren().clear();
 	}
 	
+	public SpaceBox getCurrentlySelected() {
+		SpaceBox selected = null;
+		for (SpaceBox spaceBox : getLetterBoxes()) {
+			if (spaceBox.getSelected()) {
+				selected = spaceBox;
+			}
+		}
+		
+		return selected;
+	}
+	
 	public void clearSelection() {
 		for (SpaceBox spaceBox : getLetterBoxes()) {
 			// Set to true first so it's toggled to false
@@ -235,34 +246,5 @@ public class FlowBox extends VBox {
 				((PuncBox) puncBox).setAlignment();
 			}
 		}
-	}
-	
-	// TODO: TRY TO CHANGE THIS BACK TO PRIVATE?
-	public ArrayList<SpaceBox> getIncorrectSpaceBoxes() {
-		ArrayList<SpaceBox> incorrectSpaceBoxes = new ArrayList<SpaceBox>();
-		
-		for (SpaceBox spaceBox : getLetterBoxes()) {
-			Space space = spaceBox.getSpace();
-			if (space.getSpaceType() == SpaceType.LETTER) {
-				if (!((LetterSpace) space).isCorrect()) {
-					incorrectSpaceBoxes.add(spaceBox);
-				}
-			}
-		}
-		
-		return incorrectSpaceBoxes;
-	}
-	
-	// Hilighting
-	public void clearIncorrect() {
-		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
-		LetterSpace letterSpace = null;
-		for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
-			letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
-			letterSpace.setCurrentChar(' ');
-			incorrectSpaceBoxes.get(x).setAnswerCharLabel(true);
-		}
-		
-		//clearHilights();
 	}
 }
