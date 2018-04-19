@@ -2,6 +2,7 @@ package Cryptofriends.SpaceContainer;
 
 import java.util.ArrayList;
 
+import core.Spaces.LetterSpace;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import javafx.scene.Node;
@@ -234,5 +235,34 @@ public class FlowBox extends VBox {
 				((PuncBox) puncBox).setAlignment();
 			}
 		}
+	}
+	
+	// TODO: TRY TO CHANGE THIS BACK TO PRIVATE?
+	public ArrayList<SpaceBox> getIncorrectSpaceBoxes() {
+		ArrayList<SpaceBox> incorrectSpaceBoxes = new ArrayList<SpaceBox>();
+		
+		for (SpaceBox spaceBox : getLetterBoxes()) {
+			Space space = spaceBox.getSpace();
+			if (space.getSpaceType() == SpaceType.LETTER) {
+				if (!((LetterSpace) space).isCorrect()) {
+					incorrectSpaceBoxes.add(spaceBox);
+				}
+			}
+		}
+		
+		return incorrectSpaceBoxes;
+	}
+	
+	// Hilighting
+	public void clearIncorrect() {
+		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
+		LetterSpace letterSpace = null;
+		for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
+			letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
+			letterSpace.setCurrentChar(' ');
+			incorrectSpaceBoxes.get(x).setAnswerCharLabel(true);
+		}
+		
+		//clearHilights();
 	}
 }

@@ -208,21 +208,7 @@ public class CgramController {
 		flow.setDisable(true);
 	}
 	
-	// TODO: This needs to be in... ???? some Manager
-	private ArrayList<SpaceBox> getIncorrectSpaceBoxes() {
-		ArrayList<SpaceBox> incorrectSpaceBoxes = new ArrayList<SpaceBox>();
-		
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			Space space = spaceBox.getSpace();
-			if (space.getSpaceType() == SpaceType.LETTER) {
-				if (!((LetterSpace) space).isCorrect()) {
-					incorrectSpaceBoxes.add(spaceBox);
-				}
-			}
-		}
-		
-		return incorrectSpaceBoxes;
-	}
+
 	
 	
 	// TODO: This needs to be in GameMan
@@ -232,7 +218,7 @@ public class CgramController {
 		// go to win condition
 		// Only WIN if does not contain a spacebox
 		if (gameMan.getPuzzleState() == PuzzleState.PLAYING) {
-			ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
+			ArrayList<SpaceBox> incorrectSpaceBoxes = flow.getIncorrectSpaceBoxes();
 			if (incorrectSpaceBoxes.size() == 0) {
 				puzzleSolved();
 			}
@@ -258,13 +244,7 @@ public class CgramController {
 	}
 	
 	public void clearIncorrect() {
-		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
-		LetterSpace letterSpace = null;
-		for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
-			letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
-			letterSpace.setCurrentChar(' ');
-			incorrectSpaceBoxes.get(x).setAnswerCharLabel(true);
-		}
+		flow.clearIncorrect();
 		
 		clearHilights();
 		showClearIncorrectBtns();
@@ -277,7 +257,7 @@ public class CgramController {
 		if (selectedBox != null) {
 			clearHilights();
 			
-			ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
+			ArrayList<SpaceBox> incorrectSpaceBoxes = flow.getIncorrectSpaceBoxes();
 			LetterSpace letterSpace = null;
 			for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
 				letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();

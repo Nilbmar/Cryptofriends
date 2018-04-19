@@ -1,11 +1,6 @@
 // stays in controller
 moveSelection(KeyCode)
 
-
-
-// Move into FlowBox
-void setupPuncAlignment()
-
 // GameMan
 void puzzleSovled()
 void checkForSolved()
