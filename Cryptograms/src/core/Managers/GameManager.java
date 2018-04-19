@@ -3,7 +3,6 @@ package core.Managers;
 import Cryptofriends.CgramController;
 import core.Data.Player;
 import core.Data.PuzzleState;
-import core.Loaders.PuzzleLoader;
 
 public class GameManager {
 	private CgramController controller;

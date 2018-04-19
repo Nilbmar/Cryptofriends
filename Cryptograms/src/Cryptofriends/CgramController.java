@@ -190,45 +190,7 @@ public class CgramController {
 		updatePlayerInfoBox();
 	}
 	
-	private void setupPuncAlignment() {
-		ArrayList<SpaceBox> spaceBoxes = flow.getSpaceBoxes();
-		
-		
-		SpaceBox spaceBox = null;
-		Space space = null;
-		SpaceType prevType = null;
-		SpaceType nextType = null;
-		int spaceBoxesSize = spaceBoxes.size();
-		int nextSpaceIndex = -1;
-		
-		for (int x = 0; x < spaceBoxesSize; x++) {
-			spaceBox = spaceBoxes.get(x);
-			space = spaceBox.getSpace();
-			
-			if (space.getSpaceType() == SpaceType.PUNC) {
-				((PuncBox) spaceBox).setPrevType(prevType);
-				nextSpaceIndex = x + 1;
-				if (spaceBoxesSize > nextSpaceIndex) {
-					nextType = spaceBoxes.get(nextSpaceIndex).getSpace().getSpaceType();
-				} else {
-					nextType = null;
-				}
-				((PuncBox) spaceBox).setNextType(nextType);
-			}
-			
-			// Set prevType to be used in the next iteration
-			prevType = space.getSpaceType();
-		}
-		
-		// Finally setting alignment
-		for (SpaceBox puncBox : spaceBoxes) {
-			if (puncBox.getSpace().getSpaceType() != SpaceType.PUNC) {
-				puncBox.setAlignment();
-			} else {
-				((PuncBox) puncBox).setAlignment();
-			}
-		}
-	}
+
 	
 	// TODO: A puzzleSolved() needs to be in gameMan
 	// that calls a function in controller
@@ -588,7 +550,7 @@ public class CgramController {
 			puzzleIndex++;
 			
 			// Reset alignment for punctuation
-			setupPuncAlignment();
+			flow.setupPuncAlignment();
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
