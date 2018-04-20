@@ -1,5 +1,11 @@
-MOVED
+// Still a version in controller because Main uses it for key input
+setAnswer()
 
+// stays in controller
+moveSelection(KeyCode)
+
+MOVED
+--------------------------
 // Into AnswerManager
 ArrayList<SpaceBox> getIncorrectSpaceBoxes()
 clearIncorrect()
@@ -12,14 +18,6 @@ clearLetter()
 displayLetter()
 displayAllLetters()
 
-// Into FlowBox
-getCurrentlySelected()
-
-//  DO THIS NEXT - MOVE INTO FLOWBOX
-SpaceBox getClosestLetter(ArrayList<SpaceBox> SpaceBox, int)
-moveHilightVertically(int, int)
-moveHilightHorizontally(int, int)
-
 // Into GameManager
 createBoard()
 loadRandomPuzzle()
@@ -30,11 +28,10 @@ clearPuzzle()
 setupPuzzle(Puzzle)
 SpaceBox addSpaceBox(Space)
 addWord(Word)
+getCurrentlySelected()
+SpaceBox getClosestLetter(ArrayList<SpaceBox> SpaceBox, int)
+moveHilightVertically(int, int)
+moveHilightHorizontally(int, int)
 
-// Still a version in controller because Main uses it for key input
-setAnswer()
 
-
-// stays in controller
-moveSelection(KeyCode)
 

@@ -17,10 +17,7 @@ public class GameManager {
 	private BoardManager boardManager;
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader sqlLoader;
-	private int puzzleIndex = 0;
-	
-	
-	//private PuzzleLoader sqlLoader = new PuzzleLoader(puzzleMan);
+	private int puzzleIndex = 0;	
 	private PuzzleState puzzleState = PuzzleState.PLAYING;
 	
 	public GameManager(CgramController controller) {
