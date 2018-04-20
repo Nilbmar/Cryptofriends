@@ -7,16 +7,19 @@ import core.Data.Player;
 import core.Managers.GameManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class CgramController {
+	private Scene scene;
 	private GameManager gameMan;
 	/*
 	private PuzzleManager puzzleMan = new PuzzleManager();
@@ -95,6 +98,27 @@ public class CgramController {
 	
 	@FXML
 	private HBox hboxClearIncorrect;
+	
+	public void setScene(Scene scene) {
+		this.scene = scene;
+		
+		// Setup of Key Inputs
+		this.scene.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
+        	
+        	// Letter Input
+        	if (keyEvent.getCode().isLetterKey()) {
+            	gameMan.getAnswerManager().setAnswer(keyEvent.getCode().toString());
+            }
+        	
+        	if (keyEvent.getCode().isArrowKey()) {
+        		moveSelection(keyEvent.getCode());
+        	}
+        	
+        	if (keyEvent.getCode() == KeyCode.DELETE) {
+        		gameMan.getAnswerManager().setAnswer(" ");
+        	}
+        });
+	}
 	
 	public void setGameManager(GameManager gameMan) {
 		this.gameMan = gameMan;
@@ -181,21 +205,6 @@ public class CgramController {
 	public void switchPlayer() {
 		gameMan.switchPlayer();
 		updatePlayerInfoBox();
-	}
-	
-	public void checkForSolved() {
-		gameMan.getAnswerManager().checkForSolved();
-	}
-
-	public void clearLetter() {
-		gameMan.getAnswerManager().setAnswer(" ");
-	}
-	
-	// TODO: MAIN is using this function for letter keys
-	// figure out how to move letter keys somewhere else
-	// that can have access to AnswerManager
-	public void setAnswer(String answer) {
-		gameMan.getAnswerManager().setAnswer(answer);
 	}
 	
 	public void clearIncorrect() {

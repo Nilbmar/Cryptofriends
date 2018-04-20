@@ -34,6 +34,8 @@ public class AnswerManager {
 				}
 			}
 		}
+		
+		checkForSolved();
 	}
 	
 	public void displayLetter() {

@@ -19,24 +19,7 @@ public class Main extends Application {
 			CgramController controller = loader.getController();
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
-			// Accept Key Inpu
-	        scene.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
-	        	
-	        	// Letter Input
-	        	if (keyEvent.getCode().isLetterKey()) {
-	            	controller.setAnswer(keyEvent.getCode().toString());
-	            	controller.checkForSolved();
-	            }
-	        	
-	        	if (keyEvent.getCode().isArrowKey()) {
-	        		controller.moveSelection(keyEvent.getCode());
-	        	}
-	        	
-	        	if (keyEvent.getCode() == KeyCode.DELETE) {
-	        		controller.clearLetter();
-	        	}
-	        });
+			controller.setScene(scene);
 			
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Cryptograms");
