@@ -2,7 +2,6 @@ package Cryptofriends.SpaceContainer;
 
 import java.util.ArrayList;
 
-import core.Spaces.LetterSpace;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import javafx.scene.Node;

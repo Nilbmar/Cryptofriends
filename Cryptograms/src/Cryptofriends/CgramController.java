@@ -32,9 +32,11 @@ import javafx.scene.layout.VBox;
 
 public class CgramController {
 	private GameManager gameMan;
+	/*
 	private PuzzleManager puzzleMan = new PuzzleManager();
 	private PuzzleLoader sqlLoader = new PuzzleLoader(puzzleMan);
 	private int puzzleIndex = 0;
+	*/
 	
 	@FXML
 	private FlowBox flow;
@@ -144,6 +146,11 @@ public class CgramController {
 			hboxClearIncorrect.setVisible(true);
 			hboxScorePanel.setVisible(false);
 		}
+	}
+	
+	public void updateAuthorLine(String author, String subject) {
+		lblAuthor.setText(author);
+		lblSubject.setText(subject);
 	}
 	
 	// Changes the panel on the bottom that holds
@@ -392,103 +399,25 @@ public class CgramController {
 		gameMan.getAnswerManager().updateHilights(id);
 	}
 	
-	public void loadRandomPuzzle() {
-		int numOfPuzzles = puzzleMan.count();
-		int puzzleNum = ThreadLocalRandom.current().nextInt(0, numOfPuzzles);
-		puzzleIndex = puzzleNum;
-		loadNewPuzzle();
+	public void clearPuzzle() {
+		gameMan.getBoardBuilder().clearPuzzle();
 	}
 	
-	public void clearPuzzle() {
-		if (!flow.isDisabled()) {
-			for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-				if (!spaceBox.isDisabled()) {
-					spaceBox.clear();
-				}
-			}
-		}
+	
+	public void loadRandomPuzzle() {
+		gameMan.loadRandomPuzzle();
 	}
 	
 	public void loadNewPuzzle() {
-		// Clear game board
-		flow.setDisable(false);
-		flow.clear();
-		gameMan.setPuzzleState(PuzzleState.PLAYING);
+		gameMan.loadNewPuzzle();
+	}
 		
-		// Create new game board
-		try {			
-			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
-			setupPuzzle(puzzleData.getPuzzle());
-			lblAuthor.setText(puzzleData.getAuthor());
-			lblSubject.setText(puzzleData.getSubject());
-			
-			// Keep the "next puzzle" updated
-			puzzleIndex++;
-			
-			// Reset alignment for punctuation
-			flow.setupPuncAlignment();
-		}
-		catch (NullPointerException nullEx) {
-			System.out.println("Null Pointer: Reseting to start of puzzle file");
-			puzzleIndex = 1;
-			loadNewPuzzle();
-		}
-	}
-	
-	public SpaceBox addSpaceBox(Space space) {
-		SpaceBox spaceBox = null;
-		if (flow != null) {
-			if (space.getSpaceType() == SpaceType.PUNC) {
-				PuncBox puncBox = new PuncBox(space, this, flow);
-				spaceBox = puncBox;
-			} else {
-				spaceBox = new SpaceBox(space, this, flow);
-			}
-		}
-		return spaceBox;
-	}
-	
-	private void addWord(Word word) {
-		WordBox wordBox = new WordBox();
-		for (Space space : word.getWord()) {
-			switch (space.getSpaceType()) {
-			case BLANK:
-				wordBox.addSpaceBox(addSpaceBox(space));
-				break;
-			case LETTER:
-				LetterSpace letter = (LetterSpace) space;
-				letter.addObserver(gameMan.getSelectionManager().getSelObserver());
-				wordBox.addSpaceBox(addSpaceBox(letter));
-				break;
-			case PUNC:
-				wordBox.addSpaceBox(addSpaceBox(space));
-				break;
-			default:
-				break;
-			}
-		}
-		
-		flow.addWordBox(wordBox);
-	}
-	
-	public void setupPuzzle(Puzzle puzzle) {
-		for (Word word : puzzle.getPhrase()) {
-			addWord(word);
-		}
-	}
-	
 	public void createBoard() {
-		flow = new FlowBox();
-		flow.setSpacesPerLine(15);
+		gameMan.createBoard();
+		flow = gameMan.getBoardBuilder().getFlowBox();
 		anchor.getChildren().add(flow);
-		
-		gameMan.getAnswerManager().setFlowBox(flow);
-
-		puzzleIndex = 1;
-		sqlLoader.setTarget(Integer.toString(puzzleIndex));
-		sqlLoader.load();
 	}
-	
+		
 	public void exitProgram() {
 		System.out.println("Exiting Cyrptofriends.");
 		Platform.exit();

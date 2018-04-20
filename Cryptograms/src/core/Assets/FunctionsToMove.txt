@@ -7,26 +7,22 @@ puzzleSovled()
 checkForSolved()
 updateHilights(int)
 clearLetter()
+displayLetter()
+displayAllLetters()
+
+// Still a version in controller because Main uses it for key input
+setAnswer()
 
 
 // stays in controller
 moveSelection(KeyCode)
 
 // GameMan
-
 loadRandomPuzzle()
 loadNewPuzzle()
 
 // ????
 clearPuzzle() 
-
-
-// DO THESE NEXT!
-
-
-
-displayLetter()
-displayAllLetters()
 
 createBoard() // This may stay in controller and start flowbox
 setupPuzzle(Puzzle)
@@ -34,7 +30,7 @@ SpaceBox addSpaceBox(Space)
 addWord(Word)
 
 
-setAnswer()
+
 SpaceBox getCurrentlySelected()
 
 SpaceBox getClosestLetter(ArrayList<SpaceBox> SpaceBox, int)
