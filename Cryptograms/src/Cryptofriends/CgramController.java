@@ -1,24 +1,14 @@
 package Cryptofriends;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.GUI.PlayerMenu;
 import Cryptofriends.SpaceContainer.FlowBox;
-import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
-import Cryptofriends.SpaceContainer.WordBox;
 import core.Data.Player;
-import core.Data.Puzzle;
-import core.Data.PuzzleData;
-import core.Data.PuzzleState;
-import core.Loaders.PuzzleLoader;
 import core.Managers.GameManager;
-import core.Managers.PuzzleManager;
-import core.Spaces.LetterSpace;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
-import core.Spaces.Word;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

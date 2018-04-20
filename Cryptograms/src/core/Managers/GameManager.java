@@ -3,7 +3,6 @@ package core.Managers;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
-import Cryptofriends.SpaceContainer.FlowBox;
 import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
