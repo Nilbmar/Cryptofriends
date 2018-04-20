@@ -1,4 +1,4 @@
-package core.Builders;
+package core.Managers;
 
 import Cryptofriends.CgramController;
 import Cryptofriends.SpaceContainer.FlowBox;
@@ -6,18 +6,17 @@ import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Cryptofriends.SpaceContainer.WordBox;
 import core.Data.Puzzle;
-import core.Managers.GameManager;
 import core.Spaces.LetterSpace;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import core.Spaces.Word;
 
-public class BoardBuilder {
+public class BoardManager {
 	private CgramController controller;
 	private GameManager gameMan;
 	private FlowBox flow;
 	
-	public BoardBuilder(GameManager gameMan, CgramController controller) {
+	public BoardManager(GameManager gameMan, CgramController controller) {
 		this.controller = controller;
 		this.gameMan = gameMan;
 	}

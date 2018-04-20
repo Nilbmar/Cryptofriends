@@ -4,7 +4,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
 import Cryptofriends.SpaceContainer.FlowBox;
-import core.Builders.BoardBuilder;
 import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
@@ -16,7 +15,7 @@ public class GameManager {
 	private AnswerManager answerMan;
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
-	private BoardBuilder boardBuilder;
+	private BoardManager boardManager;
 	private PuzzleManager puzzleMan = new PuzzleManager();
 	private PuzzleLoader sqlLoader = new PuzzleLoader(puzzleMan);
 	private int puzzleIndex = 0;
@@ -31,7 +30,7 @@ public class GameManager {
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
 		answerMan = new AnswerManager(this);
-		boardBuilder = new BoardBuilder(this, controller);
+		boardManager = new BoardManager(this, controller);
 		
 		
 		// Create default player
@@ -52,16 +51,16 @@ public class GameManager {
 	public AnswerManager getAnswerManager() { return answerMan; }
 	public SelectionManager getSelectionManager() { return selectMan; }
 	public ScoreManager getScoreManager() { return scoreMan; }
-	public BoardBuilder getBoardBuilder() { return boardBuilder; }
+	public BoardManager getBoardBuilder() { return boardManager; }
 	
 	public void createBoard() {
 		//flow = new FlowBox();
 		//flow.setSpacesPerLine(15);
-		boardBuilder.setupFlowBox();
+		boardManager.setupFlowBox();
 		
 		//anchor.getChildren().add(flow);
 		
-		answerMan.setFlowBox(boardBuilder.getFlowBox());
+		answerMan.setFlowBox(boardManager.getFlowBox());
 
 		puzzleIndex = 1;
 		sqlLoader.setTarget(Integer.toString(puzzleIndex));
@@ -69,14 +68,14 @@ public class GameManager {
 	}
 	public void loadNewPuzzle() {
 		// Clear game board
-		boardBuilder.getFlowBox().setDisable(false);
-		boardBuilder.getFlowBox().clear();
+		boardManager.getFlowBox().setDisable(false);
+		boardManager.getFlowBox().clear();
 		setPuzzleState(PuzzleState.PLAYING);
 		
 		// Create new game board
 		try {			
 			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
-			boardBuilder.setupPuzzle(puzzleData.getPuzzle());
+			boardManager.setupPuzzle(puzzleData.getPuzzle());
 			
 			String author = puzzleData.getAuthor();
 			String subject = puzzleData.getSubject();
@@ -86,7 +85,7 @@ public class GameManager {
 			puzzleIndex++;
 			
 			// Reset alignment for punctuation
-			boardBuilder.getFlowBox().setupPuncAlignment();
+			boardManager.getFlowBox().setupPuncAlignment();
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
