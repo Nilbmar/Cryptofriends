@@ -2,7 +2,6 @@ package Cryptofriends.SpaceContainer;
 
 import java.util.ArrayList;
 
-import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -21,25 +20,7 @@ public class FlowBox extends VBox {
 		this.getChildren().clear();
 	}
 	
-	public SpaceBox getCurrentlySelected() {
-		SpaceBox selected = null;
-		for (SpaceBox spaceBox : getLetterBoxes()) {
-			if (spaceBox.getSelected()) {
-				selected = spaceBox;
-			}
-		}
-		
-		return selected;
-	}
-	
-	public void clearSelection() {
-		for (SpaceBox spaceBox : getLetterBoxes()) {
-			// Set to true first so it's toggled to false
-			// then deselected
-			spaceBox.setSelected(true);
-			spaceBox.toggleSelection();
-		}
-	}
+
 	
 	public int lines() { return lines.size(); }
 	public int positionOnLine(int line, int spaceID) {

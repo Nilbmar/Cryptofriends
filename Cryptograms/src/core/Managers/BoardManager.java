@@ -2,7 +2,6 @@ package core.Managers;
 
 import java.util.ArrayList;
 
-import Cryptofriends.CgramController;
 import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.PuncBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
@@ -14,12 +13,10 @@ import core.Spaces.SpaceType;
 import core.Spaces.Word;
 
 public class BoardManager {
-	private CgramController controller;
 	private GameManager gameMan;
 	private FlowBox flow;
 	
-	public BoardManager(GameManager gameMan, CgramController controller) {
-		this.controller = controller;
+	public BoardManager(GameManager gameMan) {
 		this.gameMan = gameMan;
 	}
 	
@@ -51,10 +48,10 @@ public class BoardManager {
 		SpaceBox spaceBox = null;
 		if (flow != null) {
 			if (space.getSpaceType() == SpaceType.PUNC) {
-				PuncBox puncBox = new PuncBox(space, controller, flow);
+				PuncBox puncBox = new PuncBox(space, this, flow);
 				spaceBox = puncBox;
 			} else {
-				spaceBox = new SpaceBox(space, controller, flow);
+				spaceBox = new SpaceBox(space, this, flow);
 			}
 		}
 		return spaceBox;
@@ -123,6 +120,36 @@ public class BoardManager {
 		}
 	}
 	
+	public SpaceBox getCurrentlySelected() {
+		SpaceBox selected = null;
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			if (spaceBox.getSelected()) {
+				selected = spaceBox;
+			}
+		}
+		
+		return selected;
+	}
+	
+	public void clearSelection() {
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			// Set to true first so it's toggled to false
+			// then deselected
+			spaceBox.setSelected(true);
+			spaceBox.toggleSelection();
+		}
+	}
+	
+	public void updateHilights(int id) {
+		// Tells each SpaceBox to hilight
+		// if it's space is selected (set to hilight)
+		LetterSpace letterSpace = null;
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			letterSpace = (LetterSpace) spaceBox.getSpace();
+			spaceBox.setCSS(letterSpace.getHilight(), false);
+		}
+	}
+	
 	/* Used when moving through LetterSpaces
 	 * with UP and DOWN arrow keys
 	 * if there is no LetterSpace in the same position
@@ -167,9 +194,10 @@ public class BoardManager {
 		return spaceBoxToReturn;
 	}
 	
-	public void moveHilightVertically(int selectedID, int spacesToAdjust) {
+	public void moveHilightVertically(int directionToMove) {
+		int selectedID = getCurrentlySelected().getSpace().getID();
 		int origLineNum = flow.lineOfSpaceBox(selectedID);
-		int newLineNum = origLineNum + spacesToAdjust;
+		int newLineNum = origLineNum + directionToMove;
 		ArrayList<SpaceBox> newLine = null;
 		
 		if (newLineNum >= 0 && newLineNum < flow.lines()) {
@@ -181,11 +209,11 @@ public class BoardManager {
 			if (origPos < newLine.size()) {
 				SpaceBox spaceBox = newLine.get(origPos);
 				if (spaceBox.getSpace().getSpaceType() == SpaceType.LETTER) {
-					flow.clearSelection();
+					clearSelection();
 					newLine.get(origPos).toggleSelection();
 				} else {
 					spaceBox = getClosestLetter(newLine, spaceBox, origPos);
-					flow.clearSelection();
+					clearSelection();
 					spaceBox.toggleSelection();
 				}
 			} else {
@@ -193,7 +221,7 @@ public class BoardManager {
 				// so it gets the last SpaceBox on the newLine
 				SpaceBox spaceBox = newLine.get(newLine.size() - 1);
 				spaceBox = getClosestLetter(newLine, spaceBox, origPos);
-				flow.clearSelection();
+				clearSelection();
 				spaceBox.toggleSelection();
 			}
 		}
@@ -205,7 +233,8 @@ public class BoardManager {
 	 * If at the end of a line, and used RIGHT, will go down
 	 * to next line and select the first LetterSpace on it
 	 */
-	public void moveHilightHorizontally(int spaceToMoveFrom, int spacesToAdjust) {
+	public void moveHilightHorizontally(int directionToMove) {
+		int selectedID = getCurrentlySelected().getSpace().getID();
 		int nextIndex = -1;
 		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
 		
@@ -214,8 +243,8 @@ public class BoardManager {
 		// spacesToAdjust is positive or negative based on if you need
 		// to move forward or backward
 		for (SpaceBox spaceBox : letterBoxes) {
-			if (spaceToMoveFrom == spaceBox.getSpace().getID()) {
-				nextIndex = letterBoxes.indexOf(spaceBox) + spacesToAdjust;
+			if (selectedID == spaceBox.getSpace().getID()) {
+				nextIndex = letterBoxes.indexOf(spaceBox) + directionToMove;
 			}
 		}
 		
@@ -223,18 +252,18 @@ public class BoardManager {
 		if (nextIndex >= 0) {
 			if (nextIndex < letterBoxes.size()) {
 				// Within range handle normally
-				flow.clearSelection();
+				clearSelection();
 				letterBoxes.get(nextIndex).toggleSelection();
 			} else if (nextIndex >= letterBoxes.size()) {
 				// If moving right from the last LetterSpace
 				// go to the first LetterSpace on the first line
-				flow.clearSelection();
+				clearSelection();
 				letterBoxes.get(0).toggleSelection();
 			}
 		} else if (nextIndex < 0) {
 			// Allow cycling backward from first LetterSpace on first line
 			// to last LetterSpace on last line
-			flow.clearSelection();
+			clearSelection();
 			letterBoxes.get(letterBoxes.size() - 1).toggleSelection();
 		}
 	}

@@ -1,14 +1,10 @@
 package Cryptofriends;
 
-import java.util.ArrayList;
-
 import Cryptofriends.GUI.PlayerMenu;
 import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import core.Data.Player;
 import core.Managers.GameManager;
-import core.Spaces.Space;
-import core.Spaces.SpaceType;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -210,7 +206,7 @@ public class CgramController {
 	public void hilightIncorrect() {
 		// Only needs to run if something has been selected on this puzzle
 		// And there are items that are incorrect
-		SpaceBox selectedBox = flow.getCurrentlySelected();
+		SpaceBox selectedBox = gameMan.getBoardManager().getCurrentlySelected();
 		int numFilled = gameMan.getAnswerManager().getFilledSpaceBoxes().size();
 		int numIncorrect = gameMan.getAnswerManager().getIncorrectSpaceBoxes().size();
 		
@@ -237,25 +233,24 @@ public class CgramController {
 	 * moveHilightHorizontally for Left (-1) / Right (1)
 	 */
 	public void moveSelection(KeyCode keyCode) {
-		int spacesToAdjust = 0;
-		int selectedID = flow.getCurrentlySelected().getSpace().getID();
+		int directionToMove = 0;
 		
 		switch (keyCode) {
 		case UP:
-			spacesToAdjust = -1;
-			gameMan.getBoardManager().moveHilightVertically(selectedID, spacesToAdjust);
+			directionToMove = -1;
+			gameMan.getBoardManager().moveHilightVertically(directionToMove);
 			break;
 		case DOWN:
-			spacesToAdjust = 1;
-			gameMan.getBoardManager().moveHilightVertically(selectedID, spacesToAdjust);
+			directionToMove = 1;
+			gameMan.getBoardManager().moveHilightVertically(directionToMove);
 			break;
 		case LEFT:
-			spacesToAdjust = -1;
-			gameMan.getBoardManager().moveHilightHorizontally(selectedID, spacesToAdjust);
+			directionToMove = -1;
+			gameMan.getBoardManager().moveHilightHorizontally(directionToMove);
 			break;
 		case RIGHT:
-			spacesToAdjust = 1;
-			gameMan.getBoardManager().moveHilightHorizontally(selectedID, spacesToAdjust);
+			directionToMove = 1;
+			gameMan.getBoardManager().moveHilightHorizontally(directionToMove);
 			break;
 		default:
 			break;
@@ -276,7 +271,7 @@ public class CgramController {
 		// This function is called by SpaceBox
 		// Might need to change how SpaceBox runs the update
 		// give it access to AnswerManager???
-		gameMan.getAnswerManager().updateHilights(id);
+		gameMan.getBoardManager().updateHilights(id);
 	}
 	
 	public void clearPuzzle() {

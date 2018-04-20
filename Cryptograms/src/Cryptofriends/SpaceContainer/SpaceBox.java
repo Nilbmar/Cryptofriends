@@ -1,6 +1,6 @@
 package Cryptofriends.SpaceContainer;
 
-import Cryptofriends.CgramController;
+import core.Managers.BoardManager;
 import core.Spaces.LetterSpace;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
@@ -15,16 +15,16 @@ import javafx.scene.text.Font;
 
 public class SpaceBox extends VBox {
 	private Space space;
-	private CgramController controller;
+	private BoardManager boardMan;
 	
 	private boolean selected = false;
 	
 	protected Label answerChar = new Label();
 	protected Label displayChar = new Label();
 	
-	public SpaceBox(Space space, CgramController controller, FlowBox flow) {
+	public SpaceBox(Space space, BoardManager boardMan, FlowBox flow) {
 		this.space = space;
-		this.controller = controller;
+		this.boardMan = boardMan;
 
 		
 		/* Selects a Space to change
@@ -41,7 +41,7 @@ public class SpaceBox extends VBox {
 					// and hilight all LetterSpaces
 					// with same character
 					if (event.getButton() != null && event.getButton() == MouseButton.PRIMARY) {
-						flow.clearSelection();
+						boardMan.clearSelection();
 						toggleSelection();
 					}
 				}
@@ -155,7 +155,7 @@ public class SpaceBox extends VBox {
 			((LetterSpace) space).notifyObserver();
 		}
 		
-		controller.updateHilights(space.getID());
+		boardMan.updateHilights(space.getID());
 	}
 	
 	/* Highlight Folder and Label when label is clicked on

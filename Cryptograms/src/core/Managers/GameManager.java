@@ -29,7 +29,7 @@ public class GameManager {
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
 		answerMan = new AnswerManager(this);
-		boardManager = new BoardManager(this, controller);
+		boardManager = new BoardManager(this);
 		puzzleMan = new PuzzleManager();
 		sqlLoader = new PuzzleLoader(puzzleMan);
 		

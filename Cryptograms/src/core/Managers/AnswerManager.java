@@ -146,7 +146,7 @@ public class AnswerManager {
 	public void hilightIncorrect() {
 		// Only needs to run if something has been selected on this puzzle
 		// Otherwise, the last SpaceBox would be hilighted by clearHilights()
-		SpaceBox selectedBox = flow.getCurrentlySelected();
+		SpaceBox selectedBox = gameMan.getBoardManager().getCurrentlySelected();
 		if (selectedBox != null) {
 			clearHilights();
 			
@@ -163,27 +163,19 @@ public class AnswerManager {
 	
 	public void clearHilights() {
 		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
-		SpaceBox selectedBox = flow.getCurrentlySelected();
+		SpaceBox selectedBox = gameMan.getBoardManager().getCurrentlySelected();
 		for (int x = 0; x < letterBoxes.size(); x++) {
 			letterBoxes.get(x).setCSS(false,  false);
 		}
 		
 		// Make sure the original selected box remains selected
-		flow.clearSelection();
+		gameMan.getBoardManager().clearSelection();
 		if (selectedBox != null) {
 			selectedBox.toggleSelection();
 		}
 	}
 	
-	public void updateHilights(int id) {
-		// Tells each SpaceBox to hilight
-		// if it's space is selected (set to hilight)
-		LetterSpace letterSpace = null;
-		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
-			letterSpace = (LetterSpace) spaceBox.getSpace();
-			spaceBox.setCSS(letterSpace.getHilight(), false);
-		}
-	}
+
 	
 	
 }

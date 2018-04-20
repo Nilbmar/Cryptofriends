@@ -1,6 +1,6 @@
 package Cryptofriends.SpaceContainer;
 
-import Cryptofriends.CgramController;
+import core.Managers.BoardManager;
 import core.Spaces.Space;
 import core.Spaces.SpaceType;
 import javafx.geometry.Insets;
@@ -11,8 +11,8 @@ public class PuncBox extends SpaceBox {
 	private SpaceType prevSpaceType;
 	private SpaceType nextSpaceType;
 
-	public PuncBox(Space space, CgramController controller, FlowBox flow) {
-		super(space, controller, flow);
+	public PuncBox(Space space, BoardManager boardMan, FlowBox flow) {
+		super(space, boardMan, flow);
 	}
 
 	public void setPrevType(SpaceType prevSpaceType) {
