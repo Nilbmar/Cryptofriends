@@ -15,8 +15,8 @@ public class GameManager {
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
 	private BoardManager boardManager;
-	private PuzzleManager puzzleMan = new PuzzleManager();
-	private PuzzleLoader sqlLoader = new PuzzleLoader(puzzleMan);
+	private PuzzleManager puzzleMan;
+	private PuzzleLoader sqlLoader;
 	private int puzzleIndex = 0;
 	
 	
@@ -30,6 +30,8 @@ public class GameManager {
 		scoreMan = new ScoreManager();
 		answerMan = new AnswerManager(this);
 		boardManager = new BoardManager(this, controller);
+		puzzleMan = new PuzzleManager();
+		sqlLoader = new PuzzleLoader(puzzleMan);
 		
 		
 		// Create default player
@@ -50,7 +52,7 @@ public class GameManager {
 	public AnswerManager getAnswerManager() { return answerMan; }
 	public SelectionManager getSelectionManager() { return selectMan; }
 	public ScoreManager getScoreManager() { return scoreMan; }
-	public BoardManager getBoardBuilder() { return boardManager; }
+	public BoardManager getBoardManager() { return boardManager; }
 	
 	public void createBoard() {
 		//flow = new FlowBox();
@@ -65,6 +67,7 @@ public class GameManager {
 		sqlLoader.setTarget(Integer.toString(puzzleIndex));
 		sqlLoader.load();
 	}
+	
 	public void loadNewPuzzle() {
 		// Clear game board
 		boardManager.getFlowBox().setDisable(false);
@@ -84,7 +87,7 @@ public class GameManager {
 			puzzleIndex++;
 			
 			// Reset alignment for punctuation
-			boardManager.getFlowBox().setupPuncAlignment();
+			boardManager.setupPuncAlignment();
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
