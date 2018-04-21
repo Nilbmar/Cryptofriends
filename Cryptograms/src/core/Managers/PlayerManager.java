@@ -15,6 +15,7 @@ public class PlayerManager {
 	private String currentPlayerName = null;
 	private int playerCount = 0;
 	
+	
 	public PlayerManager() {
 		players = new LinkedHashMap<String, Player>();
 	}
@@ -22,11 +23,7 @@ public class PlayerManager {
 	public void update() {
 		
 	}
-	/*
-	public void setCurrentPlayer(String playerName) {
-		currentPlayerName = playerName;
-	}
-	*/
+	
 	public String switchPlayer() {
 		boolean setNextPlayerToCurrent = false;
 		Iterator<Entry<String, Player>> it = players.entrySet().iterator();

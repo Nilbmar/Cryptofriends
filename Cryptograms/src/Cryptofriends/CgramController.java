@@ -21,11 +21,6 @@ import javafx.scene.layout.VBox;
 public class CgramController {
 	private Scene scene;
 	private GameManager gameMan;
-	/*
-	private PuzzleManager puzzleMan = new PuzzleManager();
-	private PuzzleLoader sqlLoader = new PuzzleLoader(puzzleMan);
-	private int puzzleIndex = 0;
-	*/
 	
 	@FXML
 	private FlowBox flow;
@@ -107,7 +102,7 @@ public class CgramController {
         	
         	// Letter Input
         	if (keyEvent.getCode().isLetterKey()) {
-            	gameMan.getAnswerManager().setAnswer(keyEvent.getCode().toString());
+            	gameMan.setAnswer(keyEvent.getCode().toString());
             }
         	
         	if (keyEvent.getCode().isArrowKey()) {
@@ -115,7 +110,7 @@ public class CgramController {
         	}
         	
         	if (keyEvent.getCode() == KeyCode.DELETE) {
-        		gameMan.getAnswerManager().setAnswer(" ");
+        		gameMan.setAnswer(" ");
         	}
         });
 	}

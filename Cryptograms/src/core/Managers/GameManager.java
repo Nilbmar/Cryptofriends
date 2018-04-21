@@ -14,6 +14,7 @@ public class GameManager {
 	private AnswerManager answerMan;
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
+	private TimeManager timeMan;
 	private BoardManager boardManager;
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader sqlLoader;
@@ -25,6 +26,7 @@ public class GameManager {
 		playerMan = new PlayerManager();
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
+		timeMan = new TimeManager();
 		answerMan = new AnswerManager(this);
 		boardManager = new BoardManager(this);
 		puzzleMan = new PuzzleManager();
@@ -49,6 +51,7 @@ public class GameManager {
 	public AnswerManager getAnswerManager() { return answerMan; }
 	public SelectionManager getSelectionManager() { return selectMan; }
 	public ScoreManager getScoreManager() { return scoreMan; }
+	public TimeManager getTimeManager() { return timeMan; }
 	public BoardManager getBoardManager() { return boardManager; }
 	
 	public void createBoard() {
@@ -100,12 +103,17 @@ public class GameManager {
 		loadNewPuzzle();
 	}
 	
+	public void setAnswer(String answer) {
+		answerMan.setAnswer(answer);
+	}
+	
 	public void addPlayer() {
 		// Returned so it can be added to menu
 		Player player = playerMan.addPlayer();
 		controller.addPlayerMenuItem(player);
 		String playerKey = "Player " + player.getPlayerNum();
 		scoreMan.addPlayer(playerKey);
+		timeMan.addPlayer(playerKey);
 	}
 	
 	public void renamePlayer(int numOfPlayer) {
