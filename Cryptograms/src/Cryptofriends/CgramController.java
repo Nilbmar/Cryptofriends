@@ -158,6 +158,23 @@ public class CgramController {
 		lblSubject.setText(subject);
 	}
 	
+	public void updatePlayerTime(long time) {
+		int hours = (int) time / 3600;
+		int minutes = (int) ((time % 3600) / 60);
+		int seconds = (int) time % 60;
+		String text = null;
+		
+		if (hours > 0) {
+			text = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+		} else if (minutes > 0) {
+			text = String.format("%02d:%02d", minutes, seconds);
+		} else {
+			text = String.format("%02d", seconds);
+		}
+		
+		lblTime.setText(text + "s");
+	}
+	
 	// Changes the panel on the bottom that holds
 	// player name, score, and time
 	public void updatePlayerInfoBox() {

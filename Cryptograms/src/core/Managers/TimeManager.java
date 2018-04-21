@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 public class TimeManager {
 	private HashMap<String, Integer> playerClocks = null;
 	private String currentPlayerKey;
-	long startingTime;
+	private long startingTime;
 	
 	public TimeManager() {
 		playerClocks = new HashMap<String, Integer>();
@@ -24,19 +24,17 @@ public class TimeManager {
 	}
 	
 	private long calculateElapsedTime() {
-		long elapsedTime;
-		long currentTime = System.nanoTime();
-		
-		elapsedTime = startingTime - currentTime;
-		
-		return TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+		long elapsedTime = System.nanoTime() - startingTime;
+				
+		elapsedTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+		return elapsedTime;
 	}
 	
 	public long getTimeElapsed() {
 		long elapsedTime;
 		
 		elapsedTime = calculateElapsedTime();
-		
+		System.out.println("elapsedTime - nano seconds: " + elapsedTime);
 		return elapsedTime;
 	}
 }

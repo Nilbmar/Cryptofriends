@@ -35,6 +35,7 @@ public class GameManager {
 		
 		// Create default player
 		addPlayer();
+		playerMan.getCurrentPlayer().setTurn(true);
 	}
 	
 	public void update() {
@@ -105,6 +106,15 @@ public class GameManager {
 	
 	public void setAnswer(String answer) {
 		answerMan.setAnswer(answer);
+		Player currentPlayer = playerMan.getCurrentPlayer();
+		String currentPlayerKey = "Player " + currentPlayer.getPlayerNum();
+		if (currentPlayer.getMovesThisTurn() == 0) {
+			timeMan.startTimer(currentPlayerKey);
+		} else {
+			controller.updatePlayerTime(timeMan.getTimeElapsed());
+		}
+		
+		currentPlayer.moved();
 	}
 	
 	public void addPlayer() {

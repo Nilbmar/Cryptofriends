@@ -26,6 +26,7 @@ public class PlayerManager {
 	
 	public String switchPlayer() {
 		boolean setNextPlayerToCurrent = false;
+		players.get(currentPlayerName).setTurn(false);
 		Iterator<Entry<String, Player>> it = players.entrySet().iterator();
 		while (it.hasNext()) {
 			// First run - set to first player
@@ -57,6 +58,7 @@ public class PlayerManager {
 		}
 		
 		System.out.println("switched to player " + currentPlayerName);
+		players.get(currentPlayerName).setTurn(true);
 		return currentPlayerName;
 	}
 	
