@@ -31,10 +31,9 @@ public class ScoreManager {
 		if (playerScores.containsKey(playerKey)) {
 			float occurances = letterOccurances;
 			float letters = totalLetters;
-			
+			//double rightPercent = occurances * 100 / letters;
 			// The 10 and 10d is to set it to one decimal place
-			float percent = (float) (Math.round(((occurances * 100) / letters) * 10) / 10d);
-			System.out.println("percentage is = " + percent + " : " + letterOccurances + " of " + totalLetters);
+			float percent = (float) (Math.ceil(((occurances * 100) / letters) * 10) / 10d);
 			
 			getPlayerScoreData(playerKey).reduceScore(percent);
 		}

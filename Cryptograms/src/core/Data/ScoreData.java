@@ -10,8 +10,8 @@ public class ScoreData {
 	
 	public float getScore() { return score; }
 	
-	public void reduceScore(float percentToReduce) {
-		score -= percentToReduce;
+	public void reduceScore(float percent) {
+		score -= percent;
 	}
 
 }

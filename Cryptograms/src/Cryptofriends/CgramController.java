@@ -171,8 +171,8 @@ public class CgramController {
 		if (player != null) {
 			lblPlayerName.setText(player.getName());
 			String playerKey = "Player " + player.getPlayerNum();
-			float score = gameMan.getScoreManager().getPlayerScoreData(playerKey).getScore();
-			lblScore.setText("" + score);
+			int score = (int) gameMan.getScoreManager().getPlayerScoreData(playerKey).getScore();
+			lblScore.setText(score + "%");
 		}
 	}
 	
