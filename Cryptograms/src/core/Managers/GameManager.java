@@ -1,5 +1,6 @@
 package core.Managers;
 
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
@@ -106,15 +107,26 @@ public class GameManager {
 	
 	public void setAnswer(String answer) {
 		answerMan.setAnswer(answer);
-		Player currentPlayer = playerMan.getCurrentPlayer();
-		String currentPlayerKey = "Player " + currentPlayer.getPlayerNum();
-		if (currentPlayer.getMovesThisTurn() == 0) {
+		
+		// Setting time
+		Player player = playerMan.getCurrentPlayer();
+		String currentPlayerKey = "Player " + player.getPlayerNum();
+		if (player.getMovesThisTurn() == 0) {
 			timeMan.startTimer(currentPlayerKey);
 		} else {
+			timeMan.updateTimer();
 			controller.updatePlayerTime(timeMan.getTimeElapsed());
 		}
 		
-		currentPlayer.moved();
+		player.moved();
+		
+		// Testing PlayerTime
+		System.out.println("Testing PlayerTime");
+		for (Player currPlayer : playerMan.getPlayersArrayList()) {
+			System.out.println("Player " + currPlayer.getPlayerNum());
+			System.out.println("Puzzle Time: " + currPlayer.getPlayerTime().getPuzzleTime()
+					+ " Total Time: " + currPlayer.getPlayerTime().getTotalTime());
+		}
 	}
 	
 	public void addPlayer() {
@@ -123,7 +135,7 @@ public class GameManager {
 		controller.addPlayerMenuItem(player);
 		String playerKey = "Player " + player.getPlayerNum();
 		scoreMan.addPlayer(playerKey);
-		timeMan.addPlayer(playerKey);
+		timeMan.addPlayer(player);
 	}
 	
 	public void renamePlayer(int numOfPlayer) {
@@ -136,5 +148,7 @@ public class GameManager {
 	
 	public void switchPlayer() {
 		playerMan.switchPlayer();
+		String newPlayerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
+		timeMan.switchedPlayer(newPlayerKey);
 	}
 }

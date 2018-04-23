@@ -1,5 +1,6 @@
 package core.Managers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -63,6 +64,16 @@ public class PlayerManager {
 	}
 	
 	public HashMap<String, Player> getPlayers() { return players; }
+	public ArrayList<Player> getPlayersArrayList() { 
+		ArrayList<Player> playersArray = new ArrayList<Player>();
+		
+		Iterator<Entry<String, Player>> it = players.entrySet().iterator();
+		while (it.hasNext()) {
+			playersArray.add(it.next().getValue());
+		}
+		
+		return playersArray;
+	}
 	public Player getCurrentPlayer() {
 		Player player = null;
 		

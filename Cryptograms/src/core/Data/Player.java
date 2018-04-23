@@ -2,6 +2,7 @@ package core.Data;
 
 public class Player {
 	private String name;
+	private PlayerTime playerTime;
 	private int playerNum;
 	private int score;
 	private int movesThisTurn;
@@ -12,7 +13,10 @@ public class Player {
 	public Player(String name, int num) {
 		this.name = name;
 		playerNum = num;
+		playerTime = new PlayerTime();
 	}
+	
+	public PlayerTime getPlayerTime() { return playerTime; }
 	
 	public void setName(String name) { this.name = name; }
 	public String getName() { return name; }
