@@ -2,24 +2,37 @@ package core.Managers;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Timer;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import core.Data.Player;
+import core.Processes.CgramTimeTask;
 
 public class TimeManager {
 	private HashMap<String, Player> players = null;
 	private String currentPlayerKey;
 	private long startingTime;
+	private CgramTimeTask timeTask;
+	private Timer timer;
 	
-	public TimeManager() {
+	public TimeManager(CgramTimeTask timeTask) {
 		players = new HashMap<String, Player>();
+		
+		this.timeTask = timeTask;
+		this.timeTask.setTimeManager(this);
+		timer = new Timer(true);
+		timer.scheduleAtFixedRate(this.timeTask, 0, 10*100);
 	}
 	
 	public void addPlayer(Player player) {
 		String playerKey = "Player " + player.getPlayerNum();
 		if (!players.containsKey(playerKey)) {
 			players.put(playerKey, player);
+		}
+		
+		if (playerKey.contentEquals("Player 1")) {
+			timeTask.setPlayer(player);
 		}
 	}
 	
@@ -30,13 +43,12 @@ public class TimeManager {
 	
 	public void updateTimer() {
 		long elapsedTime = getTimeElapsed();
-		players.get(currentPlayerKey).getPlayerTime().setPuzzleTime(elapsedTime);
+		players.get(currentPlayerKey).getPlayerTime().updatePuzzleTime(elapsedTime);
 	}
 	
 	private void stopTimer() {
 		updateTimer();
 		currentPlayerKey = null;
-		startingTime = 0;
 	}
 	
 	private long calculateElapsedTime() {
@@ -61,6 +73,7 @@ public class TimeManager {
 		stopTimer();
 		
 		currentPlayerKey = newPlayerKey;
+		timeTask.setPlayer(players.get(currentPlayerKey));
 	}
 	
 	/* Sets the last elapsed time for the current player
@@ -75,7 +88,7 @@ public class TimeManager {
 			player = it.next().getValue();
 			playerKey = "Player " + player.getPlayerNum();
 			if (currentPlayerKey == playerKey) {
-				player.getPlayerTime().setPuzzleTime(getTimeElapsed());
+				player.getPlayerTime().updatePuzzleTime(getTimeElapsed());
 			}
 			
 			player.getPlayerTime().finishedPuzzle();

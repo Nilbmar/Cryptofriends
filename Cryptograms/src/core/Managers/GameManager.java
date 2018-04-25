@@ -1,6 +1,7 @@
 package core.Managers;
 
-import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
@@ -16,6 +17,7 @@ public class GameManager {
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
 	private TimeManager timeMan;
+	private Timer timer;
 	private BoardManager boardManager;
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader sqlLoader;
@@ -27,7 +29,8 @@ public class GameManager {
 		playerMan = new PlayerManager();
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
-		timeMan = new TimeManager();
+		timeMan = new TimeManager(this.controller.getTimeTask());
+		
 		answerMan = new AnswerManager(this);
 		boardManager = new BoardManager(this);
 		puzzleMan = new PuzzleManager();
@@ -114,19 +117,11 @@ public class GameManager {
 		if (player.getMovesThisTurn() == 0) {
 			timeMan.startTimer(currentPlayerKey);
 		} else {
-			timeMan.updateTimer();
-			controller.updatePlayerTime(timeMan.getTimeElapsed());
+			
+			//controller.updatePlayerTime(timeMan.getTimeElapsed());
 		}
 		
 		player.moved();
-		
-		// Testing PlayerTime
-		System.out.println("Testing PlayerTime");
-		for (Player currPlayer : playerMan.getPlayersArrayList()) {
-			System.out.println("Player " + currPlayer.getPlayerNum());
-			System.out.println("Puzzle Time: " + currPlayer.getPlayerTime().getPuzzleTime()
-					+ " Total Time: " + currPlayer.getPlayerTime().getTotalTime());
-		}
 	}
 	
 	public void addPlayer() {
@@ -150,5 +145,6 @@ public class GameManager {
 		playerMan.switchPlayer();
 		String newPlayerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
 		timeMan.switchedPlayer(newPlayerKey);
+		
 	}
 }

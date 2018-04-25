@@ -8,8 +8,8 @@ public class PlayerTime {
 	}
 	
 	public long getPuzzleTime() { return puzzleTime; }
-	public void setPuzzleTime(long time) {
-		puzzleTime = time;
+	public void updatePuzzleTime(long time) {
+		puzzleTime += time;
 	}
 	
 	public long getTotalTime() { return totalTime; }

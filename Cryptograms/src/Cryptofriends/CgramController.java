@@ -5,6 +5,7 @@ import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import core.Data.Player;
 import core.Managers.GameManager;
+import core.Processes.CgramTimeTask;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ import javafx.scene.layout.VBox;
 public class CgramController {
 	private Scene scene;
 	private GameManager gameMan;
+	private CgramTimeTask timeTask;
 	
 	@FXML
 	private FlowBox flow;
@@ -113,6 +115,8 @@ public class CgramController {
         		gameMan.setAnswer(" ");
         	}
         });
+		
+		timeTask = new CgramTimeTask(lblTime);
 	}
 	
 	public void setGameManager(GameManager gameMan) {
@@ -126,6 +130,8 @@ public class CgramController {
 		// and default color for panels
 		showClearIncorrectBtns();
 	}
+	
+	public CgramTimeTask getTimeTask() { return timeTask; }
 	
 	public void showClearIncorrectBtns() {
 		if (hboxClearIncorrect.isVisible()) {
@@ -158,21 +164,15 @@ public class CgramController {
 		lblSubject.setText(subject);
 	}
 	
-	public void updatePlayerTime(long time) {
-		int hours = (int) time / 3600;
-		int minutes = (int) ((time % 3600) / 60);
-		int seconds = (int) time % 60;
-		String text = null;
-		
-		if (hours > 0) {
-			text = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-		} else if (minutes > 0) {
-			text = String.format("%02d:%02d", minutes, seconds);
-		} else {
-			text = String.format("%02d", seconds);
+	public void updatePlayerTime() {
+		try {
+			Player player = gameMan.getPlayerManager().getCurrentPlayer();
+			long time = player.getPlayerTime().getPuzzleTime();
+			//timeTask.setTime(time);
+			timeTask.run();
+		} catch (Exception ex) {
+			System.out.println("updatePlayerTime exception: " + ex.getMessage());
 		}
-		
-		lblTime.setText(text + "s");
 	}
 	
 	// Changes the panel on the bottom that holds
