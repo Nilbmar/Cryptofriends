@@ -1,7 +1,5 @@
 package core.Managers;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
@@ -17,7 +15,6 @@ public class GameManager {
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
 	private TimeManager timeMan;
-	private Timer timer;
 	private BoardManager boardManager;
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader sqlLoader;

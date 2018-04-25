@@ -166,9 +166,6 @@ public class CgramController {
 	
 	public void updatePlayerTime() {
 		try {
-			Player player = gameMan.getPlayerManager().getCurrentPlayer();
-			long time = player.getPlayerTime().getPuzzleTime();
-			//timeTask.setTime(time);
 			timeTask.run();
 		} catch (Exception ex) {
 			System.out.println("updatePlayerTime exception: " + ex.getMessage());
