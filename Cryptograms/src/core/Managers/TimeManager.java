@@ -6,49 +6,63 @@ import java.util.Timer;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
+import Cryptofriends.GUI.CgramTimeTask;
+import Cryptofriends.GUI.CgramTimer;
 import core.Data.Player;
-import core.Processes.CgramTimeTask;
+import javafx.scene.control.Label;
 
 public class TimeManager {
 	private HashMap<String, Player> players = null;
+	private HashMap<String, CgramTimer> timers = null;
 	private String currentPlayerKey;
+	private Label lblTime;
 	private long startingTime;
-	private CgramTimeTask timeTask;
-	private Timer timer;
+	//private Timer timer;
 	
-	public TimeManager(CgramTimeTask timeTask) {
+	public TimeManager(Label lblTime) {
+		this.lblTime = lblTime;
 		players = new HashMap<String, Player>();
-		
-		this.timeTask = timeTask;
-		this.timeTask.setTimeManager(this);
-		timer = new Timer(true);
-		timer.scheduleAtFixedRate(this.timeTask, 0, 10*100);
+		timers = new HashMap<String, CgramTimer>();
+		//timer = new Timer(true);
 	}
 	
 	public void addPlayer(Player player) {
 		String playerKey = "Player " + player.getPlayerNum();
 		if (!players.containsKey(playerKey)) {
 			players.put(playerKey, player);
+			//addTimeTaskToPlayer(playerKey);
+			CgramTimer cTimer = new CgramTimer(this, player, lblTime);
+			timers.put(playerKey, cTimer);
+			
+			if (playerKey.contentEquals("Player 1")) {
+				currentPlayerKey = playerKey;
+			}
 		}
 		
-		if (playerKey.contentEquals("Player 1")) {
-			timeTask.setPlayer(player);
-		}
+		
 	}
 	
 	public void startTimer(String playerKey) {
 		currentPlayerKey = playerKey;
 		startingTime = System.nanoTime();
+		timers.get(currentPlayerKey).schedule();
 	}
 	
 	public void updateTimer() {
 		long elapsedTime = getTimeElapsed();
-		players.get(currentPlayerKey).getPlayerTime().updatePuzzleTime(elapsedTime);
+		System.out.println(currentPlayerKey + "elapsedTime: " + elapsedTime);
+		players.get(currentPlayerKey).getPlayerTime().updateRoundTime(elapsedTime);
 	}
 	
 	private void stopTimer() {
 		updateTimer();
-		currentPlayerKey = null;
+		startingTime = 0;
+		timers.get(currentPlayerKey).cancel();
+		timers.remove(currentPlayerKey);
+		
+		CgramTimer cTimer = new CgramTimer(this, players.get(currentPlayerKey), lblTime);
+		timers.put(currentPlayerKey, cTimer);
+		//currentPlayerKey = null;
 	}
 	
 	private long calculateElapsedTime() {
@@ -71,9 +85,11 @@ public class TimeManager {
 	
 	public void switchedPlayer(String newPlayerKey) {
 		stopTimer();
-		
-		currentPlayerKey = newPlayerKey;
-		timeTask.setPlayer(players.get(currentPlayerKey));
+		//startTimer(newPlayerKey);
+	}
+	
+	public CgramTimeTask getCurrentTimeTask() {
+		return timers.get(currentPlayerKey).getTimeTask();
 	}
 	
 	/* Sets the last elapsed time for the current player
@@ -88,7 +104,7 @@ public class TimeManager {
 			player = it.next().getValue();
 			playerKey = "Player " + player.getPlayerNum();
 			if (currentPlayerKey == playerKey) {
-				player.getPlayerTime().updatePuzzleTime(getTimeElapsed());
+				player.getPlayerTime().updateRoundTime(getTimeElapsed());
 			}
 			
 			player.getPlayerTime().finishedPuzzle();

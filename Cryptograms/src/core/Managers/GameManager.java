@@ -26,7 +26,7 @@ public class GameManager {
 		playerMan = new PlayerManager();
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
-		timeMan = new TimeManager(this.controller.getTimeTask());
+		timeMan = new TimeManager(controller.getTimeLabel());
 		
 		answerMan = new AnswerManager(this);
 		boardManager = new BoardManager(this);

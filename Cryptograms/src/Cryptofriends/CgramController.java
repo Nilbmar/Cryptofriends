@@ -1,11 +1,11 @@
 package Cryptofriends;
 
+import Cryptofriends.GUI.CgramTimeTask;
 import Cryptofriends.GUI.PlayerMenu;
 import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import core.Data.Player;
 import core.Managers.GameManager;
-import core.Processes.CgramTimeTask;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -116,7 +116,7 @@ public class CgramController {
         	}
         });
 		
-		timeTask = new CgramTimeTask(lblTime);
+		//timeTask = new CgramTimeTask(lblTime);
 	}
 	
 	public void setGameManager(GameManager gameMan) {
@@ -131,7 +131,12 @@ public class CgramController {
 		showClearIncorrectBtns();
 	}
 	
+	public Label getTimeLabel() { return lblTime; }
+	public void setTimeTask(CgramTimeTask timeTask) {
+		this.timeTask = timeTask;
+	}
 	public CgramTimeTask getTimeTask() { return timeTask; }
+
 	
 	public void showClearIncorrectBtns() {
 		if (hboxClearIncorrect.isVisible()) {
@@ -166,6 +171,8 @@ public class CgramController {
 	
 	public void updatePlayerTime() {
 		try {
+			System.out.println(gameMan.getPlayerManager().getCurrentPlayer().getName());
+			timeTask = gameMan.getTimeManager().getCurrentTimeTask();
 			timeTask.run();
 		} catch (Exception ex) {
 			System.out.println("updatePlayerTime exception: " + ex.getMessage());

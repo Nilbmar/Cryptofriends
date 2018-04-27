@@ -1,4 +1,4 @@
-package core.Processes;
+package Cryptofriends.GUI;
 
 import java.util.TimerTask;
 
@@ -31,8 +31,11 @@ public class CgramTimeTask extends TimerTask {
 			@Override public void run() {
 				try {
 				System.out.println("Running task - Player " + player.getPlayerNum());
+				
+				if (timeMan != null) {
 				time = timeMan.getTimeElapsed();
-				player.getPlayerTime().updatePuzzleTime(time);
+				player.getPlayerTime().updateRoundTime(time);
+				}
 				
 				int hours = (int) time / 3600;
 				int minutes = (int) ((time % 3600) / 60);
@@ -50,7 +53,8 @@ public class CgramTimeTask extends TimerTask {
 				lblTime.setText(text + "s");
 				} catch (NullPointerException nullEx) {
 					System.out.println("NullPointerException: Probably no player");
-					System.out.println(nullEx.getMessage());
+					//System.out.println(nullEx.printStackTrace(););
+					nullEx.printStackTrace();
 				}
 			}
 		});
