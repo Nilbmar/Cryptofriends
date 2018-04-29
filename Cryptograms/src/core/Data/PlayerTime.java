@@ -13,6 +13,11 @@ public class PlayerTime {
 		roundTime += time;
 	}
 	
+	public long getPuzzleTime() { return puzzleTime; }
+	public void updatePuzzleTime(long time) {
+		puzzleTime += time;
+	}
+	
 	public long getTotalTime() { return totalTime; }
 		
 	public void finishedPuzzle() {

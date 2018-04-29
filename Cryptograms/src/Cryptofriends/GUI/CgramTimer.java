@@ -25,9 +25,7 @@ public class CgramTimer extends Timer {
 	
 	public CgramTimeTask getTimeTask() { return timeTask; }
 	private void setupTimeTask() {
-		timeTask = new CgramTimeTask(lblTime);
-		timeTask.setTimeManager(this.timeMan);
-		timeTask.setPlayer(this.player);
+		timeTask = new CgramTimeTask(timeMan, player, lblTime);
 	}
 	
 	public void schedule() {

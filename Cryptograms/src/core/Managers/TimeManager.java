@@ -36,6 +36,7 @@ public class TimeManager {
 			
 			if (playerKey.contentEquals("Player 1")) {
 				currentPlayerKey = playerKey;
+				timers.get(currentPlayerKey).schedule();
 			}
 		}
 		
@@ -45,21 +46,29 @@ public class TimeManager {
 	public void startTimer(String playerKey) {
 		currentPlayerKey = playerKey;
 		startingTime = System.nanoTime();
-		timers.get(currentPlayerKey).schedule();
+		
 	}
 	
 	public void updateTimer() {
 		long elapsedTime = getTimeElapsed();
-		System.out.println(currentPlayerKey + "elapsedTime: " + elapsedTime);
+		//System.out.println(currentPlayerKey + " elapsedTime: " + elapsedTime);
 		players.get(currentPlayerKey).getPlayerTime().updateRoundTime(elapsedTime);
 	}
 	
 	private void stopTimer() {
 		updateTimer();
+		System.out.print("\nstopTimer: puzzleTime - ");
+		System.out.print(getTimeElapsed() + "\n\n");
+		players.get(currentPlayerKey).getPlayerTime().updatePuzzleTime(getTimeElapsed());
+		System.out.print("\nstopTimer: puzzleTime - ");
+		System.out.print(getTimeElapsed() + "\n\n");
 		startingTime = 0;
+		
+		// Remove old timer for player being switched from
 		timers.get(currentPlayerKey).cancel();
 		timers.remove(currentPlayerKey);
 		
+		// Create new timer for player being switched from
 		CgramTimer cTimer = new CgramTimer(this, players.get(currentPlayerKey), lblTime);
 		timers.put(currentPlayerKey, cTimer);
 		//currentPlayerKey = null;
@@ -79,13 +88,13 @@ public class TimeManager {
 		long elapsedTime;
 		
 		elapsedTime = calculateElapsedTime();
-		System.out.println("elapsedTime in seconds: " + elapsedTime);
 		return elapsedTime;
 	}
 	
 	public void switchedPlayer(String newPlayerKey) {
 		stopTimer();
-		//startTimer(newPlayerKey);
+		currentPlayerKey = newPlayerKey;
+		timers.get(currentPlayerKey).schedule();
 	}
 	
 	public CgramTimeTask getCurrentTimeTask() {
