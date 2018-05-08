@@ -3,6 +3,7 @@ package core.Managers;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
+import Cryptofriends.SpaceContainer.SpaceBox;
 import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
@@ -15,7 +16,7 @@ public class GameManager {
 	private PlayerManager playerMan;
 	private ScoreManager scoreMan;
 	private TimeManager timeMan;
-	private BoardManager boardManager;
+	private BoardManager boardMan;
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader sqlLoader;
 	private int puzzleIndex = 0;	
@@ -29,7 +30,7 @@ public class GameManager {
 		timeMan = new TimeManager(controller.getTimeLabel());
 		
 		answerMan = new AnswerManager(this);
-		boardManager = new BoardManager(this);
+		boardMan = new BoardManager(this);
 		puzzleMan = new PuzzleManager();
 		sqlLoader = new PuzzleLoader(puzzleMan);
 		
@@ -54,16 +55,12 @@ public class GameManager {
 	public SelectionManager getSelectionManager() { return selectMan; }
 	public ScoreManager getScoreManager() { return scoreMan; }
 	public TimeManager getTimeManager() { return timeMan; }
-	public BoardManager getBoardManager() { return boardManager; }
+	public BoardManager getBoardManager() { return boardMan; }
 	
 	public void createBoard() {
-		//flow = new FlowBox();
-		//flow.setSpacesPerLine(15);
-		boardManager.setupFlowBox();
-		
-		//anchor.getChildren().add(flow);
-		
-		answerMan.setFlowBox(boardManager.getFlowBox());
+		boardMan.setupFlowBox();
+				
+		answerMan.setFlowBox(boardMan.getFlowBox());
 
 		puzzleIndex = 1;
 		sqlLoader.setTarget(Integer.toString(puzzleIndex));
@@ -72,14 +69,14 @@ public class GameManager {
 	
 	public void loadNewPuzzle() {
 		// Clear game board
-		boardManager.getFlowBox().setDisable(false);
-		boardManager.getFlowBox().clear();
+		boardMan.getFlowBox().setDisable(false);
+		boardMan.getFlowBox().clear();
 		setPuzzleState(PuzzleState.PLAYING);
 		
 		// Create new game board
 		try {			
 			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
-			boardManager.setupPuzzle(puzzleData.getPuzzle());
+			boardMan.setupPuzzle(puzzleData.getPuzzle());
 			
 			String author = puzzleData.getAuthor();
 			String subject = puzzleData.getSubject();
@@ -89,7 +86,7 @@ public class GameManager {
 			puzzleIndex++;
 			
 			// Reset alignment for punctuation
-			boardManager.setupPuncAlignment();
+			boardMan.setupPuncAlignment();
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
@@ -121,6 +118,37 @@ public class GameManager {
 		player.moved();
 	}
 	
+	/* Reveals */
+	public void displayLetter() {
+		answerMan.displayLetter();
+	}
+	
+	public void displayAllLetters() {
+		answerMan.displayAllLetters();
+		timeMan.finishedPuzzle();
+	}
+	
+	public void hilightIncorrect() {
+		// Only needs to run if something has been selected on this puzzle
+		// And there are items that are incorrect
+		// TODO: IS CURRENTLY SHOWING EVEN IF NO INCORRECT
+		// IS ANSWERMAN ACTUALLY GETTING INCORRECT??
+		SpaceBox selectedBox = boardMan.getCurrentlySelected();
+		int numFilled = answerMan.getFilledSpaceBoxes().size();
+		int numIncorrect = answerMan.getIncorrectSpaceBoxes().size();
+		
+		if (selectedBox != null && numFilled > 0 && numIncorrect > 0) {
+			answerMan.hilightIncorrect();
+			controller.showClearIncorrectBtns();
+		}
+	}
+	
+	public void clearIncorrect() {
+		answerMan.clearIncorrect();
+		controller.showClearIncorrectBtns();
+	}
+	
+	/* Player Management */
 	public void addPlayer() {
 		// Returned so it can be added to menu
 		Player player = playerMan.addPlayer();

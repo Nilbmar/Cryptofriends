@@ -223,37 +223,25 @@ public class CgramController {
 		updatePlayerInfoBox();
 	}
 	
-	public void clearIncorrect() {
-		gameMan.getAnswerManager().clearIncorrect();
-		showClearIncorrectBtns();
-	}
 	
-	public void hilightIncorrect() {
-		// Only needs to run if something has been selected on this puzzle
-		// And there are items that are incorrect
-		SpaceBox selectedBox = gameMan.getBoardManager().getCurrentlySelected();
-		int numFilled = gameMan.getAnswerManager().getFilledSpaceBoxes().size();
-		int numIncorrect = gameMan.getAnswerManager().getIncorrectSpaceBoxes().size();
-		
-		if (selectedBox != null && numFilled > 0 && numIncorrect > 0) {
-			gameMan.getAnswerManager().hilightIncorrect();
-			showClearIncorrectBtns();
-		}
-	}
-	
+	/* Reveal Buttons */
 	public void displayLetter() {
-		gameMan.getAnswerManager().displayLetter();
-		
+		gameMan.displayLetter();
 		updatePlayerInfoBox();
 	}
 	
 	public void displayAllLetters() {
-		gameMan.getAnswerManager().displayAllLetters();
-		gameMan.getTimeManager().finishedPuzzle();
+		gameMan.displayAllLetters();
 		updatePlayerInfoBox();
 	}
 	
-
+	public void hilightIncorrect() {
+		gameMan.hilightIncorrect();
+	}
+	
+	public void clearIncorrect() {
+		gameMan.clearIncorrect();
+	}
 	
 	/* Allows movement between SpaceBoxes with arrow keys
 	 * moveHilightVertically for Up (-1) / Down (1)
@@ -285,13 +273,6 @@ public class CgramController {
 		
 		
 	}
-
-
-	
-	
-	
-	
-	
 	
 	public void updateHilights(int id) {
 		// TODO:
