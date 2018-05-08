@@ -16,51 +16,46 @@ public class TimeManager {
 	private String currentPlayerKey;
 	private Label lblTime;
 	private long startingTime;
-	//private Timer timer;
 	
 	public TimeManager(Label lblTime) {
 		this.lblTime = lblTime;
 		players = new HashMap<String, Player>();
 		timers = new HashMap<String, CgramTimer>();
-		//timer = new Timer(true);
 	}
 	
 	public void addPlayer(Player player) {
 		String playerKey = "Player " + player.getPlayerNum();
 		if (!players.containsKey(playerKey)) {
 			players.put(playerKey, player);
-			//addTimeTaskToPlayer(playerKey);
+			
+			// Create timer for the new player
 			CgramTimer cTimer = new CgramTimer(this, player, lblTime);
 			timers.put(playerKey, cTimer);
 			
+			// When first player added
+			// Set it as the current player and start its timer
 			if (playerKey.contentEquals("Player 1")) {
 				currentPlayerKey = playerKey;
 				timers.get(currentPlayerKey).schedule();
 			}
 		}
-		
-		
 	}
 	
 	public void startTimer(String playerKey) {
 		currentPlayerKey = playerKey;
 		startingTime = System.nanoTime();
-		
 	}
 	
 	public void updateTimer() {
-		long elapsedTime = getTimeElapsed();
-		//System.out.println(currentPlayerKey + " elapsedTime: " + elapsedTime);
+		long elapsedTime = getElapsedTime();
 		players.get(currentPlayerKey).getPlayerTime().updateRoundTime(elapsedTime);
 	}
 	
 	private void stopTimer() {
 		updateTimer();
-		System.out.print("\nstopTimer: puzzleTime - ");
-		System.out.print(getTimeElapsed() + "\n\n");
-		players.get(currentPlayerKey).getPlayerTime().updatePuzzleTime(getTimeElapsed());
-		System.out.print("\nstopTimer: puzzleTime - ");
-		System.out.print(getTimeElapsed() + "\n\n");
+		
+		// Updates player's time taken
+		players.get(currentPlayerKey).getPlayerTime().updatePuzzleTime(getElapsedTime());
 		startingTime = 0;
 		
 		// Remove old timer for player being switched from
@@ -68,25 +63,19 @@ public class TimeManager {
 		timers.remove(currentPlayerKey);
 		
 		// Create new timer for player being switched from
+		// so it's ready to be used on their next turn
 		CgramTimer cTimer = new CgramTimer(this, players.get(currentPlayerKey), lblTime);
 		timers.put(currentPlayerKey, cTimer);
-		//currentPlayerKey = null;
 	}
 	
-	private long calculateElapsedTime() {
+	public long getElapsedTime() {
 		long elapsedTime = 0;
+		
 		if (startingTime > 0) {
 			elapsedTime = System.nanoTime() - startingTime;
 			elapsedTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
 		}
 		
-		return elapsedTime;
-	}
-	
-	public long getTimeElapsed() {
-		long elapsedTime;
-		
-		elapsedTime = calculateElapsedTime();
 		return elapsedTime;
 	}
 	
@@ -104,6 +93,7 @@ public class TimeManager {
 	 * and then tells all players to add to their total
 	 */
 	public void finishedPuzzle() {
+		// TODO: Can I just stop Timer here?
 		Iterator<Entry<String, Player>> it = players.entrySet().iterator();
 		
 		Player player = null;
@@ -112,10 +102,12 @@ public class TimeManager {
 			player = it.next().getValue();
 			playerKey = "Player " + player.getPlayerNum();
 			if (currentPlayerKey == playerKey) {
-				player.getPlayerTime().updateRoundTime(getTimeElapsed());
+				player.getPlayerTime().updateRoundTime(getElapsedTime());
 			}
 			
 			player.getPlayerTime().finishedPuzzle();
 		}
+		
+		stopTimer();
 	}
 }

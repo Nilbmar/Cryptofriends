@@ -72,6 +72,9 @@ public class AnswerManager {
 			}
 		}
 		
+		String playerKey = "Player " + gameMan.getPlayerManager().getCurrentPlayer().getPlayerNum();
+		gameMan.getScoreManager().playerRevealedPuzzle(playerKey);
+		
 		gameMan.setPuzzleState(PuzzleState.FAILED);
 		flow.setDisable(true);
 	}

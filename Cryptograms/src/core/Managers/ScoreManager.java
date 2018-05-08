@@ -2,29 +2,29 @@ package core.Managers;
 
 import java.util.HashMap;
 
-import core.Data.ScoreData;
+import core.Data.PlayerScore;
 
 public class ScoreManager {
-	private HashMap<String, ScoreData> playerScores = null;
+	private HashMap<String, PlayerScore> playerScores = null;
 	
 	public ScoreManager() {
-		playerScores = new HashMap<String, ScoreData>();
+		playerScores = new HashMap<String, PlayerScore>();
 	}
 	
 	public void addPlayer(String playerKey) {
 		if (!playerScores.containsKey(playerKey)) {
-			ScoreData scoreData = new ScoreData(playerKey);
-			playerScores.put(playerKey, scoreData);
+			PlayerScore playerScore = new PlayerScore(playerKey);
+			playerScores.put(playerKey, playerScore);
 		}
 	}
 	
-	public ScoreData getPlayerScoreData(String playerKey) {
-		ScoreData scoreData = null;
+	public PlayerScore getPlayerScoreData(String playerKey) {
+		PlayerScore playerScore = null;
 		if (playerScores.containsKey(playerKey)) {
-			scoreData = playerScores.get(playerKey);
+			playerScore = playerScores.get(playerKey);
 		}
 		
-		return scoreData;
+		return playerScore;
 	}
 
 	public void playerRevealedLetter(String playerKey, int letterOccurances, int totalLetters) {
@@ -36,6 +36,12 @@ public class ScoreManager {
 			float percent = (float) (Math.ceil(((occurances * 100) / letters) * 10) / 10d);
 			
 			getPlayerScoreData(playerKey).reduceScore(percent);
+		}
+	}
+	
+	public void playerRevealedPuzzle(String playerKey) {
+		if (playerScores.containsKey(playerKey)) {
+			getPlayerScoreData(playerKey).scoreZero();
 		}
 	}
 }

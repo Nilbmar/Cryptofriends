@@ -1,10 +1,10 @@
 package core.Data;
 
-public class ScoreData {
+public class PlayerScore {
 	private String playerKey = null;
 	private float score = 100;
 	
-	public ScoreData(String playerKey) {
+	public PlayerScore(String playerKey) {
 		this.playerKey = playerKey;
 	}
 	
@@ -13,5 +13,7 @@ public class ScoreData {
 	public void reduceScore(float percent) {
 		score -= percent;
 	}
+	
+	public void scoreZero() { score = 0; }
 
 }

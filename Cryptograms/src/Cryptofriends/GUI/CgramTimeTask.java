@@ -25,7 +25,7 @@ public class CgramTimeTask extends TimerTask {
 			@Override public void run() {
 				try {				
 					if (timeMan != null) {
-						time = timeMan.getTimeElapsed() 
+						time = timeMan.getElapsedTime() 
 								+ player.getPlayerTime().getPuzzleTime();
 					}
 					

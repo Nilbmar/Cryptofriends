@@ -249,6 +249,8 @@ public class CgramController {
 	
 	public void displayAllLetters() {
 		gameMan.getAnswerManager().displayAllLetters();
+		gameMan.getTimeManager().finishedPuzzle();
+		updatePlayerInfoBox();
 	}
 	
 
