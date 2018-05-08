@@ -3,7 +3,6 @@ package Cryptofriends;
 import Cryptofriends.GUI.CgramTimeTask;
 import Cryptofriends.GUI.PlayerMenu;
 import Cryptofriends.SpaceContainer.FlowBox;
-import Cryptofriends.SpaceContainer.SpaceBox;
 import core.Data.Player;
 import core.Managers.GameManager;
 import javafx.application.Platform;
