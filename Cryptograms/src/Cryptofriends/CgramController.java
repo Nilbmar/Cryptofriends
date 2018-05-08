@@ -1,8 +1,8 @@
 package Cryptofriends;
 
-import Cryptofriends.GUI.CgramTimeTask;
 import Cryptofriends.GUI.PlayerMenu;
 import Cryptofriends.SpaceContainer.FlowBox;
+import Enums.MoveDirections;
 import core.Data.Player;
 import core.Managers.GameManager;
 import javafx.application.Platform;
@@ -21,7 +21,6 @@ import javafx.scene.layout.VBox;
 public class CgramController {
 	private Scene scene;
 	private GameManager gameMan;
-	private CgramTimeTask timeTask;
 	
 	@FXML
 	private FlowBox flow;
@@ -114,8 +113,6 @@ public class CgramController {
         		gameMan.setAnswer(" ");
         	}
         });
-		
-		//timeTask = new CgramTimeTask(lblTime);
 	}
 	
 	public void setGameManager(GameManager gameMan) {
@@ -131,11 +128,6 @@ public class CgramController {
 	}
 	
 	public Label getTimeLabel() { return lblTime; }
-	public void setTimeTask(CgramTimeTask timeTask) {
-		this.timeTask = timeTask;
-	}
-	public CgramTimeTask getTimeTask() { return timeTask; }
-
 	
 	public void showClearIncorrectBtns() {
 		if (hboxClearIncorrect.isVisible()) {
@@ -144,7 +136,7 @@ public class CgramController {
 			// and set default color
 			if (gameMan.getPlayerManager() != null) {
 				try {
-					updatePlayerInfoBox();
+					gameMan.updatePlayerInfoBox();
 				} catch (NullPointerException nullEx) {
 					System.out.println("No player name yet.");
 				}
@@ -168,27 +160,11 @@ public class CgramController {
 		lblSubject.setText(subject);
 	}
 	
-	public void updatePlayerTime() {
-		try {
-			System.out.println(gameMan.getPlayerManager().getCurrentPlayer().getName());
-			timeTask = gameMan.getTimeManager().getCurrentTimeTask();
-			timeTask.run();
-		} catch (Exception ex) {
-			System.out.println("updatePlayerTime exception: " + ex.getMessage());
-		}
-	}
-	
 	// Changes the panel on the bottom that holds
 	// player name, score, and time
-	public void updatePlayerInfoBox() {
-		Player player = gameMan.getPlayerManager().getCurrentPlayer();
-		
-		if (player != null) {
-			lblPlayerName.setText(player.getName());
-			String playerKey = "Player " + player.getPlayerNum();
-			int score = (int) gameMan.getScoreManager().getPlayerScoreData(playerKey).getScore();
-			lblScore.setText(score + "%");
-		}
+	public void updatePlayerInfoBox(String playerName, int score) {
+		lblPlayerName.setText(playerName);
+		lblScore.setText(score + "%");
 	}
 	
 	// Created separate function
@@ -196,10 +172,7 @@ public class CgramController {
 	// because it can't use the addPlayer() function
 	// that needs the yet-to-be-constructed GameManager
 	public void addPlayerMenuItem(Player player) {
-		if (player != null) {
-			int playerNum = player.getPlayerNum();
-			System.out.println("Number of players is : " + playerNum);
-			
+		if (player != null) {			
 			PlayerMenu playerMenuItem = new PlayerMenu(this, player);
 			playerMenu.getItems().add(playerMenuItem);
 		}
@@ -209,29 +182,24 @@ public class CgramController {
 	
 	public void renamePlayer(int numOfPlayer) {
 		gameMan.renamePlayer(numOfPlayer);
-		updatePlayerInfoBox();
 	}
 	
 	public void removePlayer(int numOfPlayer) {
 		gameMan.removePlayer(numOfPlayer);
-		updatePlayerInfoBox();
 	}
 	
 	public void switchPlayer() {
 		gameMan.switchPlayer();
-		updatePlayerInfoBox();
 	}
 	
 	
 	/* Reveal Buttons */
 	public void displayLetter() {
 		gameMan.displayLetter();
-		updatePlayerInfoBox();
 	}
 	
 	public void displayAllLetters() {
 		gameMan.displayAllLetters();
-		updatePlayerInfoBox();
 	}
 	
 	public void hilightIncorrect() {
@@ -242,47 +210,28 @@ public class CgramController {
 		gameMan.clearIncorrect();
 	}
 	
-	/* Allows movement between SpaceBoxes with arrow keys
-	 * moveHilightVertically for Up (-1) / Down (1)
-	 * moveHilightHorizontally for Left (-1) / Right (1)
-	 */
+	// Allows movement between SpaceBoxes with arrow keys
 	public void moveSelection(KeyCode keyCode) {
-		int directionToMove = 0;
-		
 		switch (keyCode) {
 		case UP:
-			directionToMove = -1;
-			gameMan.getBoardManager().moveHilightVertically(directionToMove);
+			gameMan.moveSelection(MoveDirections.UP);
 			break;
 		case DOWN:
-			directionToMove = 1;
-			gameMan.getBoardManager().moveHilightVertically(directionToMove);
+			gameMan.moveSelection(MoveDirections.DOWN);
 			break;
 		case LEFT:
-			directionToMove = -1;
-			gameMan.getBoardManager().moveHilightHorizontally(directionToMove);
+			gameMan.moveSelection(MoveDirections.LEFT);
 			break;
 		case RIGHT:
-			directionToMove = 1;
-			gameMan.getBoardManager().moveHilightHorizontally(directionToMove);
+			gameMan.moveSelection(MoveDirections.RIGHT);
 			break;
 		default:
 			break;
 		}
-		
-		
-	}
-	
-	public void updateHilights(int id) {
-		// TODO:
-		// This function is called by SpaceBox
-		// Might need to change how SpaceBox runs the update
-		// give it access to AnswerManager???
-		gameMan.getBoardManager().updateHilights(id);
 	}
 	
 	public void clearPuzzle() {
-		gameMan.getBoardManager().clearPuzzle();
+		gameMan.clearPuzzle();
 	}
 	
 	

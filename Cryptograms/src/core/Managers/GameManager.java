@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
 import Cryptofriends.SpaceContainer.SpaceBox;
+import Enums.MoveDirections;
 import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
@@ -67,6 +68,35 @@ public class GameManager {
 		sqlLoader.load();
 	}
 	
+	/* Allows movement between SpaceBoxes with arrow keys
+	 * moveHilightVertically for Up (-1) / Down (1)
+	 * moveHilightHorizontally for Left (-1) / Right (1)
+	 */
+	public void moveSelection(MoveDirections dir) {
+		int directionToMove = 0;
+		
+		switch (dir) {
+		case UP:
+			directionToMove = -1;
+			boardMan.moveHilightVertically(directionToMove);
+			break;
+		case DOWN:
+			directionToMove = 1;
+			boardMan.moveHilightVertically(directionToMove);
+			break;
+		case LEFT:
+			directionToMove = -1;
+			boardMan.moveHilightHorizontally(directionToMove);
+			break;
+		case RIGHT:
+			directionToMove = 1;
+			boardMan.moveHilightHorizontally(directionToMove);
+			break;
+		default:
+			break;
+		}
+	}
+	
 	public void loadNewPuzzle() {
 		// Clear game board
 		boardMan.getFlowBox().setDisable(false);
@@ -102,6 +132,10 @@ public class GameManager {
 		loadNewPuzzle();
 	}
 	
+	public void clearPuzzle() {
+		boardMan.clearPuzzle();
+	}
+	
 	public void setAnswer(String answer) {
 		answerMan.setAnswer(answer);
 		
@@ -111,7 +145,6 @@ public class GameManager {
 		if (player.getMovesThisTurn() == 0) {
 			timeMan.startTimer(currentPlayerKey);
 		} else {
-			
 			//controller.updatePlayerTime(timeMan.getTimeElapsed());
 		}
 		
@@ -121,11 +154,13 @@ public class GameManager {
 	/* Reveals */
 	public void displayLetter() {
 		answerMan.displayLetter();
+		updatePlayerInfoBox();
 	}
 	
 	public void displayAllLetters() {
 		answerMan.displayAllLetters();
 		timeMan.finishedPuzzle();
+		updatePlayerInfoBox();
 	}
 	
 	public void hilightIncorrect() {
@@ -160,10 +195,12 @@ public class GameManager {
 	
 	public void renamePlayer(int numOfPlayer) {
 		playerMan.renamePlayer(numOfPlayer);
+		updatePlayerInfoBox();
 	}
 	
 	public void removePlayer(int numOfPlayer) {
 		playerMan.removePlayer(numOfPlayer);
+		updatePlayerInfoBox();
 	}
 	
 	public void switchPlayer() {
@@ -171,5 +208,16 @@ public class GameManager {
 		String newPlayerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
 		timeMan.switchedPlayer(newPlayerKey);
 		
+		updatePlayerInfoBox();
+	}
+	
+	public void updatePlayerInfoBox() {
+		Player player = playerMan.getCurrentPlayer();
+		
+		if (player != null) {
+			String playerKey = "Player " + player.getPlayerNum();
+			int score = (int) scoreMan.getPlayerScoreData(playerKey).getScore();
+			controller.updatePlayerInfoBox(player.getName(), score);
+		}
 	}
 }
