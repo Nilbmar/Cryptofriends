@@ -12,6 +12,10 @@ public class PlayerScore {
 	
 	public void reduceScore(float percent) {
 		score -= percent;
+		
+		if (score < 0) {
+			score = 0;
+		}
 	}
 	
 	public void scoreZero() { score = 0; }

@@ -153,12 +153,28 @@ public class GameManager {
 	
 	/* Reveals */
 	public void displayLetter() {
-		answerMan.displayLetter();
+		int letterOccurances = answerMan.displayLetter();
+		int boardSize = boardMan.getFlowBox().getLetterBoxes().size();
+
+		// Update Score
+		String playerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
+		scoreMan.playerRevealedLetter(playerKey, letterOccurances, boardSize);
 		updatePlayerInfoBox();
 	}
 	
 	public void displayAllLetters() {
 		answerMan.displayAllLetters();
+		
+		// Update Score
+		String playerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
+		scoreMan.playerRevealedPuzzle(playerKey);
+		// TODO: IF MULTIPLAYER
+		// OTHER PLAYERS SHOULD GET PERCENTAGE THAT THEY ANSWERED CORRECTLY STILL
+		
+		// Set board as failed
+		setPuzzleState(PuzzleState.FAILED);
+		boardMan.getFlowBox().setDisable(true);
+		
 		timeMan.finishedPuzzle();
 		updatePlayerInfoBox();
 	}
@@ -173,8 +189,12 @@ public class GameManager {
 		int numIncorrect = answerMan.getIncorrectSpaceBoxes().size();
 		
 		if (selectedBox != null && numFilled > 0 && numIncorrect > 0) {
-			answerMan.hilightIncorrect();
-			controller.showClearIncorrectBtns();
+			int numOfIncorrect = answerMan.hilightIncorrect();
+			if (numOfIncorrect > 0) {
+				String playerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
+				scoreMan.playerHilightedIncorrect(playerKey, numIncorrect);
+				controller.showClearIncorrectBtns();
+			}
 		}
 	}
 	

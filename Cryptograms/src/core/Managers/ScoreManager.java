@@ -44,4 +44,11 @@ public class ScoreManager {
 			getPlayerScoreData(playerKey).scoreZero();
 		}
 	}
+	
+	public void playerHilightedIncorrect(String playerKey, int numIncorrect) {
+		float percent = 10;
+		if (playerScores.containsKey(playerKey)) {
+			getPlayerScoreData(playerKey).reduceScore(percent);
+		}
+	}
 }

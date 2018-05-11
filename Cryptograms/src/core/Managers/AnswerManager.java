@@ -38,7 +38,7 @@ public class AnswerManager {
 		checkForSolved();
 	}
 	
-	public void displayLetter() {
+	public int displayLetter() {
 		int letterOccurances = 0;
 		LetterSpace letterSpace = null;
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
@@ -54,10 +54,7 @@ public class AnswerManager {
 			}
 		}
 		
-		// TODO: GameManager needs to take care of this
-		String playerKey = "Player " + gameMan.getPlayerManager().getCurrentPlayer().getPlayerNum();
-		gameMan.getScoreManager().playerRevealedLetter(playerKey, letterOccurances, flow.getLetterBoxes().size());
-		
+		return letterOccurances;
 	}
 	
 	public void displayAllLetters() {
@@ -71,12 +68,6 @@ public class AnswerManager {
 				spaceBox.setDisable(true);
 			}
 		}
-		
-		String playerKey = "Player " + gameMan.getPlayerManager().getCurrentPlayer().getPlayerNum();
-		gameMan.getScoreManager().playerRevealedPuzzle(playerKey);
-		
-		gameMan.setPuzzleState(PuzzleState.FAILED);
-		flow.setDisable(true);
 	}
 	
 	private void puzzleSolved() {
@@ -148,7 +139,8 @@ public class AnswerManager {
 		clearHilights();
 	}
 	
-	public void hilightIncorrect() {
+	public int hilightIncorrect() {
+		int numOfIncorrect = 0;
 		// Only needs to run if something has been selected on this puzzle
 		// Otherwise, the last SpaceBox would be hilighted by clearHilights()
 		SpaceBox selectedBox = gameMan.getBoardManager().getCurrentlySelected();
@@ -161,9 +153,13 @@ public class AnswerManager {
 				letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
 				if (!letterSpace.isBlank()) {
 					incorrectSpaceBoxes.get(x).setCSS(true, true);	
+					numOfIncorrect++;
 				}	
 			}
 		}
+		
+		
+		return numOfIncorrect;
 	}
 	
 	public void clearHilights() {
