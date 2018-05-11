@@ -143,11 +143,10 @@ public class AnswerManager {
 		clearHilights();
 	}
 	
-	public int hilightIncorrect() {
+	public int hilightIncorrect(SpaceBox selectedBox) {
 		int numOfWrongAnswers = 0;
 		// Only needs to run if something has been selected on this puzzle
 		// Otherwise, the last SpaceBox would be hilighted by clearHilights()
-		SpaceBox selectedBox = gameMan.getBoardManager().getCurrentlySelected();
 		if (selectedBox != null) {
 			clearHilights();
 			

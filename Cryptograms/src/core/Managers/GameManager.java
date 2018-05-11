@@ -189,7 +189,7 @@ public class GameManager {
 		int numIncorrect = answerMan.getIncorrectSpaceBoxes().size();
 		
 		if (selectedBox != null && numFilled > 0 && numIncorrect > 0) {
-			int numOfWrongAnswers = answerMan.hilightIncorrect();
+			int numOfWrongAnswers = answerMan.hilightIncorrect(selectedBox);
 			if (numOfWrongAnswers > 0) {
 				String playerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
 				scoreMan.playerHilightedIncorrect(playerKey, numOfWrongAnswers);
