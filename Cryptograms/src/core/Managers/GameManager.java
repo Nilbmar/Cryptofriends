@@ -180,16 +180,14 @@ public class GameManager {
 	}
 	
 	public void hilightIncorrect() {
-		// Only needs to run if something has been selected on this puzzle
-		// And there are items that are incorrect
-		// TODO: IS CURRENTLY SHOWING EVEN IF NO INCORRECT
-		// IS ANSWERMAN ACTUALLY GETTING INCORRECT??
 		SpaceBox selectedBox = boardMan.getCurrentlySelected();
 		int numFilled = answerMan.getFilledSpaceBoxes().size();
-		int numIncorrect = answerMan.getIncorrectSpaceBoxes().size();
 		
-		if (selectedBox != null && numFilled > 0 && numIncorrect > 0) {
+		// Only needs to run if something has been Selected and Filled
+		if (selectedBox != null && numFilled > 0) {
 			int numOfWrongAnswers = answerMan.hilightIncorrect(selectedBox);
+			
+			// Only needs to run if there is a Wrong answer, empty spaces don't count
 			if (numOfWrongAnswers > 0) {
 				String playerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
 				scoreMan.playerHilightedIncorrect(playerKey, numOfWrongAnswers);
