@@ -112,6 +112,10 @@ public class AnswerManager {
 		return filledSpaceBoxs;
 	}
 	
+	/* Returns ArrayList of SpaceBoxes that are:
+	 * Answered wrong OR Left blank
+	 * because blank spaces are still "incorrect"
+	 */
 	public ArrayList<SpaceBox> getIncorrectSpaceBoxes() {
 		ArrayList<SpaceBox> incorrectSpaceBoxes = new ArrayList<SpaceBox>();
 
@@ -140,26 +144,28 @@ public class AnswerManager {
 	}
 	
 	public int hilightIncorrect() {
-		int numOfIncorrect = 0;
+		int numOfWrongAnswers = 0;
 		// Only needs to run if something has been selected on this puzzle
 		// Otherwise, the last SpaceBox would be hilighted by clearHilights()
 		SpaceBox selectedBox = gameMan.getBoardManager().getCurrentlySelected();
 		if (selectedBox != null) {
 			clearHilights();
 			
+			// Incorrect are Wrong and Unanswered
+			// increments local variable to keep track of Wrong answers
 			ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
 			LetterSpace letterSpace = null;
 			for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
 				letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
 				if (!letterSpace.isBlank()) {
 					incorrectSpaceBoxes.get(x).setCSS(true, true);	
-					numOfIncorrect++;
+					numOfWrongAnswers++;
 				}	
 			}
 		}
 		
 		
-		return numOfIncorrect;
+		return numOfWrongAnswers;
 	}
 	
 	public void clearHilights() {

@@ -45,7 +45,7 @@ public class ScoreManager {
 		}
 	}
 	
-	public void playerHilightedIncorrect(String playerKey, int numIncorrect) {
+	public void playerHilightedIncorrect(String playerKey, int numWrongAnswers) {
 		float percent = 10;
 		if (playerScores.containsKey(playerKey)) {
 			getPlayerScoreData(playerKey).reduceScore(percent);
