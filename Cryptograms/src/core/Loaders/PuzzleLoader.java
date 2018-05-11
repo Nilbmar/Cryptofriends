@@ -23,7 +23,7 @@ public class PuzzleLoader implements Loader {
 	
 	private void loadPuzzles(Connection conn) {
 		System.out.println("Loading puzzles\n\n");
-		String sql = "SELECT Key, Author, NumOfAuthorQuote, Quote, Subject FROM Phrase";
+		String sql = "SELECT Key, Author, NumOfAuthorQuote, Quote, Subject, Hints FROM Phrase";
 		
 		try {
 			Statement stmt = conn.createStatement();
@@ -32,7 +32,8 @@ public class PuzzleLoader implements Loader {
 			// Add each result from database to PuzzleManager
 			while (resultSet.next()) {
                 puzzleMan.addPuzzle(
-                		resultSet.getInt("Key"), resultSet.getString("Quote"), 
+                		resultSet.getInt("Key"), 
+                		resultSet.getString("Hints"), resultSet.getString("Quote"), 
                 		resultSet.getString("Subject"), resultSet.getString("Author"),
                 		resultSet.getInt("NumOfAuthorQuote"));
 			}

@@ -38,6 +38,23 @@ public class AnswerManager {
 		checkForSolved();
 	}
 	
+	public void setHints(String hints) {
+		LetterSpace letterSpace = null;
+		int numOfHints = hints.length();
+		for (int x = 0; x < numOfHints; x++) {
+			for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+				if (!spaceBox.isDisable()) {
+					letterSpace = (LetterSpace) spaceBox.getSpace();
+					if (hints.indexOf(letterSpace.getCorrectChar()) >= 0) {
+						letterSpace.setCurrentChar(letterSpace.getCorrectChar());
+						spaceBox.setAnswerCharLabel(true);
+						spaceBox.setDisable(true);
+					}
+				}
+			}
+		}
+	}
+	
 	public int displayLetter() {
 		int letterOccurances = 0;
 		LetterSpace letterSpace = null;

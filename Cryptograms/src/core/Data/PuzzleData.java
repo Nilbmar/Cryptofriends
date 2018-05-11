@@ -8,9 +8,11 @@ public class PuzzleData {
 	private String author = null;
 	private String phrase = null;
 	private String subject = null;
+	private String hints = null;
 	
-	public PuzzleData(int key, String phrase, String subject, String author, int num) {
+	public PuzzleData(int key, String hints, String phrase, String subject, String author, int num) {
 		this.key = key;
+		this.hints = hints;
 		this.phrase = phrase;
 		this.subject = subject;
 		this.author = author;
@@ -18,6 +20,7 @@ public class PuzzleData {
 	}
 	
 	public int getKey() { return key; }
+	public String getHints() { return hints; }
 	public String getPhrase() { return phrase; }
 	public String getSubject() { return subject; }
 	public String getAuthor() { return author; }

@@ -117,6 +117,8 @@ public class GameManager {
 			
 			// Reset alignment for punctuation
 			boardMan.setupPuncAlignment();
+			
+			answerMan.setHints(puzzleData.getHints());
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");

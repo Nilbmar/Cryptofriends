@@ -15,8 +15,8 @@ public class PuzzleManager {
 		return puzzleMap.size();
 	}
 	
-	public void addPuzzle(int key, String phrase, String subject, String author, int numOfAuthorQuote) {
-		PuzzleData puzzle = new PuzzleData(key, phrase, subject, author, numOfAuthorQuote);
+	public void addPuzzle(int key, String hints, String phrase, String subject, String author, int numOfAuthorQuote) {
+		PuzzleData puzzle = new PuzzleData(key, hints, phrase, subject, author, numOfAuthorQuote);
 		puzzleMap.put(key, puzzle);
 	}
 	
