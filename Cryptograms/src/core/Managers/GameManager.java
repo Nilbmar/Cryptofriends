@@ -98,6 +98,25 @@ public class GameManager {
 	}
 	
 	public void loadNewPuzzle() {
+		// Don't update for skipping puzzles
+		// only when a puzzle is Failed or Won
+		// TODO: LetterSpaces should save last person who answered them
+		// 			so scores can be properly updated
+		switch(puzzleState) {
+		case PLAYING:
+			// Save information about answered letters
+			break;
+		case FAILED:
+			// TODO: Should players that didn't Reveal get any points??
+			// Certainly shouldn't be 100%, which this currently does
+			scoreMan.updateForNewPuzzle();
+			break;
+		case WON:
+			// TODO: Calculate who answered what correctly
+			scoreMan.updateForNewPuzzle();
+			break;
+		}
+		
 		// Clear game board
 		boardMan.getFlowBox().setDisable(false);
 		boardMan.getFlowBox().clear();
@@ -119,6 +138,8 @@ public class GameManager {
 			boardMan.setupPuncAlignment();
 			
 			answerMan.setHints(puzzleData.getHints());
+			
+			updatePlayerInfoBox();
 		}
 		catch (NullPointerException nullEx) {
 			System.out.println("Null Pointer: Reseting to start of puzzle file");
@@ -164,6 +185,7 @@ public class GameManager {
 		updatePlayerInfoBox();
 	}
 	
+	// Puzzle Will Be Lost - Resulting in a Zero for the score
 	public void displayAllLetters() {
 		answerMan.displayAllLetters();
 		
@@ -229,6 +251,10 @@ public class GameManager {
 		timeMan.switchedPlayer(newPlayerKey);
 		
 		updatePlayerInfoBox();
+		System.out.println("Player scores: " 
+			+ scoreMan.getPlayerScoreData(newPlayerKey).getScore()
+			+ " totalScore: "
+			+ scoreMan.getPlayerScoreData(newPlayerKey).getTotalScore());
 	}
 	
 	public void updatePlayerInfoBox() {

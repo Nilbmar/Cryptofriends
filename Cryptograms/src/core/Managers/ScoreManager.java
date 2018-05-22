@@ -51,4 +51,10 @@ public class ScoreManager {
 			getPlayerScoreData(playerKey).reduceScore(percent);
 		}
 	}
+	
+	public void updateForNewPuzzle() {
+		// Lamba expression - v (value) are PlayerScore's
+		// For each playeScore in HashMap, tell it to update for changed puzzle
+		playerScores.forEach((k, v) -> v.changedPuzzle());
+	}
 }
