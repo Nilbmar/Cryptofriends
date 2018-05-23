@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
-import core.Data.AnswerData;
 import core.Data.PuzzleState;
 import core.Spaces.LetterSpace;
 import core.Spaces.Space;
