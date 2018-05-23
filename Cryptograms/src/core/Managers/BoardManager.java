@@ -28,6 +28,8 @@ public class BoardManager {
 		}
 	}
 	
+	public int getTotalLetters() { return flow.getLetterBoxes().size(); }
+	
 	public void setupPuzzle(Puzzle puzzle) {
 		for (Word word : puzzle.getPhrase()) {
 			addWord(word);

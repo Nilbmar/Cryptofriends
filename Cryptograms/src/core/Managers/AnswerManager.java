@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
+import core.Data.AnswerData;
 import core.Data.PuzzleState;
 import core.Spaces.LetterSpace;
 import core.Spaces.Space;
@@ -21,16 +22,23 @@ public class AnswerManager {
 		this.flow = flow;
 	}
 	
-	public void setAnswer(String answer) {
+	public void setAnswer(String answer, String currentPlayerKey) {
+		int currentSpaceBoxNum = -1;
+		PuzzleState puzzleState = gameMan.getPuzzleState();
 		// Tells each selected SpaceBox to
 		// set answer label to letter input
 		LetterSpace letterSpace = null;
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			currentSpaceBoxNum++;
+			
 			if (!spaceBox.isDisabled()) {
 				letterSpace = (LetterSpace) spaceBox.getSpace();
 				if (letterSpace.getHilight()) {
 					letterSpace.setCurrentChar(answer.charAt(0));
 					spaceBox.setAnswerCharLabel(true);
+					
+					// Update PuzzleState for keeping score
+					puzzleState.answered(currentSpaceBoxNum, answer, currentPlayerKey);
 				}
 			}
 		}
@@ -39,16 +47,23 @@ public class AnswerManager {
 	}
 	
 	public void setHints(String hints) {
+		int currentSpaceBoxNum = -1;
+		PuzzleState puzzleState = gameMan.getPuzzleState();
 		LetterSpace letterSpace = null;
 		int numOfHints = hints.length();
 		for (int x = 0; x < numOfHints; x++) {
 			for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+				currentSpaceBoxNum++;
+				
 				if (!spaceBox.isDisable()) {
 					letterSpace = (LetterSpace) spaceBox.getSpace();
 					if (hints.indexOf(letterSpace.getCorrectChar()) >= 0) {
 						letterSpace.setCurrentChar(letterSpace.getCorrectChar());
 						spaceBox.setAnswerCharLabel(true);
 						spaceBox.setDisable(true);
+						
+						// Update PuzzleState for keeping score
+						puzzleState.answered(currentSpaceBoxNum, "HINT", "HINT");
 					}
 				}
 			}
@@ -96,7 +111,7 @@ public class AnswerManager {
 		}
 		
 		// Disable puzzle so it can't be edited
-		gameMan.setPuzzleState(PuzzleState.WON);
+		gameMan.setPuzzleState(PuzzleState.State.WON);
 		flow.setDisable(true);
 	}
 	
@@ -105,7 +120,7 @@ public class AnswerManager {
 		// if no spaces contain a wrong answer
 		// go to win condition
 		// Only WIN if does not contain a spacebox
-		if (gameMan.getPuzzleState() == PuzzleState.PLAYING) {
+		if (gameMan.getPuzzleState().getState() == PuzzleState.State.PLAYING) {
 			ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
 			if (incorrectSpaceBoxes.size() == 0) {
 				puzzleSolved();

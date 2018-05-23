@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import Cryptofriends.CgramController;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Enums.MoveDirections;
+import core.Data.AnswerData;
 import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
@@ -21,7 +22,7 @@ public class GameManager {
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader sqlLoader;
 	private int puzzleIndex = 0;	
-	private PuzzleState puzzleState = PuzzleState.PLAYING;
+	private PuzzleState puzzleState = null;
 	
 	public GameManager(CgramController controller) {
 		this.controller = controller;
@@ -47,8 +48,8 @@ public class GameManager {
 	}
 	
 	public PuzzleState getPuzzleState() { return puzzleState; }
-	public void setPuzzleState(PuzzleState puzzleState) { 
-		this.puzzleState = puzzleState; 
+	public void setPuzzleState(PuzzleState.State state) {
+		puzzleState.setState(state);
 	}
 	
 	public PlayerManager getPlayerManager() { return playerMan; }
@@ -100,32 +101,51 @@ public class GameManager {
 	public void loadNewPuzzle() {
 		// Don't update for skipping puzzles
 		// only when a puzzle is Failed or Won
-		// TODO: LetterSpaces should save last person who answered them
-		// 			so scores can be properly updated
-		switch(puzzleState) {
-		case PLAYING:
-			// Save information about answered letters
-			break;
-		case FAILED:
-			// TODO: Should players that didn't Reveal get any points??
-			// Certainly shouldn't be 100%, which this currently does
-			scoreMan.updateForNewPuzzle();
-			break;
-		case WON:
-			// TODO: Calculate who answered what correctly
-			scoreMan.updateForNewPuzzle();
-			break;
+		if (puzzleState != null) {
+			AnswerData answerData = null;
+			switch(puzzleState.getState()) {
+			case PLAYING:
+				// TODO: Remove this testing clock
+				System.out.println("GameMan - PuzzleState:");
+				for (int x = 0; x < boardMan.getTotalLetters(); x++) {
+					answerData = puzzleState.getAnswerData(x);
+					System.out.println(answerData.getAnsweredChar() + " by " + answerData.getPlayerKey());
+				}
+				
+				// Save information about answered letters
+				break;
+			case FAILED:
+				// TODO: Should players that didn't Reveal get any points??
+				// Certainly shouldn't be 100%, which this currently does
+				scoreMan.updateForNewPuzzle();
+				break;
+			case WON:
+				// TODO: Remove this testing clock
+				System.out.println("GameMan - PuzzleState:");
+				for (int x = 0; x < boardMan.getTotalLetters(); x++) {
+					answerData = puzzleState.getAnswerData(x);
+					System.out.println(answerData.getAnsweredChar() + " by " + answerData.getPlayerKey());
+				}
+				
+				scoreMan.updateForNewPuzzle();
+				break;
+			}
 		}
 		
 		// Clear game board
 		boardMan.getFlowBox().setDisable(false);
 		boardMan.getFlowBox().clear();
-		setPuzzleState(PuzzleState.PLAYING);
+		
 		
 		// Create new game board
 		try {			
 			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
 			boardMan.setupPuzzle(puzzleData.getPuzzle());
+			
+			// Create PuzzleState for saving score
+			int puzzleSize = boardMan.getTotalLetters();
+			puzzleState = new PuzzleState(puzzleSize);
+			setPuzzleState(PuzzleState.State.PLAYING);
 			
 			String author = puzzleData.getAuthor();
 			String subject = puzzleData.getSubject();
@@ -160,8 +180,6 @@ public class GameManager {
 	}
 	
 	public void setAnswer(String answer) {
-		answerMan.setAnswer(answer);
-		
 		// Setting time
 		Player player = playerMan.getCurrentPlayer();
 		String currentPlayerKey = "Player " + player.getPlayerNum();
@@ -171,13 +189,15 @@ public class GameManager {
 			//controller.updatePlayerTime(timeMan.getTimeElapsed());
 		}
 		
-		player.moved();
+		
+		answerMan.setAnswer(answer, currentPlayerKey);
+		player.moved();		
 	}
 	
 	/* Reveals */
 	public void displayLetter() {
 		int letterOccurances = answerMan.displayLetter();
-		int boardSize = boardMan.getFlowBox().getLetterBoxes().size();
+		int boardSize = boardMan.getTotalLetters();
 
 		// Update Score
 		String playerKey = "Player " + playerMan.getCurrentPlayer().getPlayerNum();
@@ -196,7 +216,7 @@ public class GameManager {
 		// OTHER PLAYERS SHOULD GET PERCENTAGE THAT THEY ANSWERED CORRECTLY STILL
 		
 		// Set board as failed
-		setPuzzleState(PuzzleState.FAILED);
+		setPuzzleState(PuzzleState.State.FAILED);
 		boardMan.getFlowBox().setDisable(true);
 		
 		timeMan.finishedPuzzle();
