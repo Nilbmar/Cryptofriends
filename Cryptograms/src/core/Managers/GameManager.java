@@ -10,6 +10,7 @@ import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
+import core.Processes.SavePuzzleState;
 
 public class GameManager {
 	private CgramController controller;
@@ -102,6 +103,9 @@ public class GameManager {
 		// Don't update for skipping puzzles
 		// only when a puzzle is Failed or Won
 		if (puzzleState != null) {
+			SavePuzzleState savePuzzleState = new SavePuzzleState(puzzleState);
+			savePuzzleState.save();
+			
 			AnswerData answerData = null;
 			switch(puzzleState.getState()) {
 			case PLAYING:
@@ -144,7 +148,10 @@ public class GameManager {
 			
 			// Create PuzzleState for saving score
 			int puzzleSize = boardMan.getTotalLetters();
-			puzzleState = new PuzzleState(puzzleSize);
+			String fileName = puzzleData.getAuthor() 
+					+ "_" + puzzleData.getSubject() 
+					+ "_" + puzzleData.getNumber();
+			puzzleState = new PuzzleState(puzzleSize, fileName);
 			setPuzzleState(PuzzleState.State.PLAYING);
 			
 			String author = puzzleData.getAuthor();

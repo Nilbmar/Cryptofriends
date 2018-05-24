@@ -6,11 +6,14 @@ public class PuzzleState {
 	public enum State { PLAYING, FAILED, WON; }
 	private State currentState = null;
 	private ArrayList<AnswerData> answeredByPlayer = null;
+	private String fileName = null;
 	
-	public PuzzleState(int totalChars) {
+	public PuzzleState(int totalChars, String fileName) {
+		this.fileName = fileName;
 		answeredByPlayer = new ArrayList<AnswerData>();
 		initilizeArrayList(totalChars);
 		currentState = State.PLAYING;
+		
 	}
 	
 	private void initilizeArrayList(int totalChars) {
@@ -18,6 +21,8 @@ public class PuzzleState {
 			answeredByPlayer.add(new AnswerData("", ""));
 		}
 	}
+	
+	public String getFileName() { return fileName; }
 	
 	public AnswerData getAnswerData(int charNum) { return answeredByPlayer.get(charNum); }
 	public void answered(int charNum, String answer, String playerKey) {
