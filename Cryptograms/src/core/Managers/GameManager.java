@@ -10,6 +10,7 @@ import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
+import core.Loaders.PuzzleStateLoader;
 import core.Processes.SavePuzzleState;
 
 public class GameManager {
@@ -103,6 +104,7 @@ public class GameManager {
 		// Don't update for skipping puzzles
 		// only when a puzzle is Failed or Won
 		if (puzzleState != null) {
+			// Saves puzzle state before moving on
 			SavePuzzleState savePuzzleState = new SavePuzzleState(puzzleState);
 			savePuzzleState.save();
 			
@@ -110,11 +112,12 @@ public class GameManager {
 			switch(puzzleState.getState()) {
 			case PLAYING:
 				// TODO: Remove this testing clock
+				/*
 				System.out.println("GameMan - PuzzleState:");
 				for (int x = 0; x < boardMan.getTotalLetters(); x++) {
 					answerData = puzzleState.getAnswerData(x);
 					System.out.println(answerData.getAnsweredChar() + " by " + answerData.getPlayerKey());
-				}
+				}*/
 				
 				// Save information about answered letters
 				break;
@@ -125,11 +128,12 @@ public class GameManager {
 				break;
 			case WON:
 				// TODO: Remove this testing clock
+				/*
 				System.out.println("GameMan - PuzzleState:");
 				for (int x = 0; x < boardMan.getTotalLetters(); x++) {
 					answerData = puzzleState.getAnswerData(x);
 					System.out.println(answerData.getAnsweredChar() + " by " + answerData.getPlayerKey());
-				}
+				}*/
 				
 				scoreMan.updateForNewPuzzle();
 				break;
@@ -146,13 +150,25 @@ public class GameManager {
 			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
 			boardMan.setupPuzzle(puzzleData.getPuzzle());
 			
-			// Create PuzzleState for saving score
-			int puzzleSize = boardMan.getTotalLetters();
 			String fileName = puzzleData.getAuthor() 
 					+ "_" + puzzleData.getSubject() 
 					+ "_" + puzzleData.getNumber();
-			puzzleState = new PuzzleState(puzzleSize, fileName);
-			setPuzzleState(PuzzleState.State.PLAYING);
+			
+			PuzzleStateLoader stateLoader = new PuzzleStateLoader();
+			stateLoader.setTarget(fileName);
+			stateLoader.load();
+			
+			// Load PuzzleState if a file exists
+			// otherwise create one
+			if (stateLoader.getPuzzleState() != null) {
+				System.out.println("JSON Loaded PuzzleState:");
+				puzzleState = stateLoader.getPuzzleState();
+				setPuzzleState(puzzleState.getState());
+			} else {
+				int puzzleSize = boardMan.getTotalLetters();
+				puzzleState = new PuzzleState(puzzleSize, fileName);
+				setPuzzleState(PuzzleState.State.PLAYING);
+			}
 			
 			String author = puzzleData.getAuthor();
 			String subject = puzzleData.getSubject();
@@ -164,7 +180,9 @@ public class GameManager {
 			// Reset alignment for punctuation
 			boardMan.setupPuncAlignment();
 			
+			answerMan.loadAnswers();
 			answerMan.setHints(puzzleData.getHints());
+			
 			
 			updatePlayerInfoBox();
 		}

@@ -24,6 +24,17 @@ public class PuzzleState {
 	
 	public String getFileName() { return fileName; }
 	
+	public int getPuzzleSize() { return answeredByPlayer.size(); }
+	
+	public String[] getAnswers() {
+		String[] answers = new String[answeredByPlayer.size()];
+		for (int x = 0; x < answeredByPlayer.size(); x++) {
+			answers[x] = answeredByPlayer.get(x).getAnsweredChar()
+					+ " - " + answeredByPlayer.get(x).getPlayerKey();
+		}
+		return answers;
+	}
+	
 	public AnswerData getAnswerData(int charNum) { return answeredByPlayer.get(charNum); }
 	public void answered(int charNum, String answer, String playerKey) {
 		answeredByPlayer.get(charNum).setAnswer(answer, playerKey);
@@ -32,5 +43,19 @@ public class PuzzleState {
 	public State getState() { return currentState; }
 	public void setState(State currentState) {
 		this.currentState = currentState;
+	}
+	public void setState(String currentState) {
+		switch (currentState.toUpperCase()) {
+		case "PLAYING":
+			this.currentState = State.PLAYING;
+			break;
+		case "FAILED":
+			this.currentState = State.FAILED;
+			break; 
+		case "WON":
+			this.currentState = State.WON;
+			break;
+			
+		}
 	}
 }

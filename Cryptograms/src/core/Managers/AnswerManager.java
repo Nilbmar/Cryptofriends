@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Cryptofriends.SpaceContainer.FlowBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
+import core.Data.AnswerData;
 import core.Data.PuzzleState;
 import core.Spaces.LetterSpace;
 import core.Spaces.Space;
@@ -42,6 +43,29 @@ public class AnswerManager {
 			}
 		}
 		
+		checkForSolved();
+	}
+	
+	// Tells each selected SpaceBox to
+	// set answer label to input saved to a PuzzleState JSON
+	public void loadAnswers() {
+		int currentSpaceBoxNum = -1;
+		PuzzleState puzzleState = gameMan.getPuzzleState();
+		AnswerData answerData = null;
+		
+		LetterSpace letterSpace = null;
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			currentSpaceBoxNum++;
+			
+			if (!spaceBox.isDisabled()) {
+				letterSpace = (LetterSpace) spaceBox.getSpace();
+				answerData = puzzleState.getAnswerData(currentSpaceBoxNum);
+				letterSpace.setCurrentChar(answerData.getAnsweredChar().charAt(0));
+				spaceBox.setAnswerCharLabel(true);
+			}
+		}
+		
+		// TODO: THIS ISN'T RUNNING THE puzzledSolved() FOR SOME REASON
 		checkForSolved();
 	}
 	

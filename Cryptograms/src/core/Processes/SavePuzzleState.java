@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import core.Data.PuzzleState;
 
 public class SavePuzzleState {
@@ -28,12 +31,30 @@ public class SavePuzzleState {
 		}
 	}
 	
+	// Suppress Warnings is the only option
+	// JSONObject extends HashMap, 
+	// but doesn't allow for <k, v> parameters to be set
+	@SuppressWarnings("unchecked")
 	public void save() {
 		setTarget();
 		
+		JSONObject json = new JSONObject();
+		json.put("state", puzzleState.getState().toString());
+		json.put("fileName", puzzleState.getFileName());
+		json.put("letterCount", puzzleState.getPuzzleSize());
+		
+		
+		JSONArray jsonArray = new JSONArray();
+		String[] answers = puzzleState.getAnswers();
+		for (int x = 0; x < answers.length; x++) {
+			jsonArray.add(answers[x]);
+		}
+		
+		json.put("answers", jsonArray);
+		
 		try {
 			FileWriter writer = new FileWriter(target);
-			writer.write("This is the " + target + " file");
+			writer.write(json.toJSONString());
 			writer.flush();
 			writer.close();
 		} catch (IOException ioExc) {
