@@ -60,12 +60,15 @@ public class AnswerManager {
 			if (!spaceBox.isDisabled()) {
 				letterSpace = (LetterSpace) spaceBox.getSpace();
 				answerData = puzzleState.getAnswerData(currentSpaceBoxNum);
-				letterSpace.setCurrentChar(answerData.getAnsweredChar().charAt(0));
+				if (!answerData.getAnsweredChar().contentEquals("HINT")) {
+					letterSpace.setCurrentChar(answerData.getAnsweredChar().charAt(0));
+				} else {
+					letterSpace.setCurrentChar(letterSpace.getCorrectChar());
+				}
 				spaceBox.setAnswerCharLabel(true);
 			}
 		}
-		
-		// TODO: THIS ISN'T RUNNING THE puzzledSolved() FOR SOME REASON
+
 		checkForSolved();
 	}
 	
@@ -109,6 +112,7 @@ public class AnswerManager {
 			}
 		}
 		
+		checkForSolved();
 		return letterOccurances;
 	}
 	
@@ -126,8 +130,6 @@ public class AnswerManager {
 	}
 	
 	private void puzzleSolved() {
-		System.out.println("Congratulations! You won the game!");
-		
 		// Clears hilights and selection box
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
 			spaceBox.setCSS(false, false);
@@ -136,6 +138,8 @@ public class AnswerManager {
 		// Disable puzzle so it can't be edited
 		gameMan.setPuzzleState(PuzzleState.State.WON);
 		flow.setDisable(true);
+		
+		gameMan.gameWon();
 	}
 	
 	public void checkForSolved() {
@@ -143,7 +147,7 @@ public class AnswerManager {
 		// if no spaces contain a wrong answer
 		// go to win condition
 		// Only WIN if does not contain a spacebox
-		if (gameMan.getPuzzleState().getState() == PuzzleState.State.PLAYING) {
+		if (gameMan.getPuzzleState().getState() != PuzzleState.State.FAILED) {
 			ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
 			if (incorrectSpaceBoxes.size() == 0) {
 				puzzleSolved();

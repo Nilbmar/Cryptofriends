@@ -100,13 +100,23 @@ public class GameManager {
 		}
 	}
 	
+	public void gameWon() {
+		savePuzzleState();
+		System.out.println("Congratulations! You won the game!");
+	}
+	
+	private void savePuzzleState() {
+		SavePuzzleState savePuzzleState = new SavePuzzleState(puzzleState);
+		savePuzzleState.save();
+	}
+	
 	public void loadNewPuzzle() {
+		boolean stateLoadedFromFile = false;
 		// Don't update for skipping puzzles
 		// only when a puzzle is Failed or Won
 		if (puzzleState != null) {
 			// Saves puzzle state before moving on
-			SavePuzzleState savePuzzleState = new SavePuzzleState(puzzleState);
-			savePuzzleState.save();
+			savePuzzleState();
 			
 			AnswerData answerData = null;
 			switch(puzzleState.getState()) {
@@ -161,9 +171,8 @@ public class GameManager {
 			// Load PuzzleState if a file exists
 			// otherwise create one
 			if (stateLoader.getPuzzleState() != null) {
-				System.out.println("JSON Loaded PuzzleState:");
 				puzzleState = stateLoader.getPuzzleState();
-				setPuzzleState(puzzleState.getState());
+				stateLoadedFromFile = true;
 			} else {
 				int puzzleSize = boardMan.getTotalLetters();
 				puzzleState = new PuzzleState(puzzleSize, fileName);
@@ -180,7 +189,9 @@ public class GameManager {
 			// Reset alignment for punctuation
 			boardMan.setupPuncAlignment();
 			
-			answerMan.loadAnswers();
+			if (stateLoadedFromFile) {
+				answerMan.loadAnswers();
+			}
 			answerMan.setHints(puzzleData.getHints());
 			
 			
