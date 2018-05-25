@@ -59,6 +59,9 @@ public class PuzzleStateLoader implements Loader {
 				// Setup PuzzleState
 				puzzleState = new PuzzleState(letterCount, fileName);
 				puzzleState.setState(state);
+				
+				// Have to suppress warning for Iterator- json doesn't allow for setting parameter
+				@SuppressWarnings("unchecked")
 				Iterator<String> iterator = jsonArray.iterator();
 				String unparsedAnswer = null;
 				int charNum = -1;
