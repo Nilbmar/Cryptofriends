@@ -94,6 +94,13 @@ public class CgramController {
 	@FXML
 	private HBox hboxClearIncorrect;
 	
+	private boolean stageIsShowing = false;
+	
+	public boolean isStageShowing() { return stageIsShowing; }
+	public void setStageShowing(boolean showing) { 
+		stageIsShowing = showing;
+	}
+	
 	public void setScene(Scene scene) {
 		this.scene = scene;
 		
@@ -154,6 +161,7 @@ public class CgramController {
 			hboxScorePanel.setVisible(false);
 		}
 	}
+	
 	
 	public void updateAuthorLine(String author, String subject) {
 		lblAuthor.setText(author);

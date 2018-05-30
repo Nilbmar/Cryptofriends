@@ -1,5 +1,6 @@
 package core.Managers;
 
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
@@ -12,6 +13,11 @@ import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
 import core.Processes.SavePuzzleState;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 
 public class GameManager {
 	private CgramController controller;
@@ -100,9 +106,31 @@ public class GameManager {
 		}
 	}
 	
+	public void alertWinner() {
+			String solvedBy = "MONKEY_GREMLIN";
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Cryptogram Solved");
+			alert.setHeaderText("Congratulations!");
+			alert.setContentText("This puzzle was solved by " + solvedBy);
+			
+			ButtonType btnNextPuzzle = new ButtonType("Go to Next Puzzle");
+			ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+			
+			alert.getButtonTypes().setAll(btnNextPuzzle, btnCancel);
+			
+			
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == btnNextPuzzle) {
+				loadNewPuzzle();
+			} else {
+				// User chose cancel or otherwise closed dialog
+				// no action needed?
+			}
+	}
+	
 	public void gameWon() {
 		savePuzzleState();
-		System.out.println("Congratulations! You won the game!");
+		alertWinner();
 	}
 	
 	private void savePuzzleState() {
