@@ -1,6 +1,5 @@
 package core.Managers;
 
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
@@ -14,16 +13,6 @@ import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
 import core.Processes.SavePuzzleState;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class GameManager {
 	private CgramController controller;
