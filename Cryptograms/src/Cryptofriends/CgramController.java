@@ -16,11 +16,15 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class CgramController {
 	private Scene scene;
 	private GameManager gameMan;
+	
+	@FXML
+	private StackPane stack;
 	
 	@FXML
 	private FlowBox flow;
@@ -132,6 +136,10 @@ public class CgramController {
 		// Start with hboxClearIncorrect hidden
 		// and default color for panels
 		showClearIncorrectBtns();
+	}
+	
+	public StackPane getStackPane() {
+		return stack;
 	}
 	
 	public Label getTimeLabel() { return lblTime; }

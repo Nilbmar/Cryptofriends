@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Cryptofriends.CgramController;
+import Cryptofriends.GUI.PopInBox;
 import Cryptofriends.SpaceContainer.SpaceBox;
 import Enums.MoveDirections;
 import core.Data.AnswerData;
@@ -13,11 +14,16 @@ import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
 import core.Processes.SavePuzzleState;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class GameManager {
 	private CgramController controller;
@@ -82,53 +88,40 @@ public class GameManager {
 	 * moveHilightHorizontally for Left (-1) / Right (1)
 	 */
 	public void moveSelection(MoveDirections dir) {
-		int directionToMove = 0;
-		
-		switch (dir) {
-		case UP:
-			directionToMove = -1;
-			boardMan.moveHilightVertically(directionToMove);
-			break;
-		case DOWN:
-			directionToMove = 1;
-			boardMan.moveHilightVertically(directionToMove);
-			break;
-		case LEFT:
-			directionToMove = -1;
-			boardMan.moveHilightHorizontally(directionToMove);
-			break;
-		case RIGHT:
-			directionToMove = 1;
-			boardMan.moveHilightHorizontally(directionToMove);
-			break;
-		default:
-			break;
+		if (!boardMan.getFlowBox().isDisabled()) {
+			int directionToMove = 0;
+			
+			switch (dir) {
+			case UP:
+				directionToMove = -1;
+				boardMan.moveHilightVertically(directionToMove);
+				break;
+			case DOWN:
+				directionToMove = 1;
+				boardMan.moveHilightVertically(directionToMove);
+				break;
+			case LEFT:
+				directionToMove = -1;
+				boardMan.moveHilightHorizontally(directionToMove);
+				break;
+			case RIGHT:
+				directionToMove = 1;
+				boardMan.moveHilightHorizontally(directionToMove);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 	
 	public void alertWinner() {
-			String solvedBy = "MONKEY_GREMLIN";
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Cryptogram Solved");
-			alert.setHeaderText("Congratulations!");
-			alert.setContentText("This puzzle was solved by " + solvedBy);
-			
-			ButtonType btnNextPuzzle = new ButtonType("Go to Next Puzzle");
-			ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-			
-			alert.getButtonTypes().setAll(btnNextPuzzle, btnCancel);
-			
-			
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == btnNextPuzzle) {
-				loadNewPuzzle();
-			} else {
-				// User chose cancel or otherwise closed dialog
-				// no action needed?
-			}
+		PopInBox gameWon = new PopInBox(controller.getStackPane());
+		gameWon.winnerBox(this, puzzleState.getWinner());
 	}
 	
 	public void gameWon() {
+		setPuzzleState(PuzzleState.State.WON);
+		String winner = playerMan.getCurrentPlayer().getName();
 		savePuzzleState();
 		alertWinner();
 	}
@@ -138,7 +131,7 @@ public class GameManager {
 		savePuzzleState.save();
 	}
 	
-	public void loadNewPuzzle() {
+	public void loadNewPuzzle() {		
 		boolean stateLoadedFromFile = false;
 		// Don't update for skipping puzzles
 		// only when a puzzle is Failed or Won

@@ -134,12 +134,18 @@ public class AnswerManager {
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
 			spaceBox.setCSS(false, false);
 		}
-		
+
 		// Disable puzzle so it can't be edited
-		gameMan.setPuzzleState(PuzzleState.State.WON);
 		flow.setDisable(true);
 		
-		gameMan.gameWon();
+		if (gameMan.getPuzzleState().getState() != PuzzleState.State.WON) {
+			// Only run gameWon if its the first time
+			gameMan.gameWon();
+		} else {
+			// When returning to a solved puzzle, only alert winner
+			// Don't set to win again
+			gameMan.alertWinner();
+		}
 	}
 	
 	public void checkForSolved() {

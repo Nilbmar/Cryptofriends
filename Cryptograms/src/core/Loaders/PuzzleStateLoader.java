@@ -49,18 +49,20 @@ public class PuzzleStateLoader implements Loader {
 				Object obj = parser.parse(new FileReader(target));
 				JSONObject json = (JSONObject) obj;
 				
-				
 				/// Data needed by PuzzleState
 				int letterCount = Math.toIntExact((long) json.get("letterCount"));
 				String fileName = (String) json.get("fileName");
 				String state = (String) json.get("state");
+				String winner = (String) json.get("winner");
 				JSONArray jsonArray = (JSONArray) json.get("answers");
 				
 				// Setup PuzzleState
 				puzzleState = new PuzzleState(letterCount, fileName);
 				puzzleState.setState(state);
+				puzzleState.setWinner(winner);
 				
-				// Have to suppress warning for Iterator- json doesn't allow for setting parameter
+				// Have to suppress warning for Iterator
+				// json doesn't allow for setting parameter
 				@SuppressWarnings("unchecked")
 				Iterator<String> iterator = jsonArray.iterator();
 				String unparsedAnswer = null;

@@ -236,7 +236,10 @@ public class BoardManager {
 	 * to next line and select the first LetterSpace on it
 	 */
 	public void moveHilightHorizontally(int directionToMove) {
-		int selectedID = getCurrentlySelected().getSpace().getID();
+		int selectedID = 0;
+		if (getCurrentlySelected() != null) {
+			selectedID = getCurrentlySelected().getSpace().getID();
+		}
 		int nextIndex = -1;
 		ArrayList<SpaceBox> letterBoxes = flow.getLetterBoxes();
 		

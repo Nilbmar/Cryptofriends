@@ -7,6 +7,7 @@ public class PuzzleState {
 	private State currentState = null;
 	private ArrayList<AnswerData> answeredByPlayer = null;
 	private String fileName = null;
+	private String winner = "NONE";
 	
 	public PuzzleState(int totalChars, String fileName) {
 		this.fileName = fileName;
@@ -25,6 +26,11 @@ public class PuzzleState {
 	public String getFileName() { return fileName; }
 	
 	public int getPuzzleSize() { return answeredByPlayer.size(); }
+	
+	public String getWinner() { return winner; }
+	public void setWinner(String winner) { 
+		this.winner = winner;
+	}
 	
 	public String[] getAnswers() {
 		String[] answers = new String[answeredByPlayer.size()];

@@ -39,6 +39,7 @@ public class SavePuzzleState {
 		setTarget();
 		
 		JSONObject json = new JSONObject();
+		json.put("winner", puzzleState.getWinner());
 		json.put("state", puzzleState.getState().toString());
 		json.put("fileName", puzzleState.getFileName());
 		json.put("letterCount", puzzleState.getPuzzleSize());
