@@ -13,6 +13,7 @@ import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
 import core.Processes.SavePuzzleState;
+import javafx.scene.layout.VBox;
 
 public class GameManager {
 	private CgramController controller;
@@ -103,9 +104,13 @@ public class GameManager {
 		}
 	}
 	
+	public void removeAlertPopIn() {
+		controller.removePopIn();
+	}
 	public void alertWinner() {
 		PopInBox gameWon = new PopInBox(controller.getStackPane());
-		gameWon.winnerBox(this, puzzleState.getWinner());
+		VBox vBox = gameWon.winnerBox(this, puzzleState.getWinner());
+		controller.showGameWonPopIn(vBox);
 	}
 	
 	public void gameWon() {
@@ -121,6 +126,8 @@ public class GameManager {
 	}
 	
 	public void loadNewPuzzle() {		
+		removeAlertPopIn();
+		
 		boolean stateLoadedFromFile = false;
 		// Don't update for skipping puzzles
 		// only when a puzzle is Failed or Won
@@ -215,6 +222,7 @@ public class GameManager {
 	}
 	
 	public void loadRandomPuzzle() {
+		removeAlertPopIn();
 		int numOfPuzzles = puzzleMan.count();
 		int puzzleNum = ThreadLocalRandom.current().nextInt(0, numOfPuzzles);
 		puzzleIndex = puzzleNum;

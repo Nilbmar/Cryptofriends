@@ -98,6 +98,8 @@ public class CgramController {
 	@FXML
 	private HBox hboxClearIncorrect;
 	
+	private VBox vboxPopIn;
+	
 	private boolean stageIsShowing = false;
 	
 	public boolean isStageShowing() { return stageIsShowing; }
@@ -143,6 +145,16 @@ public class CgramController {
 	}
 	
 	public Label getTimeLabel() { return lblTime; }
+	
+	public void removePopIn() {
+		if (vboxPopIn != null) {
+			stack.getChildren().remove(vboxPopIn);
+		}
+	}
+	public void showGameWonPopIn(VBox vBox) {
+		vboxPopIn = vBox;
+		stack.getChildren().add(vboxPopIn);
+	}
 	
 	public void showClearIncorrectBtns() {
 		if (hboxClearIncorrect.isVisible()) {

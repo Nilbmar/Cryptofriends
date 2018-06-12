@@ -24,7 +24,7 @@ public class PopInBox {
 				+" -fx-spacing: 10;");
 	}
 	
-	public void winnerBox(GameManager gameMan, String solvedBy) {
+	public VBox winnerBox(GameManager gameMan, String solvedBy) {
 		Label lblTitle = new Label("Congratulations");
 		Label lblMessage = new Label("Puzzle was solved by " + solvedBy);
 		
@@ -39,22 +39,21 @@ public class PopInBox {
 		btnNextPuzzle.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				int lastItem = stackPane.getChildren().size() - 1;
-				stackPane.getChildren().remove(lastItem);
+				gameMan.removeAlertPopIn();
 				gameMan.loadNewPuzzle();
-				
 		}});
 		
 		// Just removes this popin box
 		btnCancel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				int lastItem = stackPane.getChildren().size() - 1;
-				stackPane.getChildren().remove(lastItem);
+				gameMan.removeAlertPopIn();
 			}
 		});
 		
 		vBox.getChildren().addAll(lblTitle, lblMessage, hBoxButtons);
-		stackPane.getChildren().add(vBox);
+		
+		return vBox;
+		//stackPane.getChildren().add(vBox);
 	}
 }
