@@ -60,10 +60,12 @@ public class AnswerManager {
 			if (!spaceBox.isDisabled()) {
 				letterSpace = (LetterSpace) spaceBox.getSpace();
 				answerData = puzzleState.getAnswerData(currentSpaceBoxNum);
-				if (!answerData.getAnsweredChar().contentEquals("HINT")) {
-					letterSpace.setCurrentChar(answerData.getAnsweredChar().charAt(0));
-				} else {
+				if (answerData.getAnsweredChar().contentEquals("HINT")) {
 					letterSpace.setCurrentChar(letterSpace.getCorrectChar());
+				} else if (answerData.getAnsweredChar().contentEquals("CLEAR")) {
+					letterSpace.setCurrentChar(' ');
+				} else {
+					letterSpace.setCurrentChar(answerData.getAnsweredChar().charAt(0));
 				}
 				spaceBox.setAnswerCharLabel(true);
 			}
@@ -197,12 +199,24 @@ public class AnswerManager {
 	}
 	
 	public void clearIncorrect() {
+		int letterNum = -1;
+		PuzzleState puzzleState = gameMan.getPuzzleState();
+		
 		ArrayList<SpaceBox> incorrectSpaceBoxes = getIncorrectSpaceBoxes();
 		LetterSpace letterSpace = null;
 		for (int x = 0; x < incorrectSpaceBoxes.size(); x++) {
 			letterSpace = (LetterSpace) incorrectSpaceBoxes.get(x).getSpace();
-			letterSpace.setCurrentChar(' ');
-			incorrectSpaceBoxes.get(x).setAnswerCharLabel(true);
+			
+			// Don't do anything if it's a blank space
+			if (letterSpace.getCurrentChar() != ' ') {
+				letterSpace.setCurrentChar(' ');
+				incorrectSpaceBoxes.get(x).setAnswerCharLabel(true);
+				
+				
+				// Update PuzzleState for keeping score
+				letterNum = flow.getLetterBoxes().indexOf(incorrectSpaceBoxes.get(x));
+				puzzleState.answered(letterNum, "", "");
+			}
 		}
 		
 		clearHilights();
