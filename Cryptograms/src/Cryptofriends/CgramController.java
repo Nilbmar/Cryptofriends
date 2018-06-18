@@ -98,6 +98,7 @@ public class CgramController {
 	
 	private VBox vboxPopIn;
 	
+	private enum UI_COLOR { BLUE, ORANGE; }
 	private boolean stageIsShowing = false;
 	
 	public boolean isStageShowing() { return stageIsShowing; }
@@ -132,7 +133,7 @@ public class CgramController {
 		// Allows setting the colors for these panels
 		hboxScorePanel.setManaged(true);
 		
-		setUIColor(false);
+		setUIColor(UI_COLOR.BLUE);
 	}
 	
 	public StackPane getStackPane() {
@@ -141,15 +142,17 @@ public class CgramController {
 	
 	public Label getTimeLabel() { return lblTime; }
 	
-	private void setUIColor(boolean orange) {
-		if (orange) {
-			// Orange color
+	private void setUIColor(UI_COLOR color) {
+		switch (color) {
+		case ORANGE:
 			vboxDisplayItems.setStyle("-fx-background-color: #fc4a1a;");
 			vboxBottomPanel.setStyle("-fx-background-color: #fc4a1a;");
-		} else {
-			// Blue color
+			break;
+		case BLUE:
+		default:
 			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
 			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
+			;
 		}
 	}
 	
@@ -159,7 +162,7 @@ public class CgramController {
 			vboxPopIn = null;
 		}
 		
-		setUIColor(false);
+		setUIColor(UI_COLOR.BLUE);
 	}
 	
 	public void addPopInBox(VBox vBox) {
@@ -169,10 +172,11 @@ public class CgramController {
 	
 	public void showClearIncorrectBtns() {
 		if (vboxPopIn == null) {
-			setUIColor(true);
 			PopInBox popInClear = new PopInBox();
 			VBox vBox = popInClear.clearIncorrect(gameMan);
 			addPopInBox(vBox);
+			
+			setUIColor(UI_COLOR.ORANGE);
 		}
 	}
 	
