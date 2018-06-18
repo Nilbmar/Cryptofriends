@@ -60,12 +60,13 @@ public class AnswerManager {
 			if (!spaceBox.isDisabled()) {
 				letterSpace = (LetterSpace) spaceBox.getSpace();
 				answerData = puzzleState.getAnswerData(currentSpaceBoxNum);
-				if (answerData.getAnsweredChar().contentEquals("HINT")) {
-					letterSpace.setCurrentChar(letterSpace.getCorrectChar());
-				} else if (answerData.getAnsweredChar().contentEquals("CLEAR")) {
-					letterSpace.setCurrentChar(' ');
-				} else {
+				
+				// Is it answered/blank, or a hint?
+				// Set display character appropriately
+				if (!answerData.getAnsweredChar().contentEquals("HINT")) {
 					letterSpace.setCurrentChar(answerData.getAnsweredChar().charAt(0));
+				} else {
+					letterSpace.setCurrentChar(letterSpace.getCorrectChar());
 				}
 				spaceBox.setAnswerCharLabel(true);
 			}
