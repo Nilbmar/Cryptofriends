@@ -107,10 +107,11 @@ public class GameManager {
 	public void removeAlertPopIn() {
 		controller.removePopIn();
 	}
+	
 	public void alertWinner() {
 		PopInBox gameWon = new PopInBox();
 		VBox vBox = gameWon.winnerBox(this, puzzleState.getWinner());
-		controller.showGameWonPopIn(vBox);
+		controller.addPopInBox(vBox);
 	}
 	
 	public void gameWon() {

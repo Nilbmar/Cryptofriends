@@ -21,6 +21,38 @@ public class PopInBox {
 				+" -fx-spacing: 10;");
 	}
 	
+	public VBox clearIncorrect(GameManager gameMan) {
+		Label lblTitle = new Label("Reveal Mistakes");
+		Label lblMessage = new Label("Clear incorrect letters?");
+		
+		HBox hBoxButtons = new HBox();
+		hBoxButtons.setAlignment(Pos.CENTER);
+		hBoxButtons.setStyle("-fx-spacing: 15;");
+		Button btnClear = new Button("Clear");
+		Button btnCancel = new Button("No");
+		hBoxButtons.getChildren().addAll(btnClear, btnCancel);
+		
+		// Goes to next puzzle and removes this popin box
+		btnClear.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				gameMan.clearIncorrect();
+				gameMan.removeAlertPopIn();
+		}});
+		
+		// Just removes this popin box
+		btnCancel.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				gameMan.removeAlertPopIn();
+			}
+		});
+		
+		vBox.getChildren().addAll(lblTitle, lblMessage, hBoxButtons);
+		
+		return vBox;
+	}
+	
 	public VBox winnerBox(GameManager gameMan, String solvedBy) {
 		Label lblTitle = new Label("Congratulations");
 		Label lblMessage = new Label("Puzzle was solved by " + solvedBy);

@@ -1,6 +1,7 @@
 package Cryptofriends;
 
 import Cryptofriends.GUI.PlayerMenu;
+import Cryptofriends.GUI.PopInBox;
 import Cryptofriends.SpaceContainer.FlowBox;
 import Enums.MoveDirections;
 import core.Data.Player;
@@ -95,9 +96,6 @@ public class CgramController {
 	@FXML
 	private Label lblScore;
 	
-	@FXML
-	private HBox hboxClearIncorrect;
-	
 	private VBox vboxPopIn;
 	
 	private boolean stageIsShowing = false;
@@ -133,7 +131,6 @@ public class CgramController {
 		
 		// Allows setting the colors for these panels
 		hboxScorePanel.setManaged(true);
-		hboxClearIncorrect.setManaged(true);
 		
 		// Start with hboxClearIncorrect hidden
 		// and default color for panels
@@ -149,14 +146,21 @@ public class CgramController {
 	public void removePopIn() {
 		if (vboxPopIn != null) {
 			stack.getChildren().remove(vboxPopIn);
+			vboxPopIn = null;
 		}
 	}
-	public void showGameWonPopIn(VBox vBox) {
+	public void addPopInBox(VBox vBox) {
 		vboxPopIn = vBox;
 		stack.getChildren().add(vboxPopIn);
 	}
 	
 	public void showClearIncorrectBtns() {
+		if (vboxPopIn == null) {
+			PopInBox popInClear = new PopInBox();
+			VBox vBox = popInClear.clearIncorrect(gameMan);
+			addPopInBox(vBox);
+		}
+		/*
 		if (hboxClearIncorrect.isVisible()) {
 			// Hides hboxClearIncorrect
 			// Show user data
@@ -171,15 +175,16 @@ public class CgramController {
 			
 			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
 			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
-			hboxScorePanel.setVisible(true);
-			hboxClearIncorrect.setVisible(false);
+			//hboxScorePanel.setVisible(true);
+			//hboxClearIncorrect.setVisible(false);
 		} else {
 			// Shows hboxClearIncorrect and set warning color
 			vboxDisplayItems.setStyle("-fx-background-color: #fc4a1a;");
 			vboxBottomPanel.setStyle("-fx-background-color: #fc4a1a;");
-			hboxClearIncorrect.setVisible(true);
-			hboxScorePanel.setVisible(false);
+			//hboxClearIncorrect.setVisible(true);
+			//hboxScorePanel.setVisible(false);
 		}
+		*/
 	}
 	
 	

@@ -7,24 +7,31 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefWidth="375.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cryptofriends.CgramController">
+<BorderPane prefWidth="375.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cryptofriends.CgramController">
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="476.0" prefWidth="370.0" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane fx:id="anchor" prefHeight="448.0" prefWidth="355.0">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+      <StackPane fx:id="stack" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="476.0" prefWidth="370.0">
+              <content>
+                <AnchorPane fx:id="anchor" prefHeight="448.0" prefWidth="355.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </StackPane>
    </center>
    <top>
       <SplitPane maxHeight="90.0" minHeight="0.0" prefWidth="375.0" BorderPane.alignment="CENTER">
@@ -48,16 +55,12 @@
                               <MenuItem fx:id="displayAllLetters" mnemonicParsing="false" onAction="#displayAllLetters" text="Answer Puzzle" />
                            </items>
                       </Menu>
-                        <Menu mnemonicParsing="false" text="Players">
+                        <Menu fx:id="playerMenu" mnemonicParsing="false" text="Players">
                           <items>
                               <MenuItem fx:id="nextPlayer" mnemonicParsing="false" onAction="#switchPlayer" text="Next Player" />
-                              <Menu mnemonicParsing="false" text="Edit Players">
-                                 <items>
-                                    <MenuItem fx:id="renamePlayer" mnemonicParsing="false" onAction="#renamePlayer" text="Rename Player" />
-                                  <MenuItem fx:id="addPlayer" mnemonicParsing="false" onAction="#addPlayer" text="Add Player" />
-                                    <MenuItem fx:id="removePlayer" mnemonicParsing="false" onAction="#removePlayer" text="Remove Player" />
-                                 </items>
-                              </Menu>
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                            <MenuItem fx:id="addPlayer" mnemonicParsing="false" onAction="#addPlayer" text="Add Player" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
                           </items>
                         </Menu>
                       <Menu mnemonicParsing="false" text="Help">
@@ -94,71 +97,49 @@
    <bottom>
       <VBox fx:id="vboxBottomPanel" maxHeight="50.0" minHeight="0.0" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="hboxScorePanel" alignment="CENTER_RIGHT" maxHeight="50.0" minHeight="0.0" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+            <HBox fx:id="hboxScorePanel" alignment="CENTER" maxHeight="50.0" minHeight="0.0" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0">
+                  <VBox alignment="CENTER" minHeight="40.0" prefHeight="200.0" prefWidth="375.0">
                      <children>
-                        <Label text="Player">
-                           <font>
-                              <Font name="Envy Code R Bold" size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblPlayerName" text="Number 1">
-                           <font>
-                              <Font name="Envy Code R Italic" size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </VBox>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="200.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0">
+                        <TilePane alignment="CENTER" hgap="50.0" orientation="VERTICAL" prefHeight="200.0" prefTileHeight="19.0" prefTileWidth="75.0" prefWidth="200.0">
                            <children>
-                              <Label text="Score:" textAlignment="RIGHT">
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Player" textAlignment="CENTER">
                                  <font>
                                     <Font name="Envy Code R Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblScore" alignment="CENTER_RIGHT" text="100%">
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Time" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Envy Code R Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Score" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Envy Code R Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </TilePane>
+                        <TilePane alignment="CENTER" hgap="50.0" prefHeight="200.0" prefTileHeight="19.0" prefTileWidth="75.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="lblPlayerName" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Player 1" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Envy Code R Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblTime" alignment="CENTER" maxWidth="1.7976931348623157E308" text="100m 60s" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Envy Code R Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblScore" alignment="CENTER" maxWidth="1.7976931348623157E308" text="100%" textAlignment="CENTER">
                                  <font>
                                     <Font name="Envy Code R Italic" size="16.0" />
                                  </font>
                               </Label>
                            </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0">
-                           <children>
-                              <Label text="Time: " textAlignment="RIGHT">
-                                 <font>
-                                    <Font name="Envy Code R Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblTime" text="100m 60s">
-                                 <font>
-                                    <Font name="Envy Code R Italic" size="16.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets right="5.0" />
-                           </padding>
-                        </HBox>
+                        </TilePane>
                      </children>
-                     <opaqueInsets>
-                        <Insets right="15.0" />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets right="10.0" />
-                     </padding>
                   </VBox>
                </children>
                <padding>
