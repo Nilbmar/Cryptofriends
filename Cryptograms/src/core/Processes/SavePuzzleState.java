@@ -1,5 +1,6 @@
 package core.Processes;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -26,6 +27,13 @@ public class SavePuzzleState {
 	private void setTarget() {
 		if (puzzleState != null) {
 			path = FileSystems.getDefault().getPath(saveDataPath).toAbsolutePath();
+			
+			// Create the folder if it doesn't exist
+			File directory = new File(saveDataPath);
+		    if (!directory.exists()){
+		        directory.mkdir();
+		    }
+		    
 			fileName = puzzleState.getFileName();
 			target = path.toString() + separator + fileName + ext;
 		}

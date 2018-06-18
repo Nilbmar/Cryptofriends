@@ -7,15 +7,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class PopInBox {
-	private StackPane stackPane;
 	private VBox vBox;
 	
-	public PopInBox(StackPane stackPane) {
-		this.stackPane = stackPane;
+	public PopInBox() {
 		vBox = new VBox();
 		vBox.setAlignment(Pos.CENTER);
 		vBox.setMaxHeight(100);
@@ -54,6 +51,5 @@ public class PopInBox {
 		vBox.getChildren().addAll(lblTitle, lblMessage, hBoxButtons);
 		
 		return vBox;
-		//stackPane.getChildren().add(vBox);
 	}
 }
