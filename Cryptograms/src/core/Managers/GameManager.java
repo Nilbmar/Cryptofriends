@@ -117,6 +117,7 @@ public class GameManager {
 	public void gameWon() {
 		setPuzzleState(PuzzleState.State.WON);
 		String winner = playerMan.getCurrentPlayer().getName();
+		puzzleState.setWinner(winner);
 		savePuzzleState();
 		alertWinner();
 	}
