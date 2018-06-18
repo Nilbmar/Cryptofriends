@@ -132,9 +132,7 @@ public class CgramController {
 		// Allows setting the colors for these panels
 		hboxScorePanel.setManaged(true);
 		
-		// Start with hboxClearIncorrect hidden
-		// and default color for panels
-		showClearIncorrectBtns();
+		setUIColor(false);
 	}
 	
 	public StackPane getStackPane() {
@@ -143,12 +141,27 @@ public class CgramController {
 	
 	public Label getTimeLabel() { return lblTime; }
 	
+	private void setUIColor(boolean orange) {
+		if (orange) {
+			// Orange color
+			vboxDisplayItems.setStyle("-fx-background-color: #fc4a1a;");
+			vboxBottomPanel.setStyle("-fx-background-color: #fc4a1a;");
+		} else {
+			// Blue color
+			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
+			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
+		}
+	}
+	
 	public void removePopIn() {
 		if (vboxPopIn != null) {
 			stack.getChildren().remove(vboxPopIn);
 			vboxPopIn = null;
 		}
+		
+		setUIColor(false);
 	}
+	
 	public void addPopInBox(VBox vBox) {
 		vboxPopIn = vBox;
 		stack.getChildren().add(vboxPopIn);
@@ -156,37 +169,12 @@ public class CgramController {
 	
 	public void showClearIncorrectBtns() {
 		if (vboxPopIn == null) {
+			setUIColor(true);
 			PopInBox popInClear = new PopInBox();
 			VBox vBox = popInClear.clearIncorrect(gameMan);
 			addPopInBox(vBox);
 		}
-		/*
-		if (hboxClearIncorrect.isVisible()) {
-			// Hides hboxClearIncorrect
-			// Show user data
-			// and set default color
-			if (gameMan.getPlayerManager() != null) {
-				try {
-					gameMan.updatePlayerInfoBox();
-				} catch (NullPointerException nullEx) {
-					System.out.println("No player name yet.");
-				}
-			}
-			
-			vboxDisplayItems.setStyle("-fx-background-color: #4abdac;");
-			vboxBottomPanel.setStyle("-fx-background-color: #4abdac;");
-			//hboxScorePanel.setVisible(true);
-			//hboxClearIncorrect.setVisible(false);
-		} else {
-			// Shows hboxClearIncorrect and set warning color
-			vboxDisplayItems.setStyle("-fx-background-color: #fc4a1a;");
-			vboxBottomPanel.setStyle("-fx-background-color: #fc4a1a;");
-			//hboxClearIncorrect.setVisible(true);
-			//hboxScorePanel.setVisible(false);
-		}
-		*/
 	}
-	
 	
 	public void updateAuthorLine(String author, String subject) {
 		lblAuthor.setText(author);

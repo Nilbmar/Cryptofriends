@@ -17,11 +17,12 @@ public class PopInBox {
 		vBox.setAlignment(Pos.CENTER);
 		vBox.setMaxHeight(100);
 		//vBox.setMaxWidth(300);
-		vBox.setStyle("-fx-background-color: #4abdac;"
-				+" -fx-spacing: 10;");
+		
 	}
 	
 	public VBox clearIncorrect(GameManager gameMan) {
+		vBox.setStyle("-fx-background-color: #fc4a1a;"
+				+" -fx-spacing: 10;");
 		Label lblTitle = new Label("Reveal Mistakes");
 		Label lblMessage = new Label("Clear incorrect letters?");
 		
@@ -54,6 +55,8 @@ public class PopInBox {
 	}
 	
 	public VBox winnerBox(GameManager gameMan, String solvedBy) {
+		vBox.setStyle("-fx-background-color: #4abdac;"
+				+" -fx-spacing: 10;");
 		Label lblTitle = new Label("Congratulations");
 		Label lblMessage = new Label("Puzzle was solved by " + solvedBy);
 		
