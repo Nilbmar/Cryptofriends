@@ -46,7 +46,7 @@ public class PlayerManager {
 			}
 			
 			// When find the current player
-			// set so next iteratior changes the current player
+			// set so next iteration changes the current player
 			if (currentPlayerName.contentEquals(it.next().getKey())) {
 				setNextPlayerToCurrent = true;
 			}
@@ -57,8 +57,7 @@ public class PlayerManager {
 			Set<String> set = players.keySet();
 			currentPlayerName = set.iterator().next();
 		}
-		
-		System.out.println("switched to player " + currentPlayerName);
+
 		players.get(currentPlayerName).setTurn(true);
 		return currentPlayerName;
 	}

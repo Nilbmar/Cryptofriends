@@ -187,6 +187,7 @@ public class CgramController {
 	
 	// Changes the panel on the bottom that holds
 	// player name, score, and time
+	// Does not update time
 	public void updatePlayerInfoBox(String playerName, int score) {
 		lblPlayerName.setText(playerName);
 		lblScore.setText(score + "%");

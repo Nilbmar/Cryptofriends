@@ -79,6 +79,11 @@ public class TimeManager {
 		return elapsedTime;
 	}
 	
+	public void switchedPuzzle() {
+		stopTimer();
+		timers.get(currentPlayerKey).schedule();
+	}
+	
 	public void switchedPlayer(String newPlayerKey) {
 		stopTimer();
 		currentPlayerKey = newPlayerKey;

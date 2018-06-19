@@ -115,6 +115,8 @@ public class GameManager {
 	}
 	
 	public void gameWon() {
+		timeMan.finishedPuzzle();
+		updatePlayerInfoBox();
 		setPuzzleState(PuzzleState.State.WON);
 		String winner = playerMan.getCurrentPlayer().getName();
 		puzzleState.setWinner(winner);
@@ -213,18 +215,19 @@ public class GameManager {
 			}
 			answerMan.setHints(puzzleData.getHints());
 			
+			playerMan.getCurrentPlayer().setTurn(true);
+			timeMan.switchedPuzzle();
 			
 			updatePlayerInfoBox();
 		}
 		catch (NullPointerException nullEx) {
-			System.out.println("Null Pointer: Reseting to start of puzzle file");
+			System.out.println("End of puzzles. Returning to Puzzle #1");
 			puzzleIndex = 1;
 			loadNewPuzzle();
 		}
 	}
 	
 	public void loadRandomPuzzle() {
-		removeAlertPopIn();
 		int numOfPuzzles = puzzleMan.count();
 		int puzzleNum = ThreadLocalRandom.current().nextInt(0, numOfPuzzles);
 		puzzleIndex = puzzleNum;
@@ -327,10 +330,6 @@ public class GameManager {
 		timeMan.switchedPlayer(newPlayerKey);
 		
 		updatePlayerInfoBox();
-		System.out.println("Player scores: " 
-			+ scoreMan.getPlayerScoreData(newPlayerKey).getScore()
-			+ " totalScore: "
-			+ scoreMan.getPlayerScoreData(newPlayerKey).getTotalScore());
 	}
 	
 	public void updatePlayerInfoBox() {
