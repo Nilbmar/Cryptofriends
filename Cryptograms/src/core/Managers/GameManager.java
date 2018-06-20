@@ -10,6 +10,7 @@ import core.Data.AnswerData;
 import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
+import core.Loaders.PlayerLoader;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
 import core.Processes.SavePuzzleState;
@@ -20,17 +21,19 @@ public class GameManager {
 	private SelectionManager selectMan;
 	private AnswerManager answerMan;
 	private PlayerManager playerMan;
+	private PlayerLoader playerLoader;
 	private ScoreManager scoreMan;
 	private TimeManager timeMan;
 	private BoardManager boardMan;
 	private PuzzleManager puzzleMan;
-	private PuzzleLoader sqlLoader;
+	private PuzzleLoader puzzleLoader;
 	private int puzzleIndex = 0;	
 	private PuzzleState puzzleState = null;
 	
 	public GameManager(CgramController controller) {
 		this.controller = controller;
 		playerMan = new PlayerManager();
+		playerLoader = new PlayerLoader();
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
 		timeMan = new TimeManager(controller.getTimeLabel());
@@ -38,7 +41,7 @@ public class GameManager {
 		answerMan = new AnswerManager(this);
 		boardMan = new BoardManager(this);
 		puzzleMan = new PuzzleManager();
-		sqlLoader = new PuzzleLoader(puzzleMan);
+		puzzleLoader = new PuzzleLoader(puzzleMan);
 		
 		
 		// Create default player
@@ -69,8 +72,10 @@ public class GameManager {
 		answerMan.setFlowBox(boardMan.getFlowBox());
 
 		puzzleIndex = 1;
-		sqlLoader.setTarget(Integer.toString(puzzleIndex));
-		sqlLoader.load();
+		puzzleLoader.setTarget(Integer.toString(puzzleIndex));
+		puzzleLoader.load();
+		
+		playerLoader.load();
 	}
 	
 	/* Allows movement between SpaceBoxes with arrow keys
