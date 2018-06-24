@@ -22,6 +22,22 @@ public class AnswerManager {
 		this.flow = flow;
 	}
 	
+	public void clearAnswers() {
+		int currentSpaceBoxNum = -1;
+		PuzzleState puzzleState = gameMan.getPuzzleState();
+		LetterSpace letterSpace = null;
+		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
+			currentSpaceBoxNum++;
+			
+			if (!spaceBox.isDisabled()) {
+				letterSpace = (LetterSpace) spaceBox.getSpace();
+				spaceBox.clear();
+				spaceBox.setAnswerCharLabel(true);
+				puzzleState.answered(currentSpaceBoxNum, "CLEAR", "CLEAR");
+			}
+		}
+	}
+	
 	public void setAnswer(String answer, String currentPlayerKey) {
 		int currentSpaceBoxNum = -1;
 		PuzzleState puzzleState = gameMan.getPuzzleState();
@@ -63,10 +79,12 @@ public class AnswerManager {
 				
 				// Is it answered/blank, or a hint?
 				// Set display character appropriately
-				if (!answerData.getAnsweredChar().contentEquals("HINT")) {
-					letterSpace.setCurrentChar(answerData.getAnsweredChar().charAt(0));
-				} else {
+				if (answerData.getAnsweredChar().contentEquals("HINT")) {
 					letterSpace.setCurrentChar(letterSpace.getCorrectChar());
+				} else if (answerData.getAnsweredChar().contentEquals("CLEAR")) { 
+					letterSpace.setCurrentChar(' ');
+				} else {
+					letterSpace.setCurrentChar(answerData.getAnsweredChar().charAt(0));
 				}
 				spaceBox.setAnswerCharLabel(true);
 			}

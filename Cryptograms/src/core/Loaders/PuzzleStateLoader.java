@@ -73,6 +73,8 @@ public class PuzzleStateLoader implements Loader {
 					// Check for HINT
 					if (unparsedAnswer.contains("HINT - HINT")) {
 						puzzleState.answered(charNum, "HINT", "HINT");
+					} else if (unparsedAnswer.contains("CLEAR - CLEAR")) {
+						puzzleState.answered(charNum, "CLEAR", "CLEAR");
 					} else {
 						// Separate Char
 						String answerChar = "" + unparsedAnswer.charAt(0);

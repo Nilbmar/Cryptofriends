@@ -243,7 +243,8 @@ public class GameManager {
 	}
 	
 	public void clearPuzzle() {
-		boardMan.clearPuzzle();
+		//boardMan.clearPuzzle();
+		answerMan.clearAnswers();
 	}
 	
 	public void setAnswer(String answer) {
