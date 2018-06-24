@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 import Cryptofriends.GUI.CgramTimeTask;
 import Cryptofriends.GUI.CgramTimer;
 import core.Data.Player;
+import core.Data.PlayerTime;
+import core.Processes.SavePlayerTime;
 import javafx.scene.control.Label;
 
 public class TimeManager {
@@ -82,6 +84,7 @@ public class TimeManager {
 	public void switchedPuzzle() {
 		stopTimer();
 		timers.get(currentPlayerKey).schedule();
+		
 	}
 	
 	public void switchedPlayer(String newPlayerKey) {

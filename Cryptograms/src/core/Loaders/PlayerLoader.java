@@ -8,12 +8,12 @@ import java.sql.Statement;
 public class PlayerLoader extends SQLLoader {
 	
 	public PlayerLoader() {
-		setDatabaseName("PuzzleDatabase");//"PlayerDatabase.sqlite3";
+		setDatabaseName("PlayerDatabase");//"PlayerDatabase.sqlite3";
 	}
 	
 	protected void loadResources(Connection conn) {
-		System.out.println("Loading puzzles\n\n");
-		String sql = "SELECT Key, Author, NumOfAuthorQuote, Quote, Subject, Hints FROM Phrase";
+		System.out.println("Loading time data\n\n");
+		String sql = "SELECT player_id, puzzle_name, time  FROM Time";
 		
 		try {
 			Statement stmt = conn.createStatement();
@@ -27,10 +27,10 @@ public class PlayerLoader extends SQLLoader {
                 		resultSet.getString("Subject"), resultSet.getString("Author"),
                 		resultSet.getInt("NumOfAuthorQuote"));
         		*/
-				System.out.println("Load Players: " + resultSet.getInt("Key") 
-                		+ resultSet.getString("Hints") + resultSet.getString("Quote") 
-                		+ resultSet.getString("Subject") + resultSet.getString("Author")
-                		+ resultSet.getInt("NumOfAuthorQuote"));
+				System.out.println("Load Players: " 
+						+ " ID: " + resultSet.getInt("player_id") 
+                		+ " Puzzle Name: " + resultSet.getString("puzzle_name")
+                		+ " Time: " + resultSet.getString("time"));
 			}
 		} catch (SQLException sqlEx) {
 			System.out.println("Problem creating SQL statement: " + sqlEx.getMessage());

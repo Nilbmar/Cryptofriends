@@ -1,5 +1,7 @@
 package core.Data;
 
+import core.Processes.SavePlayerTime;
+
 public class Player {
 	private String name;
 	private PlayerTime playerTime;
@@ -9,11 +11,12 @@ public class Player {
 	private int totalMoves;
 	private boolean turn;
 	private boolean removed;
+	private String currentPuzzleName = null;
 	
 	public Player(String name, int num) {
 		this.name = name;
 		playerNum = num;
-		playerTime = new PlayerTime();
+		playerTime = new PlayerTime(this);
 	}
 	
 	public PlayerTime getPlayerTime() { return playerTime; }
@@ -46,5 +49,19 @@ public class Player {
 			movesThisTurn++;
 			totalMoves++;
 		}
+	}
+	
+	public String getCurrentPuzzleName() { return currentPuzzleName; }
+	public void setCurrentPuzzleName(String puzzleName) {
+		currentPuzzleName = puzzleName;
+	}
+	
+	public void switchedPuzzle(String newPuzzleName) {
+		if (currentPuzzleName != null) {
+			playerTime.savePlayerTime();
+		}
+		currentPuzzleName = newPuzzleName;
+		playerTime.loadTimeForCurPuzzle();
+		setTurn(true);
 	}
 }

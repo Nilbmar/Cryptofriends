@@ -13,6 +13,7 @@ import core.Data.PuzzleState;
 import core.Loaders.PlayerLoader;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
+import core.Loaders.TimeLoader;
 import core.Processes.SavePuzzleState;
 import javafx.scene.layout.VBox;
 
@@ -76,6 +77,11 @@ public class GameManager {
 		puzzleLoader.load();
 		
 		playerLoader.load();
+		TimeLoader timeLoader = new TimeLoader();
+		timeLoader.setPlayerTimeObj(playerMan.getCurrentPlayer().getPlayerTime());
+		timeLoader.setTarget(playerMan.getCurrentPlayer().getName());
+		timeLoader.load();
+		playerMan.getCurrentPlayer().getPlayerTime().printTimes();
 	}
 	
 	/* Allows movement between SpaceBoxes with arrow keys
@@ -220,9 +226,10 @@ public class GameManager {
 			}
 			answerMan.setHints(puzzleData.getHints());
 			
-			playerMan.getCurrentPlayer().setTurn(true);
 			timeMan.switchedPuzzle();
-			
+
+			playerMan.getCurrentPlayer().switchedPuzzle(fileName);
+
 			updatePlayerInfoBox();
 		}
 		catch (NullPointerException nullEx) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
@@ -23,6 +24,12 @@ public class PlayerManager {
 	
 	public void update() {
 		
+	}
+	
+	public void setCurrentPuzzleName(String puzzleName) {
+		for (Map.Entry<String, Player> entry : players.entrySet()) {
+			entry.getValue().setCurrentPuzzleName(puzzleName);
+		}
 	}
 	
 	public String switchPlayer() {
