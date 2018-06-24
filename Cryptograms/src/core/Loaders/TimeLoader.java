@@ -30,7 +30,7 @@ public class TimeLoader implements Loader {
 	@Override
 	public void setTarget(String playerName) {
 		path = FileSystems.getDefault().getPath(saveDataPath).toAbsolutePath();
-		String fileName = "player_" + playerName.toLowerCase();
+		String fileName = "player_" + playerName;
 		target = path.toString() + separator + fileName + ext;
 	}
 
@@ -47,17 +47,10 @@ public class TimeLoader implements Loader {
 		if (target != null && Files.exists(file, new LinkOption[]{LinkOption.NOFOLLOW_LINKS})) {
 			
 			JSONParser parser = new JSONParser();
-			
+
 			try {
 				Object obj = parser.parse(new FileReader(target));
 				JSONObject json = (JSONObject) obj;
-				
-				/*
-				/// Data needed by PuzzleState
-				String fileName = (String) json.get("fileName");
-				String state = (String) json.get("state");
-				String winner = (String) json.get("winner");
-				*/
 				
 				// Data needed by PlayerTime
 				long totalTime = (long) json.get("totalTime");
@@ -65,6 +58,11 @@ public class TimeLoader implements Loader {
 				
 				playerTime.loadPrevTotalTime(totalTime);
 				
+				// Iterate array in JSON file
+				// and
+				// separate the puzzle name from the puzzle time
+				// separator is a colon
+				//
 				// Have to suppress warning for Iterator
 				// json doesn't allow for setting parameter
 				@SuppressWarnings("unchecked")
@@ -78,10 +76,8 @@ public class TimeLoader implements Loader {
 					String puzzleName = unparsed.substring(0, indexOfSeparator);
 					long puzzleTime = Long.parseLong(unparsed.substring(indexOfSeparator + 1));
 					playerTime.loadPrevPuzzleTimes(puzzleName, puzzleTime);
-					//System.out.println("TimeLoader: " + puzzleName + " " + puzzleTime);
 				}
 			} catch (IOException | ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

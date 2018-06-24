@@ -81,7 +81,7 @@ public class GameManager {
 		timeLoader.setPlayerTimeObj(playerMan.getCurrentPlayer().getPlayerTime());
 		timeLoader.setTarget(playerMan.getCurrentPlayer().getName());
 		timeLoader.load();
-		playerMan.getCurrentPlayer().getPlayerTime().printTimes();
+		//playerMan.getCurrentPlayer().getPlayerTime().printTimes();
 	}
 	
 	/* Allows movement between SpaceBoxes with arrow keys
