@@ -10,7 +10,6 @@ import core.Data.AnswerData;
 import core.Data.Player;
 import core.Data.PuzzleData;
 import core.Data.PuzzleState;
-import core.Loaders.PlayerLoader;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
 import core.Loaders.TimeLoader;
@@ -22,7 +21,6 @@ public class GameManager {
 	private SelectionManager selectMan;
 	private AnswerManager answerMan;
 	private PlayerManager playerMan;
-	private PlayerLoader playerLoader;
 	private ScoreManager scoreMan;
 	private TimeManager timeMan;
 	private BoardManager boardMan;
@@ -34,7 +32,6 @@ public class GameManager {
 	public GameManager(CgramController controller) {
 		this.controller = controller;
 		playerMan = new PlayerManager();
-		playerLoader = new PlayerLoader();
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
 		timeMan = new TimeManager(controller.getTimeLabel());
@@ -75,8 +72,7 @@ public class GameManager {
 		puzzleIndex = 1;
 		puzzleLoader.setTarget(Integer.toString(puzzleIndex));
 		puzzleLoader.load();
-		
-		playerLoader.load();
+
 		TimeLoader timeLoader = new TimeLoader();
 		timeLoader.setPlayerTimeObj(playerMan.getCurrentPlayer().getPlayerTime());
 		timeLoader.setTarget(playerMan.getCurrentPlayer().getName());

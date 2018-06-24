@@ -1,7 +1,5 @@
 package core.Data;
 
-import core.Processes.SavePlayerTime;
-
 public class Player {
 	private String name;
 	private PlayerTime playerTime;

@@ -59,7 +59,6 @@ public class PlayerTime {
 	}
 	
 	public String[] getPuzzleTimes() {
-		int puzzleTimesSize = puzzleTimes.size();
 		ArrayList<String> puzzleTimesList = new ArrayList<String>();
 		for (Map.Entry<String, Long> entry : puzzleTimes.entrySet()) {
 			puzzleTimesList.add(entry.getKey() + ":" + entry.getValue());
