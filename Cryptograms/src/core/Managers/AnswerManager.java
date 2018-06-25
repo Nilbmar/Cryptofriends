@@ -25,12 +25,10 @@ public class AnswerManager {
 	public void clearAnswers() {
 		int currentSpaceBoxNum = -1;
 		PuzzleState puzzleState = gameMan.getPuzzleState();
-		LetterSpace letterSpace = null;
 		for (SpaceBox spaceBox : flow.getLetterBoxes()) {
 			currentSpaceBoxNum++;
 			
 			if (!spaceBox.isDisabled()) {
-				letterSpace = (LetterSpace) spaceBox.getSpace();
 				spaceBox.clear();
 				spaceBox.setAnswerCharLabel(true);
 				puzzleState.answered(currentSpaceBoxNum, "CLEAR", "CLEAR");
