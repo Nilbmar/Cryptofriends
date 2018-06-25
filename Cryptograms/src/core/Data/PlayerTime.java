@@ -65,9 +65,6 @@ public class PlayerTime {
 		}
 		
 		String[] times = puzzleTimesList.toArray(new String[puzzleTimesList.size()]);
-		if (times.length > 0) { 
-			System.out.println("puzzleTimes from list: " + times[0]);
-		}
 		return times;
 	}
 	

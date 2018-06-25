@@ -55,9 +55,7 @@ public class SavePlayerTime {
 		
 		JSONArray jsonArray = new JSONArray();
 		String[] times = playerTime.getPuzzleTimes();
-		System.out.println("Save - times array: ");
 		for (int x = 0; x < times.length; x++) {
-			System.out.println("time - " + x + ": " + times[x]);
 			jsonArray.add(times[x]);
 		}
 		
