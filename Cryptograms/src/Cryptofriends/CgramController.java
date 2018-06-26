@@ -276,7 +276,6 @@ public class CgramController {
 	}
 		
 	public void exitProgram() {
-		System.out.println("Exiting Cyrptofriends.");
-		Platform.exit();
+		gameMan.exitProgram();
 	}
 }

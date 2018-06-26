@@ -116,4 +116,9 @@ public class TimeManager {
 		
 		stopTimer();
 	}
+	
+	public void exitProgram() {
+		stopTimer();
+		
+	}
 }

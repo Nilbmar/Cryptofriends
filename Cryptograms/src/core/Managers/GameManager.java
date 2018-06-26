@@ -14,6 +14,7 @@ import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
 import core.Loaders.TimeLoader;
 import core.Processes.SavePuzzleState;
+import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 
 public class GameManager {
@@ -349,5 +350,13 @@ public class GameManager {
 			int score = (int) scoreMan.getPlayerScoreData(playerKey).getScore();
 			controller.updatePlayerInfoBox(player.getName(), score);
 		}
+	}
+	
+	public void exitProgram() {
+		timeMan.exitProgram();
+		playerMan.getCurrentPlayer().exitProgram();
+		savePuzzleState();
+		System.out.println("Exiting Cyrptofriends.");
+		Platform.exit();
 	}
 }

@@ -62,4 +62,10 @@ public class Player {
 		playerTime.loadTimeForCurPuzzle();
 		setTurn(true);
 	}
+	
+	public void exitProgram() {
+		if (currentPuzzleName != null) {
+			playerTime.savePlayerTime();
+		}
+	}
 }
