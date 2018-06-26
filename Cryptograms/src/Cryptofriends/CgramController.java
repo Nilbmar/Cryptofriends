@@ -6,7 +6,6 @@ import Cryptofriends.SpaceContainer.FlowBox;
 import Enums.MoveDirections;
 import core.Data.Player;
 import core.Managers.GameManager;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
