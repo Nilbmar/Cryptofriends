@@ -24,8 +24,16 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Cryptograms");
 			
+			// For when user exits with the X window button
+			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent event) {
+					controller.exitProgram();
+				}
+				
+			});
+			
 			primaryStage.setOnShowing(new EventHandler<WindowEvent>(){
-
 				@Override
 				public void handle(WindowEvent event) {
 					controller.setStageShowing(true);
