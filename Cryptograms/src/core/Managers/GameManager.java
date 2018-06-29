@@ -12,7 +12,6 @@ import core.Data.PuzzleData;
 import core.Data.PuzzleState;
 import core.Loaders.PuzzleLoader;
 import core.Loaders.PuzzleStateLoader;
-import core.Loaders.TimeLoader;
 import core.Processes.SavePuzzleState;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
@@ -73,12 +72,6 @@ public class GameManager {
 		puzzleIndex = 1;
 		puzzleLoader.setTarget(Integer.toString(puzzleIndex));
 		puzzleLoader.load();
-
-		TimeLoader timeLoader = new TimeLoader();
-		timeLoader.setPlayerTimeObj(playerMan.getCurrentPlayer().getPlayerTime());
-		timeLoader.setTarget(playerMan.getCurrentPlayer().getName());
-		timeLoader.load();
-		//playerMan.getCurrentPlayer().getPlayerTime().printTimes();
 	}
 	
 	/* Allows movement between SpaceBoxes with arrow keys

@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import Cryptofriends.GUI.CgramTimeTask;
 import Cryptofriends.GUI.CgramTimer;
 import core.Data.Player;
+import core.Loaders.TimeLoader;
 import javafx.scene.control.Label;
 
 public class TimeManager {
@@ -28,6 +29,11 @@ public class TimeManager {
 		if (!players.containsKey(playerKey)) {
 			players.put(playerKey, player);
 			
+			
+			TimeLoader timeLoader = new TimeLoader();
+			timeLoader.setPlayerTimeObj(player.getPlayerTime());
+			timeLoader.setTarget(player.getName());
+			timeLoader.load();
 			// Create timer for the new player
 			CgramTimer cTimer = new CgramTimer(this, player, lblTime);
 			timers.put(playerKey, cTimer);
@@ -89,6 +95,10 @@ public class TimeManager {
 		stopTimer();
 		currentPlayerKey = newPlayerKey;
 		timers.get(currentPlayerKey).schedule();
+		
+		if (players.containsKey(currentPlayerKey)) {
+			players.get(currentPlayerKey).getPlayerTime().loadTimeForCurPuzzle();
+		}
 	}
 	
 	public CgramTimeTask getCurrentTimeTask() {
