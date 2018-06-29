@@ -26,6 +26,7 @@ public class GameManager {
 	private BoardManager boardMan;
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader puzzleLoader;
+	private String currentPuzzleName = null;
 	private int puzzleIndex = 0;	
 	private PuzzleState puzzleState = null;
 	
@@ -182,14 +183,13 @@ public class GameManager {
 			PuzzleData puzzleData = puzzleMan.getPuzzle(puzzleIndex);
 			boardMan.setupPuzzle(puzzleData.getPuzzle());
 			
-			String fileName = puzzleData.getAuthor() 
+			currentPuzzleName = puzzleData.getAuthor() 
 					+ "_" + puzzleData.getSubject() 
 					+ "_" + puzzleData.getNumber();
 			
 			PuzzleStateLoader stateLoader = new PuzzleStateLoader();
-			stateLoader.setTarget(fileName);
+			stateLoader.setTarget(currentPuzzleName);
 			stateLoader.load();
-			
 			// Load PuzzleState if a file exists
 			// otherwise create one
 			if (stateLoader.getPuzzleState() != null) {
@@ -197,7 +197,7 @@ public class GameManager {
 				stateLoadedFromFile = true;
 			} else {
 				int puzzleSize = boardMan.getTotalLetters();
-				puzzleState = new PuzzleState(puzzleSize, fileName);
+				puzzleState = new PuzzleState(puzzleSize, currentPuzzleName);
 				setPuzzleState(PuzzleState.State.PLAYING);
 			}
 			
@@ -218,7 +218,7 @@ public class GameManager {
 			
 			timeMan.switchedPuzzle();
 
-			playerMan.getCurrentPlayer().switchedPuzzle(fileName);
+			playerMan.switchedPuzzle(currentPuzzleName);
 
 			updatePlayerInfoBox();
 		}
@@ -311,6 +311,7 @@ public class GameManager {
 	public void addPlayer() {
 		// Returned so it can be added to menu
 		Player player = playerMan.addPlayer();
+		player.setCurrentPuzzleName(currentPuzzleName);
 		controller.addPlayerMenuItem(player);
 		String playerKey = "Player " + player.getPlayerNum();
 		scoreMan.addPlayer(playerKey);

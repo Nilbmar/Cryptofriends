@@ -32,6 +32,15 @@ public class PlayerManager {
 		}
 	}
 	
+	public void switchedPuzzle(String fileName) {
+		Iterator<Entry<String, Player>> it = players.entrySet().iterator();
+		while (it.hasNext()) {
+			it.next().getValue().setCurrentPuzzleName(fileName);
+		}
+		
+		getCurrentPlayer().switchedPuzzle(fileName);
+	}
+	
 	public String switchPlayer() {
 		boolean setNextPlayerToCurrent = false;
 		players.get(currentPlayerName).setTurn(false);
