@@ -7,6 +7,7 @@ import Enums.MoveDirections;
 import core.Data.Player;
 import core.Managers.GameManager;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ import javafx.scene.layout.VBox;
 public class CgramController {
 	private Scene scene;
 	private GameManager gameMan;
+	private boolean hideAuthor = true;
 	
 	@FXML
 	private StackPane stack;
@@ -30,7 +32,13 @@ public class CgramController {
 	private FlowBox flow;
 	
 	@FXML
+	private HBox citationBox;
+	
+	@FXML
 	private Label lblAuthor;
+	
+	@FXML 
+	private Label lblCitationDash;
 	
 	@FXML
 	private Label lblSubject;
@@ -180,8 +188,15 @@ public class CgramController {
 	}
 	
 	public void updateAuthorLine(String author, String subject) {
+		citationBox.getChildren().clear();
 		lblAuthor.setText(author);
 		lblSubject.setText(subject);
+		
+		if (hideAuthor) {
+			citationBox.getChildren().add(lblSubject);
+		} else {
+			citationBox.getChildren().addAll(lblAuthor, lblCitationDash, lblSubject);
+		}
 	}
 	
 	// Changes the panel on the bottom that holds

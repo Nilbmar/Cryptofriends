@@ -13,10 +13,24 @@ public class PuzzleData {
 	public PuzzleData(int key, String hints, String phrase, String subject, String author, int num) {
 		this.key = key;
 		this.hints = hints;
-		this.phrase = phrase;
 		this.subject = subject;
 		this.author = author;
 		numOfPhraseByAuthor = num;
+		
+		// Strip quotation marks from start and end of quote
+		// Quotation mark could be " or ' 
+		if (phrase.substring(0, 1).contains("\"") || phrase.substring(0, 1).contains("\'")) {
+			String temp = phrase.substring(1);
+			
+			if (temp.endsWith("\"") || temp.endsWith("\'")) {
+				temp = temp.substring(0, temp.length() - 1);
+				System.out.println(temp);
+			}
+			
+			this.phrase = temp;
+		} else {
+			this.phrase = phrase;
+		}
 	}
 	
 	public int getKey() { return key; }

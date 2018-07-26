@@ -53,6 +53,7 @@ public class GameManager {
 		selectMan.update();
 	}
 	
+	public PuzzleData getCurrentPuzzle() { return puzzleMan.getPuzzle(puzzleIndex - 1); }
 	public PuzzleState getPuzzleState() { return puzzleState; }
 	public void setPuzzleState(PuzzleState.State state) {
 		puzzleState.setState(state);
@@ -112,7 +113,7 @@ public class GameManager {
 	
 	public void alertWinner() {
 		PopInBox gameWon = new PopInBox();
-		VBox vBox = gameWon.winnerBox(this, puzzleState.getWinner());
+		VBox vBox = gameWon.winnerBox(this, getCurrentPuzzle(), puzzleState.getWinner());
 		controller.addPopInBox(vBox);
 	}
 	
