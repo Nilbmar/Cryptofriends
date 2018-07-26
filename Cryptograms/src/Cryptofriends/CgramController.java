@@ -7,7 +7,6 @@ import Enums.MoveDirections;
 import core.Data.Player;
 import core.Managers.GameManager;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
