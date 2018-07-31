@@ -24,6 +24,7 @@ public class GameManager {
 	private ScoreManager scoreMan;
 	private TimeManager timeMan;
 	private BoardManager boardMan;
+	private OptionManager optionMan;
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader puzzleLoader;
 	private String currentPuzzleName = null;
@@ -36,6 +37,8 @@ public class GameManager {
 		selectMan = new SelectionManager();
 		scoreMan = new ScoreManager();
 		timeMan = new TimeManager(controller.getTimeLabel());
+		optionMan = new OptionManager();
+		controller.setOptionManager(optionMan);
 		
 		answerMan = new AnswerManager(this);
 		boardMan = new BoardManager(this);
@@ -65,6 +68,7 @@ public class GameManager {
 	public ScoreManager getScoreManager() { return scoreMan; }
 	public TimeManager getTimeManager() { return timeMan; }
 	public BoardManager getBoardManager() { return boardMan; }
+	public OptionManager getOptionManager() { return optionMan; }
 	
 	public void createBoard() {
 		boardMan.setupFlowBox();

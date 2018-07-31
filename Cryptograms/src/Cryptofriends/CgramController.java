@@ -5,7 +5,9 @@ import Cryptofriends.GUI.PopInBox;
 import Cryptofriends.SpaceContainer.FlowBox;
 import Enums.MoveDirections;
 import core.Data.Player;
+import core.Data.Options.OptionBool;
 import core.Managers.GameManager;
+import core.Managers.OptionManager;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,7 +24,7 @@ import javafx.scene.layout.VBox;
 public class CgramController {
 	private Scene scene;
 	private GameManager gameMan;
-	private boolean hideAuthor = true;
+	private OptionManager optionMan;
 	
 	@FXML
 	private StackPane stack;
@@ -142,6 +144,10 @@ public class CgramController {
 		setUIColor(UI_COLOR.BLUE);
 	}
 	
+	public void setOptionManager(OptionManager optionMan) {
+		this.optionMan = optionMan;
+	}
+	
 	public StackPane getStackPane() {
 		return stack;
 	}
@@ -190,8 +196,8 @@ public class CgramController {
 		citationBox.getChildren().clear();
 		lblAuthor.setText(author);
 		lblSubject.setText(subject);
-		
-		if (hideAuthor) {
+		OptionBool hideAuthor = (OptionBool) optionMan.getOption("hideAuthor");
+		if (hideAuthor.getValue()) {
 			citationBox.getChildren().add(lblSubject);
 		} else {
 			citationBox.getChildren().addAll(lblAuthor, lblCitationDash, lblSubject);
