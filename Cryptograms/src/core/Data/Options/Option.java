@@ -1,12 +1,13 @@
 package core.Data.Options;
 
 public abstract class Option {
-	protected String name = null;
+	protected Options name = null;
 	protected OptionType type = null;
 	public enum OptionType { BOOL, INT, STRING };
+	public enum Options { HIDE_AUTHOR }
 	
 	public OptionType getType() { return type; }
-	public String getName() { return name; }
+	public Options getName() { return name; }
 	 
 	
 }

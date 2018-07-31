@@ -3,13 +3,14 @@ package core.Managers;
 import java.util.HashMap;
 
 import core.Data.Options.Option;
+import core.Data.Options.Option.Options;
 import core.Data.Options.OptionBool;
 
 public class OptionManager {
-	private HashMap<String, Option> options = null;
+	private HashMap<Options, Option> options = null;
 	
 	public OptionManager() {
-		options = new HashMap<String, Option>();
+		options = new HashMap<Options, Option>();
 		defaultOptions();
 	}
 	
@@ -28,12 +29,28 @@ public class OptionManager {
 		return option;
 	}
 	
+	public boolean getBool(Options option) {
+		boolean value = false;
+		
+		try {
+			value = ((OptionBool) options.get(option)).getValue();
+		} catch (Exception exc) {
+			wrongValue(option.name());
+		}
+		
+		return value;
+	}
+	
+	private void wrongValue(String name) {
+		System.out.println("Option " + name + " is not available or of the wrong type.");
+	}
+	
 	/* TODO:
 	 * THIS IS TEMPORARY FOR TESTING PURPOSES
 	 * SO I DON'T HAVE TO CLUTTER UP GameManager
 	 * WITH ADDING DEFAULT OPTIONS
 	 */
 	private void defaultOptions() {
-		addOption(new OptionBool("hideAuthor", true));
+		addOption(new OptionBool(Options.HIDE_AUTHOR, true));
 	}
 }
