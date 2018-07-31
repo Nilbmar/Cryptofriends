@@ -5,6 +5,9 @@ import java.util.HashMap;
 import core.Data.Options.Option;
 import core.Data.Options.Option.Options;
 import core.Data.Options.OptionBool;
+import core.Data.Options.OptionInt;
+import core.Data.Options.OptionStr;
+import core.Loaders.OptionsLoader;
 
 public class OptionManager {
 	private HashMap<Options, Option> options = null;
@@ -12,6 +15,9 @@ public class OptionManager {
 	public OptionManager() {
 		options = new HashMap<Options, Option>();
 		defaultOptions();
+		OptionsLoader loader = new OptionsLoader();
+		loader.setOptionManager(this);
+		loader.load();
 	}
 	
 	public void addOption(Option option) {
@@ -34,6 +40,30 @@ public class OptionManager {
 		
 		try {
 			value = ((OptionBool) options.get(option)).getValue();
+		} catch (Exception exc) {
+			wrongValue(option.name());
+		}
+		
+		return value;
+	}
+	
+	public int getInt(Options option) {
+		int value = -1;
+		
+		try {
+			value = ((OptionInt) options.get(option)).getValue();
+		} catch (Exception exc) {
+			wrongValue(option.name());
+		}
+		
+		return value;
+	}
+	
+	public String getString(Options option) {
+		String value = null;
+		
+		try {
+			value = ((OptionStr) options.get(option)).getValue();
 		} catch (Exception exc) {
 			wrongValue(option.name());
 		}
