@@ -33,6 +33,7 @@ public class PlayerTime {
 	}
 		
 	public long getTotalTime() {
+		// Have to clear to zero or it will just keep adding up
 		totalTime = 0;
 		Iterator<Entry<String, Long>> it = puzzleTimes.entrySet().iterator();
 		while (it.hasNext()) {
