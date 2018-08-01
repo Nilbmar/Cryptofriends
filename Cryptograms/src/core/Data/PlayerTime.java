@@ -2,7 +2,9 @@ package core.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import core.Processes.SavePlayerTime;
 
@@ -30,9 +32,18 @@ public class PlayerTime {
 		}
 	}
 		
-	public long getTotalTime() { return totalTime; }
+	public long getTotalTime() {
+		totalTime = 0;
+		Iterator<Entry<String, Long>> it = puzzleTimes.entrySet().iterator();
+		while (it.hasNext()) {
+			totalTime += it.next().getValue();
+		}
+		
+		return totalTime; 
+	}
 	
 	public void savePlayerTime() {
+		getTotalTime();
 		SavePlayerTime saveTime = new SavePlayerTime(
 				this, player.getName());
 		saveTime.save();
