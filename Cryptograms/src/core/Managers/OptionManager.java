@@ -75,11 +75,8 @@ public class OptionManager {
 		System.out.println("Option " + name + " is not available or of the wrong type.");
 	}
 	
-	/* TODO:
-	 * THIS IS TEMPORARY FOR TESTING PURPOSES
-	 * SO I DON'T HAVE TO CLUTTER UP GameManager
-	 * WITH ADDING DEFAULT OPTIONS
-	 */
+	// Ensure certain options are set
+	// Will be overwritten if in options.json
 	private void defaultOptions() {
 		addOption(new OptionBool(Options.HIDE_AUTHOR, true));
 	}
