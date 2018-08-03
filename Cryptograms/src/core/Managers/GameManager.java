@@ -39,6 +39,9 @@ public class GameManager {
 		timeMan = new TimeManager(controller.getTimeLabel());
 		optionMan = new OptionManager();
 		controller.setOptionManager(optionMan);
+		controller.addDatabaseMenu("PuzzleDatabase");
+		controller.addDatabaseMenu("Games");
+		controller.addDatabaseMenu("PuzzleData");
 		
 		answerMan = new AnswerManager(this);
 		boardMan = new BoardManager(this);

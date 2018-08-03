@@ -1,5 +1,6 @@
 package Cryptofriends;
 
+import Cryptofriends.GUI.DatabaseMenuItem;
 import Cryptofriends.GUI.PlayerMenu;
 import Cryptofriends.GUI.PopInBox;
 import Cryptofriends.SpaceContainer.FlowBox;
@@ -76,6 +77,9 @@ public class CgramController {
 	
 	@FXML
 	private Menu playerMenu;
+	
+	@FXML
+	private Menu dbMenu;
 	
 	@FXML
 	private Button btnClearIncorrectYes;
@@ -210,6 +214,11 @@ public class CgramController {
 	public void updatePlayerInfoBox(String playerName, int score) {
 		lblPlayerName.setText(playerName);
 		lblScore.setText(score + "%");
+	}
+	
+	public void addDatabaseMenu(String dbName) {
+		DatabaseMenuItem dbMenuItem = new DatabaseMenuItem(dbName);
+		dbMenu.getItems().add(dbMenuItem);
 	}
 	
 	// Created separate function

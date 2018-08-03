@@ -62,6 +62,7 @@
                               <SeparatorMenuItem mnemonicParsing="false" />
                           </items>
                         </Menu>
+                        <Menu fx:id="dbMenu" mnemonicParsing="false" text="Database" />
                       <Menu mnemonicParsing="false" text="Help">
                         <items>
                           <MenuItem mnemonicParsing="false" text="About" />
