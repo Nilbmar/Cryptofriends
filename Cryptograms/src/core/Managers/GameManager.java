@@ -41,6 +41,7 @@ public class GameManager {
 		optionMan = new OptionManager();
 		controller.setOptionManager(optionMan);
 		dbMan = new DatabaseManager();
+		dbMan.load("PuzzleDatabase");
 		
 		answerMan = new AnswerManager(this);
 		boardMan = new BoardManager(this);

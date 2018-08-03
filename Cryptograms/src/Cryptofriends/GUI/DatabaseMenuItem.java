@@ -9,6 +9,7 @@ public class DatabaseMenuItem extends MenuItem {
 		setName(dbName);
 	}
 	
+	public String getDatabaseName() { return databaseName; }
 	private void setName(String dbName) {
 		databaseName = dbName;
 		String name = null;

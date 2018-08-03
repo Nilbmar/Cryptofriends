@@ -40,6 +40,20 @@ public class DatabaseManager {
 		}
 	}
 	
+	public void load(String fileName) {
+		setFilename(fileName);
+		
+		if (fileExists()) {
+			Connection conn = connect();
+			System.out.println(conn.toString());
+			try {
+				conn.close();
+			} catch (SQLException sqlExc) {
+				sqlExc.printStackTrace();
+			}
+		}
+	}
+	
 	public boolean fileExists() {
 		boolean exists = false;
 		if (databasePath != null && databaseFileName != null
@@ -58,8 +72,7 @@ public class DatabaseManager {
 	
 	public Connection connect() {
 		Connection conn = null;
-		String target = databasePath
-				+ System.getProperty("file.separator") + databaseFileName;
+		String target = databasePath + separator + databaseFileName;
 		String url = jdbc + target;
 		
 		try {
