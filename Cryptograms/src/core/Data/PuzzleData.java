@@ -24,7 +24,6 @@ public class PuzzleData {
 			
 			if (temp.endsWith("\"") || temp.endsWith("\'")) {
 				temp = temp.substring(0, temp.length() - 1);
-				System.out.println(temp);
 			}
 			
 			this.phrase = temp;
