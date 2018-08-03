@@ -25,6 +25,7 @@ public class GameManager {
 	private TimeManager timeMan;
 	private BoardManager boardMan;
 	private OptionManager optionMan;
+	private DatabaseManager dbMan;
 	private PuzzleManager puzzleMan;
 	private PuzzleLoader puzzleLoader;
 	private String currentPuzzleName = null;
@@ -39,9 +40,7 @@ public class GameManager {
 		timeMan = new TimeManager(controller.getTimeLabel());
 		optionMan = new OptionManager();
 		controller.setOptionManager(optionMan);
-		controller.addDatabaseMenu("PuzzleDatabase");
-		controller.addDatabaseMenu("Games");
-		controller.addDatabaseMenu("PuzzleData");
+		dbMan = new DatabaseManager();
 		
 		answerMan = new AnswerManager(this);
 		boardMan = new BoardManager(this);
