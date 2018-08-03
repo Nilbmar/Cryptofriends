@@ -5,7 +5,7 @@ import java.io.FilenameFilter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class DatabaseManager {
 	private String separator = System.getProperty("file.separator");
@@ -13,11 +13,13 @@ public class DatabaseManager {
 	private String databasePath = "resources" + separator + "puzzles";
 	private String databaseFileName = null; //"PuzzleDatabase" + ext;
 	private String jdbc = "jdbc:sqlite:";
-	private HashMap<String, String> dbMap = null;
+	private ArrayList<String> dbNames = null;
 	
 	public DatabaseManager() {
-		dbMap = new HashMap<String, String>();
+		dbNames = new ArrayList<String>();
 		mapDatabases();
+		
+		System.out.println("Database Names: " + getDatabaseNames());
 	}
 	
 	private void mapDatabases() {		
@@ -36,7 +38,7 @@ public class DatabaseManager {
 			indexOfExt = file.getName().indexOf(ext);
 			fileName = file.getName().substring(0, indexOfExt);
 			
-			dbMap.put(fileName, file.getAbsolutePath());
+			dbNames.add(fileName);
 		}
 	}
 	
@@ -92,6 +94,10 @@ public class DatabaseManager {
 	public String getFilename() { return databaseFileName; }
 	public void setFilename(String filename) {
 		databaseFileName = filename + ext;
+	}
+	
+	public ArrayList<String> getDatabaseNames() {
+		return dbNames;
 	}
 
 }

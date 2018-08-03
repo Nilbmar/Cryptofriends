@@ -1,5 +1,7 @@
 package Cryptofriends;
 
+import java.util.ArrayList;
+
 import Cryptofriends.GUI.DatabaseMenuItem;
 import Cryptofriends.GUI.PlayerMenu;
 import Cryptofriends.GUI.PopInBox;
@@ -216,9 +218,13 @@ public class CgramController {
 		lblScore.setText(score + "%");
 	}
 	
-	public void addDatabaseMenu(String dbName) {
-		DatabaseMenuItem dbMenuItem = new DatabaseMenuItem(dbName);
-		dbMenu.getItems().add(dbMenuItem);
+	public void addDatabaseMenu(ArrayList<String> names) {
+		DatabaseMenuItem dbMenuItem = null;
+		
+		for (String name : names) {
+			dbMenuItem = new DatabaseMenuItem(name);
+			dbMenu.getItems().add(dbMenuItem);
+		}
 	}
 	
 	// Created separate function
